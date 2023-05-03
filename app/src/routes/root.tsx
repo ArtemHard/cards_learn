@@ -1,5 +1,5 @@
-import App from "App";
+import App from "app/App"
 
 export const Root = () => {
-  return <App />;
-};
+  return <App />
+}
