@@ -3,7 +3,7 @@ import { authThunk } from "../auth.slice"
 import { useAppDispatch, useAppSelector } from "app/hooks"
 import TextField from "@mui/material/TextField"
 import { useForm, Controller, SubmitHandler } from "react-hook-form"
-import { NavLink, useNavigate } from "react-router-dom"
+import { Link, NavLink, useNavigate } from "react-router-dom"
 import InputAdornment from "@mui/material/InputAdornment"
 import IconButton from "@mui/material/IconButton"
 import Visibility from "@mui/icons-material/Visibility"
@@ -106,15 +106,7 @@ export const SignIn = () => {
         )}
       />
       <input type="submit" />
-      <NavLink
-        to="/sign-up"
-        className={({ isActive, isPending }) =>
-          isPending ? "pending" : isActive ? "active" : ""
-        }
-      >
-        Sign Up
-      </NavLink>
-      ;
+      <Link to={"/sign-up"}>Sign Up</Link>
     </form>
   )
 }
