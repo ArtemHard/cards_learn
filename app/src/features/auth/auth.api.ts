@@ -1,3 +1,4 @@
+import axios from "axios"
 import { instance } from "../../common/api/common.api"
 
 export const authApi = {
@@ -33,6 +34,9 @@ export const authApi = {
   logOut() {
     return instance.delete(this.baseUrl + "/me", {})
   },
+  forgotPassword(data: ForgotPassDataForServer) {
+    return axios.post("https://neko-back.herokuapp.com/2.0/auth/forgot", data)
+  },
 }
 
 export type AuthRegisterType = Omit<AuthLoginType, "rememberMe">
@@ -63,4 +67,10 @@ export interface ProfileType {
   __v: number
   token: string
   tokenDeathTime: number
+}
+
+export interface ForgotPassDataForServer {
+  email: string
+  from: string
+  message: string
 }

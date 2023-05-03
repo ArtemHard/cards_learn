@@ -3,6 +3,7 @@ import {
   authApi,
   AuthLoginType,
   AuthRegisterType,
+  ForgotPassDataForServer,
   ProfileType,
 } from "./auth.api"
 import { createAppAsyncThunk } from "common/utils/createAppAsyncThunk"
@@ -40,6 +41,16 @@ const logOut = createAppAsyncThunk("auth/logOut", async () => {
   return res
 })
 
+const forgotPassword = createAppAsyncThunk<any, ForgotPassDataForServer>(
+  "auth/forgot",
+  async (arg) => {
+    const res = await authApi.forgotPassword(arg)
+    console.log(res)
+
+    return res
+  }
+)
+
 const slice = createSlice({
   name: "auth",
   initialState: {
@@ -59,9 +70,10 @@ const slice = createSlice({
           state.profile = null
         }
       })
+      .addCase(forgotPassword.fulfilled, (state, action) => {})
   },
 })
 
 export const authReducer = slice.reducer
 export const authActions = slice.actions
-export const authThunk = { register, login, logOut, authMe }
+export const authThunk = { register, login, logOut, authMe, forgotPassword }
