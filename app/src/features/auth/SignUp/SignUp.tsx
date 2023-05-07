@@ -1,23 +1,163 @@
 import { useAppDispatch } from "app/hooks"
 import React from "react"
 import { authThunk } from "../auth.slice"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useForm, SubmitHandler, Controller } from "react-hook-form"
+import { AuthRegisterType } from "../auth.api"
+import { FormModule, FormWrapper } from "../SignIn/SignIn"
+import FormControl from "@mui/material/FormControl"
+import TextField from "@mui/material/TextField"
+import InputLabel from "@mui/material/InputLabel"
+import Input from "@mui/material/Input"
+import InputAdornment from "@mui/material/InputAdornment"
+import IconButton from "@mui/material/IconButton"
+import Visibility from "@mui/icons-material/Visibility"
+import VisibilityOff from "@mui/icons-material/VisibilityOff"
+
+type SignUpFormType = AuthRegisterType & { confirmPassword: string }
 
 export const SignUp = () => {
   const dispatch = useAppDispatch()
-  const registerHandler = () => {
-    const tempDataForRegister = {
-      email: "artemKab@gmail.com",
-      password: "12345678",
-      // rememberMe: false,
+  const navigate = useNavigate()
+
+  const { control, handleSubmit } = useForm<SignUpFormType>({
+    defaultValues: {
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+  })
+
+  const onSubmit: SubmitHandler<SignUpFormType> = (data) => {
+    console.log(data)
+    if (data.password === data.confirmPassword) {
+      const tempDataSignUp = {
+        email: "artemKab3@gmail.com",
+        password: "12345678",
+      }
+      //QUESTION
+      dispatch(authThunk.register(tempDataSignUp))
+        .unwrap()
+        .then(() => {
+          navigate("/sign-in")
+        })
     }
-    dispatch(authThunk.register(tempDataForRegister))
   }
+
+  const [showPassword, setShowPassword] = React.useState(false)
+  //Mui func for password
+  const handleClickShowPassword = () => setShowPassword((show) => !show)
+
+  //Mui func for password
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault()
+  }
+
   return (
-    <div>
-      <h1>SignUn-Register</h1>
-      <button onClick={registerHandler}>SignIn</button>
-      <Link to={"/sign-in"}>Sign Up</Link>
-    </div>
+    <FormWrapper>
+      <FormModule onSubmit={handleSubmit(onSubmit)}>
+        <h1>Sign Up</h1>
+        <FormControl
+          key={"emailFormControl"}
+          sx={{ m: 1, width: "25ch" }}
+          variant="standard"
+        >
+          <Controller
+            name="email"
+            key="emailController"
+            control={control}
+            rules={{ required: true }}
+            render={({ field }) => (
+              <TextField
+                type="email"
+                key="emailTextField"
+                id="standard-basic"
+                label="Email"
+                variant="standard"
+                {...field}
+              />
+            )}
+          />
+        </FormControl>
+        <FormControl
+          key={"PasswordFormControl"}
+          sx={{ m: 1, width: "25ch" }}
+          variant="standard"
+        >
+          <InputLabel
+            key="PasswordInputLabel"
+            htmlFor="standard-adornment-password"
+          >
+            Password
+          </InputLabel>
+          <Controller
+            name="password"
+            key={"password"}
+            control={control}
+            rules={{ required: true }}
+            render={({ field }) => (
+              <Input
+                // id="standard-adornment-password"
+                key={"password"}
+                type={showPassword ? "text" : "password"}
+                endAdornment={
+                  <InputAdornment key={"password"} position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                {...field}
+              />
+            )}
+          />
+        </FormControl>
+        <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
+          <InputLabel
+            key={"confirmPasswordInputLabel"}
+            htmlFor="standard-adornment-password"
+          >
+            Confirm password
+          </InputLabel>
+          <Controller
+            name="confirmPassword"
+            key={"confirmPasswordController"}
+            control={control}
+            rules={{ required: true }}
+            render={({ field }) => (
+              <Input
+                key={"confirmPasswordInput"}
+                // id="standard-adornment-password"
+                type={showPassword ? "text" : "password"}
+                endAdornment={
+                  <InputAdornment
+                    key={"confirmPasswordInputAdornment"}
+                    position="end"
+                  >
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                {...field}
+              />
+            )}
+          />
+        </FormControl>
+        <input type="submit" />
+        <Link to={"/forgot-password"}>Forgot password?</Link>
+        <Link to={"/sign-in"}>Sign In</Link>
+      </FormModule>
+    </FormWrapper>
   )
 }

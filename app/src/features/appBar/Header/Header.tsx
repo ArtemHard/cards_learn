@@ -1,11 +1,13 @@
 import { useAppDispatch, useAppSelector } from "app/hooks"
 import { authThunk } from "features/auth/auth.slice"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 
 export const Header = () => {
   const isAuth = useAppSelector((state) => state.auth.profile?.name)
   const dispatch = useAppDispatch()
+  let location = useLocation()
+  console.log(location.pathname === "/sign-in")
 
   const navigate = useNavigate()
   const onClickHandler = () => {

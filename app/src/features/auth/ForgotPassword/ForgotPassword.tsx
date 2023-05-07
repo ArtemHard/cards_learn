@@ -38,6 +38,10 @@ export const ForgotPassword = () => {
       </div>`,
     }
     dispatch(authThunk.forgotPassword(tempDataSignIn))
+      .unwrap()
+      .then(() => {
+        navigate("/check-email")
+      })
   }
 
   return (
