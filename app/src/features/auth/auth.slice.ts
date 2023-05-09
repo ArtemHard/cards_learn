@@ -37,43 +37,50 @@ const register = createAppAsyncThunk<void, AuthRegisterType>(
 const login = createAppAsyncThunk<{ profile: ProfileType }, AuthLoginType>(
   "auth/login",
   async (arg, thunkApi) => {
+    return await thunkTryCatch(thunkApi, async () => {
+      const res = await authApi.login(arg)
+      return { profile: res.data }
+    })
     // const { getState } = thunkApi
     // const state = getState()
     // const res = await authApi.login(arg)
     // return { profile: res.data }
-    const { dispatch, rejectWithValue } = thunkApi
-    try {
-      const res = await authApi.login(arg)
+    // const { dispatch, rejectWithValue } = thunkApi
+    // try {
+    //   const res = await authApi.login(arg)
 
-      return { profile: res.data }
-    } catch (e: any) {
-      dispatch(
-        appActions.setError({
-          error: e.response ? e.response.data.error : e.message,
-        })
-      )
-      return rejectWithValue(null)
-    }
-
-    // return await thunkTryCatch(thunkApi, async () => {
-    //   await authApi.login(arg)
-    // })
+    //   return { profile: res.data }
+    // } catch (e: any) {
+    //   dispatch(
+    //     appActions.setError({
+    //       error: e.response ? e.response.data.error : e.message,
+    //     })
+    //   )
+    //   return rejectWithValue(null)
+    // }
   }
 )
 
 const authMe = createAppAsyncThunk<{ profile: ProfileType }, void>(
   "auth/me",
-  async () => {
-    const res = await authApi.checkAuth()
-    return {
-      profile: res.data,
-    }
+  async (arg, thunkAPI) => {
+    return thunkTryCatch(thunkAPI, async () => {
+      const res = await authApi.checkAuth()
+      return {
+        profile: res.data,
+      }
+    })
+    // const res = await authApi.checkAuth()
+    // return {
+    //   profile: res.data,
+    // }
   }
 )
 
-const logOut = createAppAsyncThunk("auth/logOut", async () => {
-  const res = await authApi.logOut()
-  return res
+const logOut = createAppAsyncThunk("auth/logOut", async (arg, thunkAPI) => {
+  return await thunkTryCatch(thunkAPI, async () => {
+    return await authApi.logOut()
+  })
 })
 
 const forgotPassword = createAppAsyncThunk<any, ForgotPassDataForServer>(

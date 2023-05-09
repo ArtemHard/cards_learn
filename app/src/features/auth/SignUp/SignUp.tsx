@@ -32,7 +32,7 @@ export const SignUp = () => {
     console.log(data)
     if (data.password === data.confirmPassword) {
       const tempDataSignUp = {
-        email: "artemKab3@gmail.com",
+        email: "artemKab@gmail.com",
         password: "12345678",
       }
       //QUESTION

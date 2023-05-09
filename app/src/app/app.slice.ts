@@ -34,22 +34,6 @@ const slice = createSlice({
           state.isLoading = true
         }
       )
-      // .addMatcher(
-      //   (action) => {
-      //     return action.type.endsWith("/fulfilled")
-      //   },
-      //   (state, action) => {
-      //     const err = action.payload as Error | AxiosError<{ error: string }>
-      //     if (isAxiosError(err)) {
-      //       state.error = err.response ? err.response.data.error : err.message
-      //       // dispatch(appActions.setError({ error }))
-      //     } else {
-      //       state.error = `Native error ${err.message}`
-      //       state.isLoading = false
-      //       // dispatch(appActions.setError({ error: `Native error ${err.message}` }))
-      //     }
-      //   }
-      // )
       .addMatcher(
         (action) => {
           return action.type.endsWith("/fulfilled")
@@ -63,7 +47,20 @@ const slice = createSlice({
           return action.type.endsWith("/rejected")
         },
         (state, action) => {
-          state.isLoading = false
+          const err = action.payload as Error | AxiosError<{ error: string }>
+          console.log(err)
+          if (isAxiosError(err)) {
+            state.isLoading = false
+            state.error = err.response ? err.response.data.error : err.message
+            // dispatch(appActions.setError({ error }))
+          } else if (err && err.message) {
+            state.isLoading = false
+            state.error = `Native error ${err.message}`
+            // dispatch(appActions.setError({ error: `Native error ${err.message}` }))
+          } else {
+            state.isLoading = false
+            state.error = "Unexpected error in App"
+          }
         }
       )
   },

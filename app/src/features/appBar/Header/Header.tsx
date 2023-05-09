@@ -7,7 +7,6 @@ export const Header = () => {
   const isAuth = useAppSelector((state) => state.auth.profile?.name)
   const dispatch = useAppDispatch()
   let location = useLocation()
-  console.log(location.pathname === "/sign-in")
 
   const navigate = useNavigate()
   const onClickHandler = () => {

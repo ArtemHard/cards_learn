@@ -1,19 +1,31 @@
 import { BaseThunkAPI } from "@reduxjs/toolkit/dist/createAsyncThunk"
-import { appActions } from "app/app.slice"
 import { AppDispatch, RootState } from "app/store"
-import { AxiosError, isAxiosError } from "axios"
 
+// export const thunkTryCatch = async (
+//   thunkAPI: BaseThunkAPI<RootState, any, AppDispatch, unknown>,
+//   logic: Function
+// ) => {
+//   const { rejectWithValue } = thunkAPI
+//   try {
+//     return await logic()
+//   } catch (e) {
+//     console.log(e)
+
+//     // WARNING здесь null был
+//     return rejectWithValue(e)
+//   }
+// }
 export const thunkTryCatch = async (
   thunkAPI: BaseThunkAPI<RootState, any, AppDispatch, unknown>,
   logic: Function
 ) => {
-  const { dispatch, rejectWithValue } = thunkAPI
+  const { rejectWithValue } = thunkAPI
   try {
-    // dispatch(appActions.setIsLoading({ isLoading: true }))
     return await logic()
   } catch (e) {
-    // dispatch(appActions.setIsLoading({ isLoading: true }))
+    console.log(e)
 
-    return rejectWithValue(null)
+    // WARNING здесь null был
+    return rejectWithValue(e)
   }
 }

@@ -1,3 +1,4 @@
+import { appActions } from "app/app.slice"
 import { useAppSelector } from "common/hooks"
 import React, { useEffect } from "react"
 import { useDispatch } from "react-redux"
@@ -7,15 +8,16 @@ import "react-toastify/dist/ReactToastify.css"
 export const GlobalError = () => {
   const error = useAppSelector((state) => state.app.error)
   const dispatch = useDispatch()
+
   if (error !== null) {
     toast.error(error)
   }
 
   useEffect(() => {
     setTimeout(() => {
-      toast.error(null)
+      dispatch(appActions.setError({ error: null }))
     }, 2000)
-  }, [])
+  }, [error])
 
   return (
     <ToastContainer

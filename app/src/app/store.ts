@@ -9,7 +9,10 @@ export const store = configureStore({
     counter: counterReducer,
     auth: authReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).prepend(),
 })
 
 export type AppDispatch = typeof store.dispatch

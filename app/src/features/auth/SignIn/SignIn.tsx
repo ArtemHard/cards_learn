@@ -1,6 +1,5 @@
 import React from "react"
 import { authThunk } from "../auth.slice"
-import { useAppDispatch, useAppSelector } from "app/hooks"
 import TextField from "@mui/material/TextField"
 import { useForm, Controller, SubmitHandler } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom"
@@ -15,6 +14,7 @@ import FormControlLabel from "@mui/material/FormControlLabel"
 import Checkbox from "@mui/material/Checkbox"
 import { AuthLoginType } from "../auth.api"
 import styled from "styled-components"
+import { useAppDispatch, useAppSelector } from "common/hooks"
 
 export const SignIn = () => {
   const isAuth = useAppSelector((state) => state.auth.profile?.name)
@@ -30,7 +30,6 @@ export const SignIn = () => {
   })
 
   const onSubmit: SubmitHandler<AuthLoginType> = (data) => {
-    console.log(data)
     const tempDataSignIn = {
       email: "artemKab@gmail.com",
       password: "12345678",

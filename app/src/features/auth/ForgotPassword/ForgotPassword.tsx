@@ -17,7 +17,6 @@ export const ForgotPassword = () => {
   })
 
   const onSubmit: SubmitHandler<{ email: string }> = (data) => {
-    console.log(data)
     const dataForServer = {
       email: data.email,
       from: "test-front-admin <ai73a@yandex.by>",
