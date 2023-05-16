@@ -4,8 +4,9 @@ import { Controller, useForm, SubmitHandler } from "react-hook-form"
 import TextField from "@mui/material/TextField"
 import InputLabel from "@mui/material/InputLabel"
 import { Link, useNavigate } from "react-router-dom"
-import { useAppDispatch } from "app/hooks"
+
 import { authThunk } from "../auth.slice"
+import { useAppDispatch } from "common/hooks"
 
 export const ForgotPassword = () => {
   const navigate = useNavigate()

@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from "app/hooks"
+import { useAppSelector, useAppDispatch } from "common/hooks"
 import { authThunk } from "features/auth/auth.slice"
 import { useLocation, useNavigate } from "react-router-dom"
 import styled from "styled-components"

@@ -1,5 +1,4 @@
-import { useAppDispatch } from "app/hooks"
-import React from "react"
+import React, { useEffect } from "react"
 import { authThunk } from "../auth.slice"
 import { Link, useNavigate } from "react-router-dom"
 import { useForm, SubmitHandler, Controller } from "react-hook-form"
@@ -13,12 +12,18 @@ import InputAdornment from "@mui/material/InputAdornment"
 import IconButton from "@mui/material/IconButton"
 import Visibility from "@mui/icons-material/Visibility"
 import VisibilityOff from "@mui/icons-material/VisibilityOff"
+import { useAppDispatch } from "common/hooks"
+import { unHandleAction } from "common/actions/unHandleAction"
 
 type SignUpFormType = AuthRegisterType & { confirmPassword: string }
 
 export const SignUp = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    dispatch(unHandleAction())
+  }, [])
 
   const { control, handleSubmit } = useForm<SignUpFormType>({
     defaultValues: {
@@ -29,7 +34,6 @@ export const SignUp = () => {
   })
 
   const onSubmit: SubmitHandler<SignUpFormType> = (data) => {
-    console.log(data)
     if (data.password === data.confirmPassword) {
       const tempDataSignUp = {
         email: "artemKab@gmail.com",

@@ -37,10 +37,14 @@ const register = createAppAsyncThunk<void, AuthRegisterType>(
 const login = createAppAsyncThunk<{ profile: ProfileType }, AuthLoginType>(
   "auth/login",
   async (arg, thunkApi) => {
-    return await thunkTryCatch(thunkApi, async () => {
-      const res = await authApi.login(arg)
-      return { profile: res.data }
-    })
+    return await thunkTryCatch(
+      thunkApi,
+      async () => {
+        const res = await authApi.login(arg)
+        return { profile: res.data }
+      },
+      false
+    )
     // const { getState } = thunkApi
     // const state = getState()
     // const res = await authApi.login(arg)

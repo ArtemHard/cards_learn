@@ -9,8 +9,11 @@ import { useAppDispatch, useAppSelector } from "common/hooks"
 import "react-toastify/dist/ReactToastify.css"
 
 function App() {
-  const isLoading = useAppSelector((state) => state.app.isLoading)
+  // const isLoading = useAppSelector((state) => state.app.isLoading)
   const isAuth = useAppSelector((state) => state.auth.profile?.name)
+  const isLoading = useAppSelector((state) => state.app.isLoading)
+  const isAppInitialized = useAppSelector((state) => state.app.isAppInitialized)
+  const unHandleActions = useAppSelector((state) => state.app.unHandleActions)
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 

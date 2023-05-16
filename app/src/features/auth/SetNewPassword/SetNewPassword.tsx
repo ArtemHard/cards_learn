@@ -10,8 +10,8 @@ import FormControl from "@mui/material/FormControl"
 import InputLabel from "@mui/material/InputLabel"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import { useNavigate } from "react-router-dom"
-import { useAppDispatch } from "app/hooks"
 import { authThunk } from "../auth.slice"
+import { useAppDispatch } from "common/hooks"
 
 export const SetNewPassword = () => {
   const navigate = useNavigate()

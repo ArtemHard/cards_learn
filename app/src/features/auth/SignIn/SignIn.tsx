@@ -15,6 +15,8 @@ import Checkbox from "@mui/material/Checkbox"
 import { AuthLoginType } from "../auth.api"
 import styled from "styled-components"
 import { useAppDispatch, useAppSelector } from "common/hooks"
+import { toast } from "react-toastify"
+import { AxiosError, isAxiosError } from "axios"
 
 export const SignIn = () => {
   const isAuth = useAppSelector((state) => state.auth.profile?.name)
@@ -36,6 +38,21 @@ export const SignIn = () => {
       rememberMe: false,
     }
     dispatch(authThunk.login(tempDataSignIn))
+      .unwrap()
+      .then((result) => {
+        toast.success("Вы успешно залогинились")
+      })
+      .catch((err: any) => {
+        // toast.error(err.e.response.data.error)
+        if (isAxiosError(err.e)) {
+          const axiosErr = err.e?.response?.data?.error
+          if (typeof axiosErr === "string") {
+            toast.error(axiosErr)
+          } else {
+            toast.error(err.e.message)
+          }
+        }
+      })
   }
 
   const [showPassword, setShowPassword] = React.useState(false)

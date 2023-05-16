@@ -1,5 +1,5 @@
-import { useAppDispatch } from "app/hooks"
-import { useAppSelector } from "common/hooks"
+import SuperEditableSpan from "common/components/EditableSpan/EditableSpan"
+import { useAppSelector, useAppDispatch } from "common/hooks"
 import { profileData } from "common/utils/selectors/authSelectors"
 import { authThunk } from "features/auth/auth.slice"
 import React from "react"

@@ -1,4 +1,4 @@
-import { useAppSelector } from "app/hooks"
+import { useAppSelector } from "common/hooks"
 import React from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
