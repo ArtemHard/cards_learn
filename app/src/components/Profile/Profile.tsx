@@ -1,13 +1,18 @@
 import SuperEditableSpan from "common/components/EditableSpan/EditableSpan"
-import { useAppSelector, useAppDispatch } from "common/hooks"
-import { profileData } from "common/utils/selectors/authSelectors"
+import {
+  useAppSelector,
+  useAppDispatch,
+} from "common/hooks"
+import { selectProfileData } from "common/utils/selectors/authSelectors"
 import { authThunk } from "features/auth/auth.slice"
 import React from "react"
 import styled from "styled-components"
 
 export const Profile = () => {
   const dispatch = useAppDispatch()
-  const profile = useAppSelector(profileData)
+  const profile = useAppSelector(
+    selectProfileData
+  )
   const onClickHandler = () => {
     dispatch(authThunk.logOut())
   }
@@ -18,7 +23,9 @@ export const Profile = () => {
         <Avatar />
         <ProfileName>{profile?.name}</ProfileName>
         <span>{profile?.email}</span>
-        <button onClick={onClickHandler}>Log Out</button>
+        <button onClick={onClickHandler}>
+          Log Out
+        </button>
       </ProfileContainer>
     </ProfileWrapper>
   )
@@ -41,13 +48,16 @@ const ProfileContainer = styled.div`
   height: 360px;
 
   background: #ffffff;
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1), -1px -1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1),
+    -1px -1px 2px rgba(0, 0, 0, 0.1);
   border-radius: 2px;
 `
 
-const Avatar = styled.img.attrs<{ src: string }>((props) => ({
-  src: props.src || undefined,
-}))`
+const Avatar = styled.img.attrs<{ src: string }>(
+  (props) => ({
+    src: props.src || undefined,
+  })
+)`
   background-color: black;
   object-fit: cover;
   border-radius: 50%;

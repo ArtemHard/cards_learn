@@ -7,13 +7,20 @@ import { GlobalError } from "common/components/GlobalError/GlobalError"
 import LinearProgress from "@mui/material/LinearProgress"
 import { useAppDispatch, useAppSelector } from "common/hooks"
 import "react-toastify/dist/ReactToastify.css"
+import Example from "./example"
+import {
+  selectorIsAppInitialized,
+  selectorIsAuth,
+  selectorIsLoading,
+  selectorUnHandleActions,
+} from "./app.selectors"
 
 function App() {
   // const isLoading = useAppSelector((state) => state.app.isLoading)
-  const isAuth = useAppSelector((state) => state.auth.profile?.name)
-  const isLoading = useAppSelector((state) => state.app.isLoading)
-  const isAppInitialized = useAppSelector((state) => state.app.isAppInitialized)
-  const unHandleActions = useAppSelector((state) => state.app.unHandleActions)
+  const isAuth = useAppSelector(selectorIsAuth)
+  const isLoading = useAppSelector(selectorIsLoading)
+  const isAppInitialized = useAppSelector(selectorIsAppInitialized)
+  const unHandleActions = useAppSelector(selectorUnHandleActions)
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
@@ -26,6 +33,7 @@ function App() {
   // }, [isAuth])
   return (
     <div className="App">
+      <Example />
       <Header />
       <button onClick={() => navigate("/sign-in")}>sign-in</button>
       <button onClick={() => navigate("/sign-up")}>sign-up</button>
