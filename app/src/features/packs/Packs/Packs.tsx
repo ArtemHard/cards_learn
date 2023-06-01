@@ -1,12 +1,23 @@
 import { useEffect } from "react"
-import { useAppDispatch, useAppSelector } from "common/hooks"
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "common/hooks"
 import { packsThunks } from "features/packs/packs.slice"
 import s from "./styles.module.css"
 import { PackType } from "../packs.api.types"
 import styled from "styled-components"
+import {
+  filterByNamePacksSelector,
+  selectorPacks,
+} from "../pack.selector"
 
 export const Packs = () => {
-  const cardPacks = useAppSelector((state) => state.packs.cardPacks)
+  console.log("Packs render")
+
+  const cardPacks = useAppSelector(
+    filterByNamePacksSelector
+  )
 
   const dispatch = useAppDispatch()
 
@@ -27,7 +38,9 @@ export const Packs = () => {
 
   const updatePackHandler = (pack: PackType) => {
     const newName = "🦖" + Math.random()
-    dispatch(packsThunks.updatePack({ ...pack, name: newName }))
+    dispatch(
+      packsThunks.updatePack({ ...pack, name: newName })
+    )
   }
 
   return (
@@ -47,8 +60,14 @@ export const Packs = () => {
               <p>
                 <b>user name</b>: {p.user_name}
               </p>
-              <button onClick={() => removePackHandler(p._id)}>remove</button>
-              <button onClick={() => updatePackHandler(p)}>update</button>
+              <button
+                onClick={() => removePackHandler(p._id)}
+              >
+                remove
+              </button>
+              <button onClick={() => updatePackHandler(p)}>
+                update
+              </button>
             </PacksContainer>
           )
         })}

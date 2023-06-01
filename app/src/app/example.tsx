@@ -1,27 +1,26 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "./App.css"
 
 export default function Example() {
-  const [counter, setCounter] = useState<number>(
-    () => {
-      console.log("Expensive function")
-      return Math.floor(Math.random() * 16)
-    }
-  )
-
-  const incrBy3 = () => {
-    setCounter(counter + 3)
+  const [count, setCount] = useState(-1)
+  const onClickHandler = () => {
+    setCount(5)
   }
 
+  useEffect(() => {
+    if (count === 0) {
+      alert("ACTION")
+      setCount(-1)
+    } else if (count > 0) {
+      const timer = setInterval(() => {
+        setCount((prev) => prev - 1)
+        clearInterval(timer)
+      }, 1000)
+    }
+  }, [count])
   return (
-    <div className="container">
-      <h1>Increment By 3</h1>
-      <div className="counter-box">
-        <span className="large">
-          <b>{counter}</b>
-        </span>
-        <button onClick={incrBy3}>+ 3</button>
-      </div>
-    </div>
+    <button onClick={onClickHandler}>
+      {count < 0 ? "click ACtion" : `Cancel ${count}`}{" "}
+    </button>
   )
 }
