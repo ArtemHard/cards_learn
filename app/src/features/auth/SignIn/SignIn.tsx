@@ -14,14 +14,15 @@ import FormControlLabel from "@mui/material/FormControlLabel"
 import Checkbox from "@mui/material/Checkbox"
 import { AuthLoginType } from "../auth.api"
 import styled from "styled-components"
-import { useAppDispatch, useAppSelector } from "common/hooks"
+import { useActions, useAppSelector } from "common/hooks"
 import { toast } from "react-toastify"
-import { AxiosError, isAxiosError } from "axios"
+import { isAxiosError } from "axios"
+import { selectorIsAuth } from "../auth.selectors"
 
 export const SignIn = () => {
-  const isAuth = useAppSelector((state) => state.auth.profile?.name)
+  const isAuth = useAppSelector(selectorIsAuth)
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
+  const { login } = useActions(authThunk)
 
   const { control, handleSubmit } = useForm<AuthLoginType>({
     defaultValues: {
@@ -37,7 +38,7 @@ export const SignIn = () => {
       password: "12345678",
       rememberMe: false,
     }
-    dispatch(authThunk.login(tempDataSignIn))
+    login(tempDataSignIn)
       .unwrap()
       .then((result) => {
         toast.success("Вы успешно залогинились")

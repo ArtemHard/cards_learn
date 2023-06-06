@@ -12,17 +12,22 @@ import InputAdornment from "@mui/material/InputAdornment"
 import IconButton from "@mui/material/IconButton"
 import Visibility from "@mui/icons-material/Visibility"
 import VisibilityOff from "@mui/icons-material/VisibilityOff"
-import { useAppDispatch } from "common/hooks"
-import { unHandleAction } from "common/actions/unHandleAction"
+import { useActions } from "common/hooks"
+import { commonActions } from "common/actions/unHandleAction"
 
 type SignUpFormType = AuthRegisterType & { confirmPassword: string }
 
 export const SignUp = () => {
-  const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  // const { register } = useActions(authThunk)
+  const { unHandleAction, register } = useActions({
+    ...commonActions,
+    ...authThunk,
+  })
 
   useEffect(() => {
-    dispatch(unHandleAction())
+    //DANGER fale action for learning
+    unHandleAction()
   }, [])
 
   const { control, handleSubmit } = useForm<SignUpFormType>({
@@ -40,7 +45,8 @@ export const SignUp = () => {
         password: "12345678",
       }
       //QUESTION
-      dispatch(authThunk.register(tempDataSignUp))
+      // dispatch(authThunk.register(tempDataSignUp))
+      register(tempDataSignUp)
         .unwrap()
         .then(() => {
           navigate("/sign-in")

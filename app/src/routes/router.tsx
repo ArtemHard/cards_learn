@@ -10,6 +10,7 @@ import { SignIn } from "features/auth/SignIn/SignIn"
 import { ForgotPassword } from "features/auth/ForgotPassword/ForgotPassword"
 import { SetNewPassword } from "features/auth/SetNewPassword/SetNewPassword"
 import { Packs } from "features/packs/Packs/Packs"
+// import { Packs } from "features/packs/Packs/Packs"
 
 export const router = createBrowserRouter([
   {

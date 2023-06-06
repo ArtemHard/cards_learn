@@ -1,46 +1,41 @@
 import { useEffect } from "react"
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "common/hooks"
+import { useActions, useAppDispatch, useAppSelector } from "common/hooks"
 import { packsThunks } from "features/packs/packs.slice"
-import s from "./styles.module.css"
 import { PackType } from "../packs.api.types"
 import styled from "styled-components"
-import {
-  filterByNamePacksSelector,
-  selectorPacks,
-} from "../pack.selector"
+import { selectorPacks } from "../pack.selector"
 
 export const Packs = () => {
   console.log("Packs render")
+  // DANGER FAKE SELECTOR
+  const cardPacks = useAppSelector(selectorPacks)
 
-  const cardPacks = useAppSelector(
-    filterByNamePacksSelector
-  )
+  const { fetchPacks, createPack, removePack, updatePack } =
+    useActions(packsThunks)
 
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(packsThunks.fetchPacks())
+    // dispatch(packsThunks.fetchPacks())
+
+    // bindActionCreators(packsThunks.fetchPacks, dispatch)()
+    fetchPacks()
   }, [])
 
   const addPackHandler = () => {
     const newPack = {
       name: "🦁" + Math.random(),
     }
-    dispatch(packsThunks.createPack(newPack))
+    createPack(newPack)
   }
 
   const removePackHandler = (id: string) => {
-    dispatch(packsThunks.removePack(id))
+    removePack(id)
   }
 
   const updatePackHandler = (pack: PackType) => {
     const newName = "🦖" + Math.random()
-    dispatch(
-      packsThunks.updatePack({ ...pack, name: newName })
-    )
+    updatePack({ ...pack, name: newName })
   }
 
   return (
@@ -60,14 +55,8 @@ export const Packs = () => {
               <p>
                 <b>user name</b>: {p.user_name}
               </p>
-              <button
-                onClick={() => removePackHandler(p._id)}
-              >
-                remove
-              </button>
-              <button onClick={() => updatePackHandler(p)}>
-                update
-              </button>
+              <button onClick={() => removePackHandler(p._id)}>remove</button>
+              <button onClick={() => updatePackHandler(p)}>update</button>
             </PacksContainer>
           )
         })}
