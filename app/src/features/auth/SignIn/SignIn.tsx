@@ -1,7 +1,11 @@
 import React from "react"
 import { authThunk } from "../auth.slice"
 import TextField from "@mui/material/TextField"
-import { useForm, Controller, SubmitHandler } from "react-hook-form"
+import {
+  useForm,
+  Controller,
+  SubmitHandler,
+} from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom"
 import InputAdornment from "@mui/material/InputAdornment"
 import IconButton from "@mui/material/IconButton"
@@ -18,6 +22,7 @@ import { useActions, useAppSelector } from "common/hooks"
 import { toast } from "react-toastify"
 import { isAxiosError } from "axios"
 import { selectorIsAuth } from "../auth.selectors"
+import { BasicButton } from "components/Button/BasicButton"
 
 export const SignIn = () => {
   const isAuth = useAppSelector(selectorIsAuth)
@@ -56,9 +61,11 @@ export const SignIn = () => {
       })
   }
 
-  const [showPassword, setShowPassword] = React.useState(false)
+  const [showPassword, setShowPassword] =
+    React.useState(false)
   //Mui func for password
-  const handleClickShowPassword = () => setShowPassword((show) => !show)
+  const handleClickShowPassword = () =>
+    setShowPassword((show) => !show)
 
   //Mui func for password
   const handleMouseDownPassword = (
@@ -74,7 +81,10 @@ export const SignIn = () => {
     <FormWrapper>
       <FormModule onSubmit={handleSubmit(onSubmit)}>
         <h1>Sign In</h1>
-        <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
+        <FormControl
+          sx={{ m: 1, width: "25ch" }}
+          variant="standard"
+        >
           <Controller
             name="email"
             control={control}
@@ -90,7 +100,10 @@ export const SignIn = () => {
             )}
           />
         </FormControl>
-        <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
+        <FormControl
+          sx={{ m: 1, width: "25ch" }}
+          variant="standard"
+        >
           <InputLabel htmlFor="standard-adornment-password">
             Password
           </InputLabel>
@@ -109,7 +122,11 @@ export const SignIn = () => {
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
                     >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                      {showPassword ? (
+                        <VisibilityOff />
+                      ) : (
+                        <Visibility />
+                      )}
                     </IconButton>
                   </InputAdornment>
                 }
@@ -123,13 +140,20 @@ export const SignIn = () => {
           control={control}
           render={({ field }) => (
             <FormControlLabel
-              control={<Checkbox defaultChecked={false} {...field} />}
+              control={
+                <Checkbox
+                  defaultChecked={false}
+                  {...field}
+                />
+              }
               label="Remember me"
             />
           )}
         />
-        <input type="submit" />
-        <Link to={"/forgot-password"}>Forgot password?</Link>
+        <BasicButton buttonText="submit" />
+        <Link to={"/forgot-password"}>
+          Forgot password?
+        </Link>
         <Link to={"/sign-up"}>Sign Up</Link>
       </FormModule>
     </FormWrapper>
@@ -152,6 +176,7 @@ export const FormModule = styled.form`
   align-items: center;
 
   background: #ffffff;
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1), -1px -1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1),
+    -1px -1px 2px rgba(0, 0, 0, 0.1);
   border-radius: 2px;
 `
