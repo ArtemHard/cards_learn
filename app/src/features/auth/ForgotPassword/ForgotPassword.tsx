@@ -1,6 +1,10 @@
 import React from "react"
-import { FormModule, FormWrapper } from "../SignIn/SignIn"
-import { Controller, useForm, SubmitHandler } from "react-hook-form"
+import * as S from "../SignIn/SignIn.styled"
+import {
+  Controller,
+  useForm,
+  SubmitHandler,
+} from "react-hook-form"
 import TextField from "@mui/material/TextField"
 import InputLabel from "@mui/material/InputLabel"
 import { Link, useNavigate } from "react-router-dom"
@@ -11,13 +15,17 @@ import { useAppDispatch } from "common/hooks"
 export const ForgotPassword = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const { control, handleSubmit } = useForm<{ email: string }>({
+  const { control, handleSubmit } = useForm<{
+    email: string
+  }>({
     defaultValues: {
       email: "",
     },
   })
 
-  const onSubmit: SubmitHandler<{ email: string }> = (data) => {
+  const onSubmit: SubmitHandler<{ email: string }> = (
+    data
+  ) => {
     const dataForServer = {
       email: data.email,
       from: "test-front-admin <ai73a@yandex.by>",
@@ -45,8 +53,8 @@ export const ForgotPassword = () => {
   }
 
   return (
-    <FormWrapper>
-      <FormModule onSubmit={handleSubmit(onSubmit)}>
+    <S.FormWrapper>
+      <S.FormModule onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="email"
           control={control}
@@ -62,12 +70,13 @@ export const ForgotPassword = () => {
           )}
         />
         <InputLabel htmlFor="standard-adornment-password">
-          Enter your email address and we will send you further instructions
+          Enter your email address and we will send you
+          further instructions
         </InputLabel>
         <button type="submit">Send instructions</button>
         <span>Did you remember your password?</span>
         <Link to={"/sign-in"}>Try logging in</Link>
-      </FormModule>
-    </FormWrapper>
+      </S.FormModule>
+    </S.FormWrapper>
   )
 }

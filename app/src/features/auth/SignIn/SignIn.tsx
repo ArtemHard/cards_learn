@@ -17,166 +17,151 @@ import InputLabel from "@mui/material/InputLabel"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import Checkbox from "@mui/material/Checkbox"
 import { AuthLoginType } from "../auth.api"
-import styled from "styled-components"
+import * as S from "./SignIn.styled"
 import { useActions, useAppSelector } from "common/hooks"
 import { toast } from "react-toastify"
 import { isAxiosError } from "axios"
 import { selectorIsAuth } from "../auth.selectors"
 import { BasicButton } from "components/Button/BasicButton"
+import styled from "styled-components"
+import { Form } from "components/Form/Form"
 
 export const SignIn = () => {
-  const isAuth = useAppSelector(selectorIsAuth)
-  const navigate = useNavigate()
-  const { login } = useActions(authThunk)
-
-  const { control, handleSubmit } = useForm<AuthLoginType>({
-    defaultValues: {
-      email: "",
-      password: "",
-      rememberMe: false,
-    },
-  })
-
-  const onSubmit: SubmitHandler<AuthLoginType> = (data) => {
-    const tempDataSignIn = {
-      email: "artemKab@gmail.com",
-      password: "12345678",
-      rememberMe: false,
-    }
-    login(tempDataSignIn)
-      .unwrap()
-      .then((result) => {
-        toast.success("Вы успешно залогинились")
-      })
-      .catch((err: any) => {
-        // toast.error(err.e.response.data.error)
-        if (isAxiosError(err.e)) {
-          const axiosErr = err.e?.response?.data?.error
-          if (typeof axiosErr === "string") {
-            toast.error(axiosErr)
-          } else {
-            toast.error(err.e.message)
-          }
-        }
-      })
-  }
-
-  const [showPassword, setShowPassword] =
-    React.useState(false)
-  //Mui func for password
-  const handleClickShowPassword = () =>
-    setShowPassword((show) => !show)
-
-  //Mui func for password
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault()
-  }
-
-  if (!!isAuth) navigate("/")
-
-  return (
-    // <form onSubmit={handleSubmit(onSubmit)}>
-    <FormWrapper>
-      <FormModule onSubmit={handleSubmit(onSubmit)}>
-        <h1>Sign In</h1>
-        <FormControl
-          sx={{ m: 1, width: "25ch" }}
-          variant="standard"
-        >
-          <Controller
-            name="email"
-            control={control}
-            rules={{ required: true }}
-            render={({ field }) => (
-              <TextField
-                type="email"
-                id="standard-basic"
-                label="Email"
-                variant="standard"
-                {...field}
-              />
-            )}
-          />
-        </FormControl>
-        <FormControl
-          sx={{ m: 1, width: "25ch" }}
-          variant="standard"
-        >
-          <InputLabel htmlFor="standard-adornment-password">
-            Password
-          </InputLabel>
-          <Controller
-            name="password"
-            control={control}
-            rules={{ required: true }}
-            render={({ field }) => (
-              <Input
-                id="standard-adornment-password"
-                type={showPassword ? "text" : "password"}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                    >
-                      {showPassword ? (
-                        <VisibilityOff />
-                      ) : (
-                        <Visibility />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                {...field}
-              />
-            )}
-          />
-        </FormControl>
-        <Controller
-          name="rememberMe"
-          control={control}
-          render={({ field }) => (
-            <FormControlLabel
-              control={
-                <Checkbox
-                  defaultChecked={false}
-                  {...field}
-                />
-              }
-              label="Remember me"
-            />
-          )}
-        />
-        <BasicButton buttonText="submit" />
-        <Link to={"/forgot-password"}>
-          Forgot password?
-        </Link>
-        <Link to={"/sign-up"}>Sign Up</Link>
-      </FormModule>
-    </FormWrapper>
-    // {/* </form> */}
-  )
+  return <Form type="Sign In" />
 }
-export const FormWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  height: 100vh;
-`
-export const FormModule = styled.form`
-  margin-top: 60px;
-  /* margin: 60px 433px 72px 434px; */
-  height: 552px;
-  width: 413px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
 
-  background: #ffffff;
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1),
-    -1px -1px 2px rgba(0, 0, 0, 0.1);
-  border-radius: 2px;
-`
+// const isAuth = useAppSelector(selectorIsAuth)
+// const navigate = useNavigate()
+// const { login } = useActions(authThunk)
+// const { control, handleSubmit } = useForm<AuthLoginType>({
+//   defaultValues: {
+//     email: "",
+//     password: "",
+//     rememberMe: false,
+//   },
+// })
+// const onSubmit: SubmitHandler<AuthLoginType> = (data) => {
+//   const tempDataSignIn = {
+//     email: "artemKab@gmail.com",
+//     password: "12345678",
+//     rememberMe: false,
+//   }
+//   login(tempDataSignIn)
+//     .unwrap()
+//     .then((result) => {
+//       toast.success("Вы успешно залогинились")
+//     })
+//     .catch((err: any) => {
+//       // toast.error(err.e.response.data.error)
+//       if (isAxiosError(err.e)) {
+//         const axiosErr = err.e?.response?.data?.error
+//         if (typeof axiosErr === "string") {
+//           toast.error(axiosErr)
+//         } else {
+//           toast.error(err.e.message)
+//         }
+//       }
+//     })
+// }
+// const [showPassword, setShowPassword] =
+//   React.useState(false)
+// //Mui func for password
+// const handleClickShowPassword = () =>
+//   setShowPassword((show) => !show)
+// //Mui func for password
+// const handleMouseDownPassword = (
+//   event: React.MouseEvent<HTMLButtonElement>
+// ) => {
+//   event.preventDefault()
+// }
+// if (!!isAuth) navigate("/")
+// return (
+//   // <form onSubmit={handleSubmit(onSubmit)}>
+//   <S.FormWrapper>
+//     <S.FormModule onSubmit={handleSubmit(onSubmit)}>
+//       <S.TitleForForm>Sign In</S.TitleForForm>
+//       <FormControl
+//         sx={{ m: 1, width: "100%", marginBottom: "24px" }}
+//         variant="standard"
+//       >
+//         <Controller
+//           name="email"
+//           control={control}
+//           rules={{ required: true }}
+//           render={({ field }) => (
+//             <TextField
+//               type="email"
+//               id="standard-basic"
+//               label="Email"
+//               variant="standard"
+//               {...field}
+//             />
+//           )}
+//         />
+//       </FormControl>
+//       <FormControl
+//         sx={{ width: "100%", marginBottom: "24px" }}
+//         variant="standard"
+//       >
+//         <InputLabel htmlFor="standard-adornment-password">
+//           Password
+//         </InputLabel>
+//         <Controller
+//           name="password"
+//           control={control}
+//           rules={{ required: true }}
+//           render={({ field }) => (
+//             <Input
+//               id="standard-adornment-password"
+//               type={showPassword ? "text" : "password"}
+//               endAdornment={
+//                 <InputAdornment position="end">
+//                   <IconButton
+//                     aria-label="toggle password visibility"
+//                     onClick={handleClickShowPassword}
+//                     onMouseDown={handleMouseDownPassword}
+//                   >
+//                     {showPassword ? (
+//                       <VisibilityOff />
+//                     ) : (
+//                       <Visibility />
+//                     )}
+//                   </IconButton>
+//                 </InputAdornment>
+//               }
+//               {...field}
+//             />
+//           )}
+//         />
+//       </FormControl>
+//       <Controller
+//         name="rememberMe"
+//         control={control}
+//         render={({ field }) => (
+//           <FormControlLabel
+//             sx={{
+//               m: 1,
+//               margin: 0,
+//               marginBottom: "29px",
+//               width: "100%",
+//             }}
+//             control={
+//               <Checkbox
+//                 defaultChecked={false}
+//                 {...field}
+//               />
+//             }
+//             // WARNING How to stylised this label
+//             label={"Remember me"}
+//           />
+//         )}
+//       />
+//       <Link to={"/forgot-password"}>
+//         Forgot password?
+//       </Link>
+//       <BasicButton buttonText="submit" />
+//       <Link to={"/sign-up"}>Sign Up</Link>
+//     </S.FormModule>
+//   </S.FormWrapper>
+//   // {/* </form> */}
+// )

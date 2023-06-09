@@ -1,9 +1,13 @@
 import React, { useEffect } from "react"
 import { authThunk } from "../auth.slice"
 import { Link, useNavigate } from "react-router-dom"
-import { useForm, SubmitHandler, Controller } from "react-hook-form"
+import {
+  useForm,
+  SubmitHandler,
+  Controller,
+} from "react-hook-form"
 import { AuthRegisterType } from "../auth.api"
-import { FormModule, FormWrapper } from "../SignIn/SignIn"
+import * as S from "../SignIn/SignIn.styled"
 import FormControl from "@mui/material/FormControl"
 import TextField from "@mui/material/TextField"
 import InputLabel from "@mui/material/InputLabel"
@@ -15,7 +19,9 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff"
 import { useActions } from "common/hooks"
 import { commonActions } from "common/actions/unHandleAction"
 
-type SignUpFormType = AuthRegisterType & { confirmPassword: string }
+type SignUpFormType = AuthRegisterType & {
+  confirmPassword: string
+}
 
 export const SignUp = () => {
   const navigate = useNavigate()
@@ -30,15 +36,19 @@ export const SignUp = () => {
     unHandleAction()
   }, [])
 
-  const { control, handleSubmit } = useForm<SignUpFormType>({
-    defaultValues: {
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
-  })
+  const { control, handleSubmit } = useForm<SignUpFormType>(
+    {
+      defaultValues: {
+        email: "",
+        password: "",
+        confirmPassword: "",
+      },
+    }
+  )
 
-  const onSubmit: SubmitHandler<SignUpFormType> = (data) => {
+  const onSubmit: SubmitHandler<SignUpFormType> = (
+    data
+  ) => {
     if (data.password === data.confirmPassword) {
       const tempDataSignUp = {
         email: "artemKab@gmail.com",
@@ -54,9 +64,11 @@ export const SignUp = () => {
     }
   }
 
-  const [showPassword, setShowPassword] = React.useState(false)
+  const [showPassword, setShowPassword] =
+    React.useState(false)
   //Mui func for password
-  const handleClickShowPassword = () => setShowPassword((show) => !show)
+  const handleClickShowPassword = () =>
+    setShowPassword((show) => !show)
 
   //Mui func for password
   const handleMouseDownPassword = (
@@ -66,8 +78,8 @@ export const SignUp = () => {
   }
 
   return (
-    <FormWrapper>
-      <FormModule onSubmit={handleSubmit(onSubmit)}>
+    <S.FormWrapper>
+      <S.FormModule onSubmit={handleSubmit(onSubmit)}>
         <h1>Sign Up</h1>
         <FormControl
           key={"emailFormControl"}
@@ -113,13 +125,20 @@ export const SignUp = () => {
                 key={"password"}
                 type={showPassword ? "text" : "password"}
                 endAdornment={
-                  <InputAdornment key={"password"} position="end">
+                  <InputAdornment
+                    key={"password"}
+                    position="end"
+                  >
                     <IconButton
                       aria-label="toggle password visibility"
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
                     >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                      {showPassword ? (
+                        <VisibilityOff />
+                      ) : (
+                        <Visibility />
+                      )}
                     </IconButton>
                   </InputAdornment>
                 }
@@ -128,7 +147,10 @@ export const SignUp = () => {
             )}
           />
         </FormControl>
-        <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
+        <FormControl
+          sx={{ m: 1, width: "25ch" }}
+          variant="standard"
+        >
           <InputLabel
             key={"confirmPasswordInputLabel"}
             htmlFor="standard-adornment-password"
@@ -155,7 +177,11 @@ export const SignUp = () => {
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
                     >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                      {showPassword ? (
+                        <VisibilityOff />
+                      ) : (
+                        <Visibility />
+                      )}
                     </IconButton>
                   </InputAdornment>
                 }
@@ -165,9 +191,11 @@ export const SignUp = () => {
           />
         </FormControl>
         <input type="submit" />
-        <Link to={"/forgot-password"}>Forgot password?</Link>
+        <Link to={"/forgot-password"}>
+          Forgot password?
+        </Link>
         <Link to={"/sign-in"}>Sign In</Link>
-      </FormModule>
-    </FormWrapper>
+      </S.FormModule>
+    </S.FormWrapper>
   )
 }
