@@ -57,33 +57,48 @@ const ForgotPassLink = styled.span<
   Pick<TextLinkBlockPropsType, "innerText">
 >`
   cursor: ${(props) =>
-    props.innerText === "Don't have an account?"
+    props.innerText === "Don't have an account?" ||
+    props.innerText === "Already have an account?"
       ? null
       : "pointer"};
   display: flex;
   font-family: "Montserrat", sans-serif;
   font-style: normal;
   font-weight: ${(props) =>
-    props.innerText ===
-    ("Don't have an account?" || "Sign Up")
+    props.innerText === "Don't have an account?" ||
+    props.innerText === "Sign Up" ||
+    props.innerText === "Already have an account?" ||
+    props.innerText === "Sign In"
       ? "600"
       : "500"};
   font-size: ${(props) =>
-    props.innerText === "Sign Up" ? "16px" : "14px"};
+    props.innerText === "Sign Up" ||
+    props.innerText === "Sign In"
+      ? "16px"
+      : "14px"};
   line-height: ${(props) =>
-    props.innerText ===
-    ("Don't have an account?" || "Sign Up")
+    props.innerText === "Don't have an account?" ||
+    props.innerText === "Sign Up" ||
+    props.innerText === "Already have an account?" ||
+    props.innerText === "Sign In"
       ? "24px"
       : "17px"};
   text-align: center;
   opacity: ${(props) =>
-    props.innerText === "Don't have an account?"
+    props.innerText === "Don't have an account?" ||
+    props.innerText === "Already have an account?"
       ? "0.5"
       : null};
   color: ${(props) =>
-    props.innerText === "Sign Up" ? "#366EFF" : "#000000"};
+    props.innerText === "Sign Up" ||
+    props.innerText === "Sign In"
+      ? "#366EFF"
+      : "#000000"};
   text-decoration-line: ${(props) =>
-    props.innerText === "Sign Up" ? "underline" : "null"};
+    props.innerText === "Sign Up" ||
+    props.innerText === "Sign In"
+      ? "underline"
+      : "null"};
 `
 
 const ForgotPassWrapper = styled.div<
@@ -106,26 +121,27 @@ type TextLinkBlockPropsType = {
     | "Forgot password?"
     | "Don't have an account?"
     | "Sign Up"
-    | "ALready have an account?"
+    | "Already have an account?"
     | "Sign In"
 }
 export const TextLinkBlock = ({
   innerText,
 }: TextLinkBlockPropsType) => {
   const navigate = useNavigate()
+
+  const link = links.find(
+    (el) => el.innerText === innerText
+  )?.link
+
   const onClickHandler = () => {
-    if (innerText === "Don't have an account?") {
-      return null
-    } else
-      navigate(
-        links.find((el) => el.innerText === innerText)!.link
-      )
+    if (link) navigate(link)
   }
+
   return (
     <ForgotPassWrapper innerText={innerText}>
       <ForgotPassLink
         innerText={innerText}
-        onClick={onClickHandler}
+        onClick={link ? onClickHandler : undefined}
       >
         {innerText}{" "}
       </ForgotPassLink>

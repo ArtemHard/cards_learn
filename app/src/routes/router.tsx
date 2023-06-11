@@ -6,7 +6,7 @@ import { Learn } from "components/Learn/Learn"
 import App from "app/App"
 import ErrorPage from "components/404/ErrorPage"
 import { Cards } from "components/Cards/Cards"
-import { SignIn } from "features/auth/SignIn/SignIn"
+import { Auth } from "features/auth/SignIn/Auth"
 import { ForgotPassword } from "features/auth/ForgotPassword/ForgotPassword"
 import { SetNewPassword } from "features/auth/SetNewPassword/SetNewPassword"
 import { Packs } from "features/packs/Packs/Packs"
@@ -20,12 +20,12 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "sign-in",
-        element: <SignIn />,
+        element: <Auth type="Sign In" key={"sign-in"} />,
         // ErrorBoundary: ErrorPage,
       },
       {
         path: "sign-up",
-        element: <SignUp />,
+        element: <Auth type="Sign Up" key={"sign-up"} />,
         // ErrorBoundary: ErrorPage,
       },
       {

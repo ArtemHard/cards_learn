@@ -13,6 +13,7 @@ export const BasicButton = ({
       sx={{
         m: 1,
         width: "100%",
+        height: "48px",
         borderRadius: "50px",
         textTransform: "none",
         marginBottom: "31px",

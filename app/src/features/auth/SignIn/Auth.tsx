@@ -24,10 +24,63 @@ import { isAxiosError } from "axios"
 import { selectorIsAuth } from "../auth.selectors"
 import { BasicButton } from "components/Button/BasicButton"
 import styled from "styled-components"
-import { Form } from "components/Form/Form"
+import {
+  Form,
+  FormInputsType,
+  FormPropsType,
+} from "components/Form/Form"
 
-export const SignIn = () => {
-  return <Form type="Sign In" />
+export type AuthComponentType = {
+  type: "Sign In" | "Sign Up"
+}
+
+export const Auth = ({ type }: AuthComponentType) => {
+  const navigate = useNavigate()
+  const isAuth = useAppSelector(selectorIsAuth)
+
+  const { login, register } = useActions(authThunk)
+
+  if (!!isAuth) navigate("/")
+
+  const queryLogin = (data: FormInputsType) => {
+    const { passwordConfirm, ...signInData } = data
+
+    login(signInData)
+      .unwrap()
+      .then((result) => {
+        toast.success("Вы успешно залогинились")
+      })
+      .catch((err: any) => {
+        // toast.error(err.e.response.data.error)
+        if (isAxiosError(err.e)) {
+          const axiosErr = err.e?.response?.data?.error
+          if (typeof axiosErr === "string") {
+            toast.error(axiosErr)
+          } else {
+            toast.error(err.e.message)
+          }
+        }
+      })
+  }
+  const queryRegister = (data: FormInputsType) => {
+    const { rememberMe, passwordConfirm, ...signUpData } =
+      data
+    console.log(signUpData)
+    register(signUpData)
+      .unwrap()
+      .then(() => {
+        navigate("/sign-in")
+      })
+  }
+
+  return (
+    <Form
+      type={type}
+      callback={
+        type === "Sign In" ? queryLogin : queryRegister
+      }
+    />
+  )
 }
 
 // const isAuth = useAppSelector(selectorIsAuth)

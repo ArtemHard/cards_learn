@@ -16,16 +16,21 @@ import InputAdornment from "@mui/material/InputAdornment"
 import IconButton from "@mui/material/IconButton"
 import Visibility from "@mui/icons-material/Visibility"
 import VisibilityOff from "@mui/icons-material/VisibilityOff"
-import { useActions } from "common/hooks"
+import { useActions, useAppSelector } from "common/hooks"
 import { commonActions } from "common/actions/unHandleAction"
 import { Form } from "components/Form/Form"
+import { selectorIsAuth } from "../auth.selectors"
 
 type SignUpFormType = AuthRegisterType & {
   confirmPassword: string
 }
 
 export const SignUp = () => {
-  return <Form type="Sign Up" />
+  const navigate = useNavigate()
+  const isAuth = useAppSelector(selectorIsAuth)
+  const { register } = useActions(authThunk)
+  if (!!isAuth) navigate("/")
+  return <></>
 }
 // const navigate = useNavigate()
 // // const { register } = useActions(authThunk)
