@@ -13,20 +13,14 @@ export const authApi = {
     // false - куки умрут если пользователь будет
     // 3 часа бездействовать,
     // true - разрешено 7 дней бездействовать
-    return instance.post<ProfileType>(
-      this.baseUrl + "/login",
-      data ? data : tempData
-    )
+    return instance.post<ProfileType>(this.baseUrl + "/login", data ? data : tempData)
   },
   register(data?: AuthRegisterType) {
     const tempData = {
       email: "nya-admin@nya.nya",
       password: "1qazxcvBG",
     }
-    return instance.post<RegisterResponseType>(
-      this.baseUrl + "/register",
-      data ? data : tempData
-    )
+    return instance.post<RegisterResponseType>(this.baseUrl + "/register", data ? data : tempData)
   },
   checkAuth() {
     return instance.post<ProfileType>(this.baseUrl + "/me", {})
@@ -36,10 +30,7 @@ export const authApi = {
   },
   // WARNING всегда ошибка
   forgotPassword(data: ForgotPassDataForServer) {
-    return axios.post<ForgotPassResponseType>(
-      "https://neko-back.herokuapp.com/2.0/auth/forgot",
-      data
-    )
+    return axios.post<ForgotPassResponseType>("https://neko-back.herokuapp.com/2.0/auth/forgot", data)
   },
   updateUser(data: updateUserData) {
     return instance.put<updateUserResponseType>(this.baseUrl + "/me", data)

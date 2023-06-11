@@ -1,7 +1,4 @@
-import {
-  packsReducer,
-  packsThunks,
-} from "features/packs/packs.slice"
+import { packsReducer, packsThunks } from "features/packs/packs.slice"
 
 describe("packsReducer", () => {
   const initialState = {
@@ -44,24 +41,15 @@ describe("packsReducer", () => {
   }
 
   it("should fetchPacks work correctly", () => {
-    const action = packsThunks.fetchPacks.fulfilled(
-      { packsPage },
-      "requestId"
-    )
+    const action = packsThunks.fetchPacks.fulfilled({ packsPage }, "requestId")
 
     const state = packsReducer(initialState, action)
 
     expect(state.cardPacks).toEqual(packsPage.cardPacks)
     expect(state.page).toEqual(packsPage.page)
     expect(state.pageCount).toEqual(packsPage.pageCount)
-    expect(state.cardPacksTotalCount).toEqual(
-      packsPage.cardPacksTotalCount
-    )
-    expect(state.minCardsCount).toEqual(
-      packsPage.minCardsCount
-    )
-    expect(state.maxCardsCount).toEqual(
-      packsPage.maxCardsCount
-    )
+    expect(state.cardPacksTotalCount).toEqual(packsPage.cardPacksTotalCount)
+    expect(state.minCardsCount).toEqual(packsPage.minCardsCount)
+    expect(state.maxCardsCount).toEqual(packsPage.maxCardsCount)
   })
 })

@@ -1,10 +1,6 @@
 import React from "react"
-import * as S from "../SignIn/SignIn.styled"
-import {
-  Controller,
-  useForm,
-  SubmitHandler,
-} from "react-hook-form"
+import * as S from "../Auth/Auth.styled"
+import { Controller, useForm, SubmitHandler } from "react-hook-form"
 import TextField from "@mui/material/TextField"
 import InputLabel from "@mui/material/InputLabel"
 import { Link, useNavigate } from "react-router-dom"
@@ -23,9 +19,7 @@ export const ForgotPassword = () => {
     },
   })
 
-  const onSubmit: SubmitHandler<{ email: string }> = (
-    data
-  ) => {
+  const onSubmit: SubmitHandler<{ email: string }> = (data) => {
     const dataForServer = {
       email: data.email,
       from: "test-front-admin <ai73a@yandex.by>",
@@ -60,18 +54,11 @@ export const ForgotPassword = () => {
           control={control}
           rules={{ required: true }}
           render={({ field }) => (
-            <TextField
-              type="email"
-              id="standard-basic"
-              label="Email"
-              variant="standard"
-              {...field}
-            />
+            <TextField type="email" id="standard-basic" label="Email" variant="standard" {...field} />
           )}
         />
         <InputLabel htmlFor="standard-adornment-password">
-          Enter your email address and we will send you
-          further instructions
+          Enter your email address and we will send you further instructions
         </InputLabel>
         <button type="submit">Send instructions</button>
         <span>Did you remember your password?</span>

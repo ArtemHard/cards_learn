@@ -9,10 +9,7 @@ describe("app slice", () => {
   }
 
   it("should handle correct isLoading value", () => {
-    const actual = appReducer(
-      initialState,
-      appActions.setIsLoading({ isLoading: true })
-    )
+    const actual = appReducer(initialState, appActions.setIsLoading({ isLoading: true }))
 
     expect(actual.isLoading).toBe(true)
   })

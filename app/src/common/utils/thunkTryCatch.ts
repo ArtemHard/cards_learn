@@ -26,12 +26,7 @@ A utility function that creates a try-catch block around a given logic function 
 */
 
 export const thunkTryCatch = async (
-  thunkAPI: BaseThunkAPI<
-    RootState,
-    any,
-    AppDispatch,
-    unknown
-  >,
+  thunkAPI: BaseThunkAPI<RootState, any, AppDispatch, unknown>,
   logic: Function,
   showGlobalError: boolean = true
 ) => {

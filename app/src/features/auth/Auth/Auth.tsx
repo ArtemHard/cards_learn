@@ -1,11 +1,7 @@
 import React from "react"
 import { authThunk } from "../auth.slice"
 import TextField from "@mui/material/TextField"
-import {
-  useForm,
-  Controller,
-  SubmitHandler,
-} from "react-hook-form"
+import { useForm, Controller, SubmitHandler } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom"
 import InputAdornment from "@mui/material/InputAdornment"
 import IconButton from "@mui/material/IconButton"
@@ -17,18 +13,14 @@ import InputLabel from "@mui/material/InputLabel"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import Checkbox from "@mui/material/Checkbox"
 import { AuthLoginType } from "../auth.api"
-import * as S from "./SignIn.styled"
+import * as S from "./Auth.styled"
 import { useActions, useAppSelector } from "common/hooks"
 import { toast } from "react-toastify"
 import { isAxiosError } from "axios"
 import { selectorIsAuth } from "../auth.selectors"
 import { BasicButton } from "components/Button/BasicButton"
 import styled from "styled-components"
-import {
-  Form,
-  FormInputsType,
-  FormPropsType,
-} from "components/Form/Form"
+import { Form, FormInputsType, FormPropsType } from "components/Form/Form"
 
 export type AuthComponentType = {
   type: "Sign In" | "Sign Up"
@@ -63,8 +55,7 @@ export const Auth = ({ type }: AuthComponentType) => {
       })
   }
   const queryRegister = (data: FormInputsType) => {
-    const { rememberMe, passwordConfirm, ...signUpData } =
-      data
+    const { rememberMe, passwordConfirm, ...signUpData } = data
     console.log(signUpData)
     register(signUpData)
       .unwrap()
@@ -73,14 +64,7 @@ export const Auth = ({ type }: AuthComponentType) => {
       })
   }
 
-  return (
-    <Form
-      type={type}
-      callback={
-        type === "Sign In" ? queryLogin : queryRegister
-      }
-    />
-  )
+  return <Form type={type} callback={type === "Sign In" ? queryLogin : queryRegister} />
 }
 
 // const isAuth = useAppSelector(selectorIsAuth)

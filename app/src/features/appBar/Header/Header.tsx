@@ -32,6 +32,5 @@ const HeaderContainer = styled.div`
   top: 0px; */
 
   background: #fcfcfc;
-  box-shadow: 0px 2px 10px rgba(109, 109, 109, 0.25),
-    inset 0px 1px 0px rgba(255, 255, 255, 0.3);
+  box-shadow: 0px 2px 10px rgba(109, 109, 109, 0.25), inset 0px 1px 0px rgba(255, 255, 255, 0.3);
 `

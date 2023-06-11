@@ -1,6 +1,5 @@
 import styled from "styled-components"
-import { FormPropsType } from "./Form"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 const links = [
   {
@@ -36,8 +35,7 @@ export const FormModule = styled.form`
   align-items: center;
 
   background: #ffffff;
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1),
-    -1px -1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1), -1px -1px 2px rgba(0, 0, 0, 0.1);
   border-radius: 2px;
 `
 
@@ -53,14 +51,9 @@ export const TitleForForm = styled.h1`
   color: #000000;
 `
 
-const ForgotPassLink = styled.span<
-  Pick<TextLinkBlockPropsType, "innerText">
->`
+const ForgotPassLink = styled.span<Pick<TextLinkBlockPropsType, "innerText">>`
   cursor: ${(props) =>
-    props.innerText === "Don't have an account?" ||
-    props.innerText === "Already have an account?"
-      ? null
-      : "pointer"};
+    props.innerText === "Don't have an account?" || props.innerText === "Already have an account?" ? null : "pointer"};
   display: flex;
   font-family: "Montserrat", sans-serif;
   font-style: normal;
@@ -71,11 +64,7 @@ const ForgotPassLink = styled.span<
     props.innerText === "Sign In"
       ? "600"
       : "500"};
-  font-size: ${(props) =>
-    props.innerText === "Sign Up" ||
-    props.innerText === "Sign In"
-      ? "16px"
-      : "14px"};
+  font-size: ${(props) => (props.innerText === "Sign Up" || props.innerText === "Sign In" ? "16px" : "14px")};
   line-height: ${(props) =>
     props.innerText === "Don't have an account?" ||
     props.innerText === "Sign Up" ||
@@ -85,53 +74,26 @@ const ForgotPassLink = styled.span<
       : "17px"};
   text-align: center;
   opacity: ${(props) =>
-    props.innerText === "Don't have an account?" ||
-    props.innerText === "Already have an account?"
-      ? "0.5"
-      : null};
-  color: ${(props) =>
-    props.innerText === "Sign Up" ||
-    props.innerText === "Sign In"
-      ? "#366EFF"
-      : "#000000"};
+    props.innerText === "Don't have an account?" || props.innerText === "Already have an account?" ? "0.5" : null};
+  color: ${(props) => (props.innerText === "Sign Up" || props.innerText === "Sign In" ? "#366EFF" : "#000000")};
   text-decoration-line: ${(props) =>
-    props.innerText === "Sign Up" ||
-    props.innerText === "Sign In"
-      ? "underline"
-      : "null"};
+    props.innerText === "Sign Up" || props.innerText === "Sign In" ? "underline" : "null"};
 `
 
-const ForgotPassWrapper = styled.div<
-  Pick<TextLinkBlockPropsType, "innerText">
->`
+const ForgotPassWrapper = styled.div<Pick<TextLinkBlockPropsType, "innerText">>`
   width: 100%;
   display: flex;
-  flex-direction: ${(props) =>
-    props.innerText === "Forgot password?"
-      ? "row-reverse"
-      : "column"};
-  margin-bottom: ${(props) =>
-    props.innerText === "Forgot password?"
-      ? "69px"
-      : "11px"};
+  flex-direction: ${(props) => (props.innerText === "Forgot password?" ? "row-reverse" : "column")};
+  margin-bottom: ${(props) => (props.innerText === "Forgot password?" ? "69px" : "11px")};
   align-items: center;
 `
 type TextLinkBlockPropsType = {
-  innerText:
-    | "Forgot password?"
-    | "Don't have an account?"
-    | "Sign Up"
-    | "Already have an account?"
-    | "Sign In"
+  innerText: "Forgot password?" | "Don't have an account?" | "Sign Up" | "Already have an account?" | "Sign In"
 }
-export const TextLinkBlock = ({
-  innerText,
-}: TextLinkBlockPropsType) => {
+export const TextLinkBlock = ({ innerText }: TextLinkBlockPropsType) => {
   const navigate = useNavigate()
 
-  const link = links.find(
-    (el) => el.innerText === innerText
-  )?.link
+  const link = links.find((el) => el.innerText === innerText)?.link
 
   const onClickHandler = () => {
     if (link) navigate(link)
@@ -139,10 +101,7 @@ export const TextLinkBlock = ({
 
   return (
     <ForgotPassWrapper innerText={innerText}>
-      <ForgotPassLink
-        innerText={innerText}
-        onClick={link ? onClickHandler : undefined}
-      >
+      <ForgotPassLink innerText={innerText} onClick={link ? onClickHandler : undefined}>
         {innerText}{" "}
       </ForgotPassLink>
     </ForgotPassWrapper>

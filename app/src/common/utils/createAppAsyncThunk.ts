@@ -10,9 +10,8 @@ A utility function that creates an async thunk with predefined types for state, 
 @returns {AsyncThunk<unknown, RootState, { dispatch: AppDispatch, rejectValue: unknown }>} An async thunk with predefined types for state, dispatch, and reject value.
 */
 
-export const createAppAsyncThunk =
-  createAsyncThunk.withTypes<{
-    state: RootState
-    dispatch: AppDispatch
-    rejectValue: unknown
-  }>()
+export const createAppAsyncThunk = createAsyncThunk.withTypes<{
+  state: RootState
+  dispatch: AppDispatch
+  rejectValue: unknown
+}>()

@@ -1,9 +1,5 @@
 import { useEffect } from "react"
-import {
-  useActions,
-  useAppDispatch,
-  useAppSelector,
-} from "common/hooks"
+import { useActions, useAppDispatch, useAppSelector } from "common/hooks"
 import { packsThunks } from "features/packs/packs.slice"
 import { PackType } from "../packs.api.types"
 import styled from "styled-components"
@@ -14,8 +10,7 @@ export const Packs = () => {
   // DANGER FAKE SELECTOR
   const cardPacks = useAppSelector(selectorPacks)
 
-  const { fetchPacks, createPack, removePack, updatePack } =
-    useActions(packsThunks)
+  const { fetchPacks, createPack, removePack, updatePack } = useActions(packsThunks)
 
   const dispatch = useAppDispatch()
 
@@ -59,14 +54,8 @@ export const Packs = () => {
               <p>
                 <b>user name</b>: {p.user_name}
               </p>
-              <button
-                onClick={() => removePackHandler(p._id)}
-              >
-                remove
-              </button>
-              <button onClick={() => updatePackHandler(p)}>
-                update
-              </button>
+              <button onClick={() => removePackHandler(p._id)}>remove</button>
+              <button onClick={() => updatePackHandler(p)}>update</button>
             </PacksContainer>
           )
         })}

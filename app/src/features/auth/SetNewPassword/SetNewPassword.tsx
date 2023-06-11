@@ -27,9 +27,7 @@ export const SetNewPassword = () => {
   const handleClickShowPassword = () => setShowPassword((show) => !show)
 
   //Mui func for password
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
   }
 
@@ -48,9 +46,7 @@ export const SetNewPassword = () => {
       <SetNewPasswordContainer onSubmit={handleSubmit(onSubmit)}>
         <h1>Create new password </h1>
         <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
-          <InputLabel htmlFor="standard-adornment-password">
-            Password
-          </InputLabel>
+          <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
           <Controller
             name="password"
             control={control}
@@ -75,9 +71,7 @@ export const SetNewPassword = () => {
             )}
           />
         </FormControl>
-        <span>
-          Create new password and we will send you further instructors to email
-        </span>
+        <span>Create new password and we will send you further instructors to email</span>
         <input type="submit" />
       </SetNewPasswordContainer>
     </SetNewPasswordWrapper>

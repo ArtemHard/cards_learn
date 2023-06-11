@@ -33,11 +33,7 @@ describe("auth slice Reducer test", () => {
     // 2.1. То, что thunk возвращает
     // 2.2. Ожидает строку. Будем везде писать "requestId" - meta информация.
     // 2.3. То, что thunk принимает
-    const action = authThunk.login.fulfilled(
-      { profile },
-      "requestId",
-      data
-    )
+    const action = authThunk.login.fulfilled({ profile }, "requestId", data)
 
     const state = authReducer(initialState, action)
 
