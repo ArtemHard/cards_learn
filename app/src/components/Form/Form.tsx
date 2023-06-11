@@ -29,20 +29,30 @@ export type FormPropsType = {
   type: "Sign In" | "Sign Up"
 }
 
+type FormInputsType = AuthLoginType & {
+  rememberMe?: boolean
+  passwordConfirm?: string
+}
+
 export const Form = ({ type }: FormPropsType) => {
   const isAuth = useAppSelector(selectorIsAuth)
   const navigate = useNavigate()
   const { login } = useActions(authThunk)
 
-  const { control, handleSubmit } = useForm<AuthLoginType>({
-    defaultValues: {
-      email: "",
-      password: "",
-      rememberMe: false,
-    },
-  })
+  const { control, handleSubmit } = useForm<FormInputsType>(
+    {
+      defaultValues: {
+        email: "",
+        password: "",
+        passwordConfirm: "",
+        rememberMe: false,
+      },
+    }
+  )
 
-  const onSubmit: SubmitHandler<AuthLoginType> = (data) => {
+  const onSubmit: SubmitHandler<FormInputsType> = (
+    data
+  ) => {
     const tempDataSignIn = {
       email: "artemKab@gmail.com",
       password: "12345678",
@@ -68,9 +78,13 @@ export const Form = ({ type }: FormPropsType) => {
 
   const [showPassword, setShowPassword] =
     React.useState(false)
+  // const [showPasswordConfirm, setShowPasswordConfirm] =
+  //   React.useState(false)
   //Mui func for password
   const handleClickShowPassword = () =>
     setShowPassword((show) => !show)
+  // const handleClickShowPasswordConfirm = () =>
+  //   setShowPasswordConfirm((show) => !show)
 
   //Mui func for password
   const handleMouseDownPassword = (
@@ -84,7 +98,7 @@ export const Form = ({ type }: FormPropsType) => {
     // <form onSubmit={handleSubmit(onSubmit)}>
     <S.FormWrapper>
       <S.FormModule onSubmit={handleSubmit(onSubmit)}>
-        <S.TitleForForm>Sign In</S.TitleForForm>
+        <S.TitleForForm>{type}</S.TitleForForm>
         <FormControl
           sx={{ m: 1, width: "100%", marginBottom: "24px" }}
           variant="standard"
@@ -139,28 +153,69 @@ export const Form = ({ type }: FormPropsType) => {
             )}
           />
         </FormControl>
-        <Controller
-          name="rememberMe"
-          control={control}
-          render={({ field }) => (
-            <FormControlLabel
-              sx={{
-                m: 1,
-                margin: 0,
-                marginBottom: "29px",
-                width: "100%",
-              }}
-              control={
-                <Checkbox
-                  defaultChecked={false}
+        {type === "Sign Up" && (
+          <FormControl
+            sx={{ width: "100%", marginBottom: "60px" }}
+            variant="standard"
+          >
+            <InputLabel htmlFor="standard-adornment-password">
+              Confirm password
+            </InputLabel>
+            <Controller
+              name="passwordConfirm"
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <Input
+                  id="standard-adornment-password"
+                  type={showPassword ? "text" : "password"}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={
+                          handleMouseDownPassword
+                        }
+                      >
+                        {showPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  }
                   {...field}
                 />
-              }
-              // WARNING How to stylised this label
-              label={"Remember me"}
+              )}
             />
-          )}
-        />
+          </FormControl>
+        )}
+        {type === "Sign In" && (
+          <Controller
+            name="rememberMe"
+            control={control}
+            render={({ field }) => (
+              <FormControlLabel
+                sx={{
+                  m: 1,
+                  margin: 0,
+                  marginBottom: "29px",
+                  width: "100%",
+                }}
+                control={
+                  <Checkbox
+                    defaultChecked={false}
+                    {...field}
+                  />
+                }
+                // WARNING How to stylised this label
+                label={"Remember me"}
+              />
+            )}
+          />
+        )}
         {type === "Sign In" && (
           <S.TextLinkBlock innerText={"Forgot password?"} />
         )}

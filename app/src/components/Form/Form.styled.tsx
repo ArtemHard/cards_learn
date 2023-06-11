@@ -15,8 +15,8 @@ const links = [
   },
   {
     id: 3,
-    link: "/sign-ip",
-    innerText: "Sign in",
+    link: "/sign-in",
+    innerText: "Sign In",
   },
 ]
 
