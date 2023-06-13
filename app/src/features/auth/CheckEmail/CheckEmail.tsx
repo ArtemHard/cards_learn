@@ -1,21 +1,24 @@
 import { useAppSelector } from "common/hooks"
+import { Form } from "components/Form/Form"
 import React from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
+import { selectorSendEmail } from "../auth.selectors"
 
 export const CheckEmail = () => {
   const navigate = useNavigate()
-  const email = useAppSelector((state) => state.auth.sendEmail)
+  const email = useAppSelector(selectorSendEmail)
   return (
-    <CheckEmailWrapper>
-      <CheckEmailContainer>
-        <h1>CheckEmail</h1>
-        <Img />
-        <span>{`We've sent an Email with Instructions to ` + email} </span>
-        <button onClick={() => navigate("/sign-in")}>Back to login</button>
-      </CheckEmailContainer>
-    </CheckEmailWrapper>
+    <Form type="Check Email" callback={() => navigate("/sign-in")} email={email ? email : undefined} />
+    // <CheckEmailWrapper>
+    //   <CheckEmailContainer>
+    //     <h1>CheckEmail</h1>
+    //     <Img />
+    //     <span>{`We've sent an Email with Instructions to ` + email} </span>
+    //     <button onClick={() => navigate("/sign-in")}>Back to login</button>
+    //   </CheckEmailContainer>
+    // </CheckEmailWrapper>
   )
 }
 

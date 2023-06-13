@@ -23,7 +23,7 @@ import styled from "styled-components"
 import { Form, FormInputsType, FormPropsType } from "components/Form/Form"
 
 export type AuthComponentType = {
-  type: "Sign In" | "Sign Up"
+  type: "Sign In" | "Sign Up" | "Forgot your password?" | "Check Email" | "Create new password" | "Personal Information"
 }
 
 export const Auth = ({ type }: AuthComponentType) => {

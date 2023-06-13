@@ -78,12 +78,18 @@ const logOut = createAppAsyncThunk("auth/logOut", async (arg, thunkAPI) => {
   })
 })
 
-const forgotPassword = createAppAsyncThunk<any, ForgotPassDataForServer>("auth/forgot", async (arg) => {
-  // const res = await authApi.forgotPassword(arg)
-  // console.log(res)
-  //WARNING Не понятно куда слать запрос
-  return Promise.resolve(arg.email)
-})
+const forgotPassword = createAppAsyncThunk<{ sendEmail: string }, ForgotPassDataForServer>(
+  "auth/forgot",
+  async (arg, thunkAPI) => {
+    return await thunkTryCatch(thunkAPI, async () => {
+      await authApi.forgotPassword(arg)
+      // Promise.resolve()
+      return {
+        sendEmail: arg.email,
+      }
+    })
+  }
+)
 
 const setNewPassword = createAppAsyncThunk<void, SetNewPasswordData>("auth/set-new-password", async (arg, thunkApi) => {
   return await thunkTryCatch(thunkApi, async () => {
@@ -113,8 +119,7 @@ const slice = createSlice({
         }
       })
       .addCase(forgotPassword.fulfilled, (state, action) => {
-        // console.log(action.payload())
-        state.sendEmail = action.payload
+        state.sendEmail = action.payload.sendEmail
       })
       .addCase(register.rejected, (state, action) => {
         // state.authError = action.error

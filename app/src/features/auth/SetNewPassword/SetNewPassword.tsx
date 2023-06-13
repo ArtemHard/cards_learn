@@ -12,6 +12,7 @@ import FormControlLabel from "@mui/material/FormControlLabel"
 import { useNavigate } from "react-router-dom"
 import { authThunk } from "../auth.slice"
 import { useAppDispatch } from "common/hooks"
+import { Form } from "components/Form/Form"
 
 export const SetNewPassword = () => {
   const navigate = useNavigate()
@@ -42,39 +43,40 @@ export const SetNewPassword = () => {
   }
 
   return (
-    <SetNewPasswordWrapper>
-      <SetNewPasswordContainer onSubmit={handleSubmit(onSubmit)}>
-        <h1>Create new password </h1>
-        <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
-          <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
-          <Controller
-            name="password"
-            control={control}
-            rules={{ required: true }}
-            render={({ field }) => (
-              <Input
-                id="standard-adornment-password"
-                type={showPassword ? "text" : "password"}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                {...field}
-              />
-            )}
-          />
-        </FormControl>
-        <span>Create new password and we will send you further instructors to email</span>
-        <input type="submit" />
-      </SetNewPasswordContainer>
-    </SetNewPasswordWrapper>
+    <Form type="Create new password" callback={onSubmit} />
+    // <SetNewPasswordWrapper>
+    //   <SetNewPasswordContainer onSubmit={handleSubmit(onSubmit)}>
+    //     <h1>Create new password </h1>
+    //     <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
+    //       <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
+    //       <Controller
+    //         name="password"
+    //         control={control}
+    //         rules={{ required: true }}
+    //         render={({ field }) => (
+    //           <Input
+    //             id="standard-adornment-password"
+    //             type={showPassword ? "text" : "password"}
+    //             endAdornment={
+    //               <InputAdornment position="end">
+    //                 <IconButton
+    //                   aria-label="toggle password visibility"
+    //                   onClick={handleClickShowPassword}
+    //                   onMouseDown={handleMouseDownPassword}
+    //                 >
+    //                   {showPassword ? <VisibilityOff /> : <Visibility />}
+    //                 </IconButton>
+    //               </InputAdornment>
+    //             }
+    //             {...field}
+    //           />
+    //         )}
+    //       />
+    //     </FormControl>
+    //     <span>Create new password and we will send you further instructors to email</span>
+    //     <input type="submit" />
+    //   </SetNewPasswordContainer>
+    // </SetNewPasswordWrapper>
   )
 }
 
