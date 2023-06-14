@@ -1,4 +1,7 @@
-import { useAppSelector, useAppDispatch } from "common/hooks"
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable react/jsx-no-comment-textnodes */
+import { useState, useCallback } from "react"
+import { useAppSelector, useActions } from "common/hooks"
 import { selectProfileData } from "common/utils/selectors/authSelectors"
 import { authThunk } from "features/auth/auth.slice"
 import styled from "styled-components"
@@ -9,91 +12,99 @@ import { BasicButton } from "components/Button/BasicButton"
 import FolderIcon from "@mui/icons-material/Folder"
 import { staticSrcForEmptyAva } from "common/constants"
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined"
+import { TextInput } from "components/Inputs/TextInput/TextInput"
+import Button from "@mui/material/Button"
 
 type PrfileInputType = {
   name: string
 }
 export const Profile = () => {
-  const dispatch = useAppDispatch()
+  const { logOut, updateUser } = useActions(authThunk)
   const profile = useAppSelector(selectProfileData)
-  const onClickHandler = () => {
-    dispatch(authThunk.logOut())
-  }
-  const onSubmit: SubmitHandler<PrfileInputType> = (data) => {
-    // callback(data)
-    console.warn(data)
+  const [edit, setEdit] = useState(false)
+  const onClickEditMode = (e: any) => {
+    setEdit(!edit)
   }
 
-  const { control, handleSubmit } = useForm<PrfileInputType>({
+  const onClickHandlerLogOut = () => {
+    logOut()
+  }
+  const onSubmit: SubmitHandler<PrfileInputType> = (data) => {
+    if (data.name === profile?.name || data.name.trim() === "") {
+      setEdit(!edit)
+    } else {
+      updateUser(data)
+        .unwrap()
+        .finally(() => setEdit(!edit))
+    }
+  }
+
+  const closeEditModeClickHandler = (event: any) => {
+    if (edit) {
+      if (event.target.tagName === "INPUT" || event.target.tagName === "BUTTON") {
+        // setEdit(false)
+      } else {
+        reset({ name: profile?.name })
+        setEdit(false)
+      }
+    }
+  }
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement | HTMLInputElement | HTMLTextAreaElement>) => {
+    if (event.currentTarget instanceof HTMLDivElement) {
+      if (event.keyCode === 13) {
+        handleSubmit(onSubmit)()
+      }
+      if (event.keyCode === 27) {
+        reset({ name: profile?.name })
+        setEdit(false)
+      }
+    }
+  }
+
+  const { control, handleSubmit, reset } = useForm<PrfileInputType>({
     defaultValues: {
       name: profile?.name,
     },
   })
   return (
     <S.FormWrapper>
-      <S.FormModule onSubmit={handleSubmit(onSubmit)}>
+      <S.FormModule onClick={closeEditModeClickHandler}>
         <S.TitleForForm>Personal Information</S.TitleForForm>
         <div style={{ height: "100px" }}>
           <Avatar alt="Remy Sharp" src={staticSrcForEmptyAva} sx={{ width: 96, height: 96, borderRadius: "50%" }}>
             {/* <FolderIcon sx={{ position: "relative" }} /> */}
           </Avatar>
           <FolderIcon sx={{ zIndex: 1, position: "relative", top: "-24px", left: "66px", cursor: "pointer" }} />
-          <img
-            alt="bacgroundForFolder"
-            style={{
-              position: "relative",
-              top: "-21px",
-              left: "39px",
-              background: "#a1dd78",
-              height: "29px",
-              width: "29px",
-              borderRadius: "50%",
-              zIndex: 0,
-              opacity: 0.8,
-            }}
-          ></img>
+          <UnderFolderCircle />
         </div>
         <NameWrapper>
-          <ProfileName>{profile?.name}</ProfileName>
-          <BorderColorOutlinedIcon sx={{ cursor: "pointer" }} />
+          {!edit ? (
+            <>
+              <ProfileName>{profile?.name}</ProfileName>
+              <BorderColorOutlinedIcon onClick={onClickEditMode} sx={{ cursor: "pointer" }} />
+            </>
+          ) : (
+            <>
+              <TextInput
+                type="text"
+                control={control}
+                label="Nickname"
+                name="name"
+                inputProps={{ defaultValue: profile?.name, onKeyDown: handleKeyPress }}
+              />
+              <Button size="small" variant="contained" onClick={handleSubmit(onSubmit)}>
+                save
+              </Button>
+            </>
+          )}
         </NameWrapper>
-        <span>{profile?.email}</span>
-        <BasicButton type={"button"} onClick={onClickHandler} buttonText="Log Out"></BasicButton>
+        <EmailText>{profile?.email}</EmailText>
+        <BasicButton type={"button"} onClick={onClickHandlerLogOut} buttonText="Log Out"></BasicButton>
       </S.FormModule>
     </S.FormWrapper>
   )
 }
-
-const ProfileWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-const ProfileContainer = styled.div`
-  margin-top: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: column;
-  width: 413px;
-  height: 360px;
-
-  background: #ffffff;
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1), -1px -1px 2px rgba(0, 0, 0, 0.1);
-  border-radius: 2px;
-`
-
-// const Avatar = styled.img.attrs<{ src: string }>((props) => ({
-//   src: props.src || undefined,
-// }))`
-//   background-color: black;
-//   object-fit: cover;
-//   border-radius: 50%;
-//   height: 96px;
-//   width: 96px;
-// `
 
 const ProfileName = styled.h3`
   font-family: "Montserrat", sans-serif;
@@ -109,4 +120,30 @@ const NameWrapper = styled.div`
   justify-content: center;
   align-items: center;
   /* margin-top: 30px; */
+`
+const EmailText = styled.span`
+  margin-bottom: 29px;
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  /* identical to box height, or 171% */
+  display: flex;
+  align-items: center;
+
+  color: #000000;
+
+  opacity: 0.5;
+`
+const UnderFolderCircle = styled.div`
+  position: relative;
+  top: -54px;
+  left: 63px;
+  background-color: #a1dd78;
+  height: 29px;
+  width: 29px;
+  border-radius: 50%;
+  z-index: 0;
+  opacity: 0.8;
 `

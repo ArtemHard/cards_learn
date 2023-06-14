@@ -30,7 +30,17 @@ export function TextInput<T extends FieldValues>({
         control={control}
         rules={rules}
         render={({ field }) => (
-          <TextField type={type ? type : "text"} id="standard-basic" label={label} variant="standard" {...field} />
+          <TextField
+            type={type ? type : "text"}
+            defaultValue={inputProps?.defaultValue}
+            id="standard-basic"
+            label={label}
+            variant="standard"
+            {...field}
+            // onBlur={inputProps?.onBlur || field.onBlur}
+            //@ts-ignore
+            onKeyDown={inputProps?.onKeyDown}
+          />
         )}
       />
     </FormControl>

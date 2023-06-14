@@ -61,8 +61,8 @@ export type updateUserResponseType = {
 }
 
 export type updateUserData = {
-  name: string
-  avatar: string
+  name?: string
+  avatar?: string
 }
 export type AuthRegisterType = Omit<AuthLoginType, "rememberMe">
 

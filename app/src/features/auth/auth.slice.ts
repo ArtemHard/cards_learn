@@ -6,6 +6,7 @@ import {
   ForgotPassDataForServer,
   ProfileType,
   SetNewPasswordData,
+  updateUserData,
 } from "./auth.api"
 import { createAppAsyncThunk } from "common/utils/createAppAsyncThunk"
 
@@ -97,6 +98,20 @@ const setNewPassword = createAppAsyncThunk<void, SetNewPasswordData>("auth/set-n
   })
 })
 
+const updateUser = createAppAsyncThunk<{ profile: ProfileType }, updateUserData>(
+  "auth/update-user",
+  async (arg, thunkApi) => {
+    return await thunkTryCatch(thunkApi, async () => {
+      if (arg.name) {
+        const res = await authApi.updateUser({ name: arg.name })
+        return {
+          profile: res.data.updatedUser,
+        }
+      }
+    })
+  }
+)
+
 const slice = createSlice({
   name: "auth",
   initialState: {
@@ -124,6 +139,9 @@ const slice = createSlice({
       .addCase(register.rejected, (state, action) => {
         // state.authError = action.error
       })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.profile = action.payload.profile
+      })
   },
 })
 
@@ -136,4 +154,5 @@ export const authThunk = {
   authMe,
   forgotPassword,
   setNewPassword,
+  updateUser,
 }
