@@ -7,8 +7,8 @@ export const FormWrapper = styled.div`
 `
 export const FormModule = styled.form`
   padding: 35px 33px 38px 33px;
-  /* margin: 60px 433px 72px 434px; */
   height: 552px;
+  /* height: 30%; */
   width: 413px;
   display: flex;
   flex-direction: column;

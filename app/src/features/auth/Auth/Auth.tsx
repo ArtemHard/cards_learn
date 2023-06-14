@@ -36,8 +36,13 @@ export const Auth = ({ type }: AuthComponentType) => {
 
   const queryLogin = (data: FormInputsType) => {
     const { passwordConfirm, ...signInData } = data
-
-    login(signInData)
+    const tempDataSignIn = {
+      email: "artemKab@gmail.com",
+      password: "12345678",
+      rememberMe: false,
+    }
+    //WARNING FIX TEMPDATA to signInData
+    login(tempDataSignIn)
       .unwrap()
       .then((result) => {
         toast.success("Вы успешно залогинились")

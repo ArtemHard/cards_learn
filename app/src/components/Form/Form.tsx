@@ -65,7 +65,8 @@ export const Form = ({ type, callback, email }: FormPropsType) => {
     <S.FormWrapper>
       <S.FormModule onSubmit={handleSubmit(onSubmit)}>
         <S.TitleForForm>{type}</S.TitleForForm>
-        {type !== "Create new password" && (
+        {type === "Check Email" && <S.SVGEmail />}
+        {type !== "Create new password" && type !== "Check Email" && (
           <TextInput
             name="email"
             label="Email"
@@ -77,7 +78,7 @@ export const Form = ({ type, callback, email }: FormPropsType) => {
             control={control}
           />
         )}
-        {type !== "Forgot your password?" && (
+        {type !== "Forgot your password?" && type !== "Check Email" && (
           <PasswordInput
             name="password"
             key={"password"}

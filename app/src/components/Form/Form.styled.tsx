@@ -2,6 +2,7 @@ import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
 import { checkEmailInstructions, createNewPassInstructions, forgotPassInstructions } from "common/constants"
 import { FormPropsType } from "./Form"
+import emailIcon from "../../common/assets/icons/email-svg.svg"
 
 const links = [
   {
@@ -191,9 +192,69 @@ const SpanText = styled.span<{ marginBottom: ReturnType<typeof generateMargin> }
   color: #000000;
   opacity: 0.5;
 `
-export const S = {
-  FormWrapper,
-  FormModule,
-  TextLinkBlock,
-  TextBlock,
+
+interface SVGIconProps {
+  color?: string
+  size?: number
+  children?: React.ReactNode // добавляем тип children
+  viewBox: string
 }
+
+const StyledSVG = styled.svg<SVGIconProps>`
+  fill: ${(props) => props.color || "currentColor"};
+  width: ${(props) => (props.size ? `${props.size}px` : "24px")};
+  height: ${(props) => (props.size ? `${props.size}px` : "24px")};
+`
+
+const SVGIcon: React.FC<SVGIconProps> = ({ children, ...rest }) => <StyledSVG {...rest}>{children}</StyledSVG>
+
+export default SVGIcon
+
+export const SVGEmail = () => {
+  return (
+    <div style={{ marginBottom: "31px" }}>
+      <SVGIcon size={108} color="#000000" viewBox="0 0 30 30">
+        {/* <svg width="800px" height="800px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"> */}
+        <title />
+
+        <g id="Complete">
+          <g id="mail">
+            <g>
+              <polyline
+                fill="none"
+                points="4 8.2 12 14.1 20 8.2"
+                stroke="#000000"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              />
+
+              <rect
+                fill="none"
+                height="14"
+                rx="2"
+                ry="2"
+                stroke="#000000"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                width="18"
+                x="3"
+                y="6.5"
+              />
+            </g>
+          </g>
+        </g>
+        {/* </svg> */}
+      </SVGIcon>
+    </div>
+  )
+}
+
+// export const S = {
+//   FormWrapper,
+//   FormModule,
+//   TextLinkBlock,
+//   TextBlock,
+//   SVGEmail,
+// }
