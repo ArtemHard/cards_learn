@@ -1,12 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { createAppAsyncThunk, thunkTryCatch } from "common/utils"
-import {
-  ArgCreatePackType,
-  CreatePackResponseType,
-  FetchPacksResponseType,
-  PackType,
-} from "features/packs/packs.api.types"
+import { ArgCreatePackType, FetchPacksResponseType, PackType } from "features/packs/packs.api.types"
 import { GetParamsType, packsApi } from "./packs.api"
+import { ProfileType } from "features/auth/auth.api"
 
 const fetchPacks = createAppAsyncThunk<{ packsPage: FetchPacksResponseType }, void>(
   "packs/fetchPacks",
@@ -14,20 +10,22 @@ const fetchPacks = createAppAsyncThunk<{ packsPage: FetchPacksResponseType }, vo
     return thunkTryCatch(thunkAPI, async () => {
       const state = thunkAPI.getState().packs
       const dataForServer = {
-        packName: state.packName, // не обязательно
-        min: state.minCardsCount, // не обязательно
-        max: state.maxCardsCount, // не обязательно
-        sortPacks: state.sortPacks, // не обязательно //WARNING-QUESTION &sortPacks=0updated => Если харкор параметр в виде стринги то какие ещё варианты
-        page: state.page, // не обязательно
-        pageCount: state.pageCount, // не обязательно
-        user_id: state.user_id,
+        packName: state.filterParams.packName, // не обязательно
+        min: state.filterParams.min, // не обязательно
+        max: state.filterParams.max, // не обязательно
+        sortPacks: state.filterParams.sortPacks, // не обязательно //WARNING-QUESTION &sortPacks=0updated => Если харкор параметр в виде стринги то какие ещё варианты
+        page: state.filterParams.page, // не обязательно
+        pageCount: state.filterParams.pageCount, // не обязательно
+        user_id: state.filterParams.user_id,
         // чьи колоды не обязательно, или придут все
-        block: state.block, // не обязательно
+        block: state.filterParams.block, // не обязательно
       }
       const filteredObj: GetParamsType = Object.fromEntries(
         Object.entries(dataForServer).filter(([key, value]) => !!value)
       )
+      console.log(filteredObj)
 
+      // const res = queryParams ? await packsApi.getPacks(queryParams) : await packsApi.getPacks()
       const res = await packsApi.getPacks(filteredObj)
       return { packsPage: res.data }
     })
@@ -75,32 +73,65 @@ const updatePack = createAppAsyncThunk<{ pack: PackType }, PackType>("packs/upda
 //   // чьи колоды не обязательно, или придут все
 //   block?: boolean // не обязательно
 // }
-
+const initialState = {
+  cardPacks: [] as PackType[],
+  page: 1,
+  pageCount: 10,
+  cardPacksTotalCount: 2000,
+  minCardsCount: 0,
+  maxCardsCount: 100,
+  // packName: "" as string | null,
+  // sortPacks: "" as string | null,
+  // user_id: "" as string | null,
+  // block: false,
+  filterParams: {
+    packName: "" as string | null,
+    min: 0 as number | null, // не обязательно
+    max: 100 as number | null, // не обязательно
+    sortPacks: "" as string | null,
+    page: 1 as number | null, // не обязательно
+    pageCount: 10 as number | null, // не обязательно
+    user_id: "" as string | null,
+    block: false as boolean | null,
+  },
+}
 const slice = createSlice({
   name: "packs",
-  initialState: {
-    cardPacks: [] as PackType[],
-    page: 1,
-    pageCount: 10,
-    cardPacksTotalCount: 2000,
-    minCardsCount: 0,
-    maxCardsCount: 100,
-    packName: "" as string | null,
-    sortPacks: "" as string | null,
-    user_id: "" as string | null,
-    block: false,
-    // filterParams: {
-    //   packName: "" as string | null,
-    //   min:  0 as number | null, // не обязательно
-    //   max: 0 as number | null, // не обязательно
-    //   sortPacks: "" as string | null,
-    //   page: 0 as number | null, // не обязательно
-    //   pageCount: 0 as number | null, // не обязательно
-    //   user_id: "" as string | null,
-    //   block: false as boolean | null,
-    // }
+  initialState,
+  // {
+  //   cardPacks: [] as PackType[],
+  //   page: 1,
+  //   pageCount: 10,
+  //   cardPacksTotalCount: 2000,
+  //   minCardsCount: 0,
+  //   maxCardsCount: 100,
+  //   // packName: "" as string | null,
+  //   // sortPacks: "" as string | null,
+  //   // user_id: "" as string | null,
+  //   // block: false,
+  //   filterParams: {
+  //     packName: "" as string | null,
+  //     min: 0 as number | null, // не обязательно
+  //     max: 100 as number | null, // не обязательно
+  //     sortPacks: "" as string | null,
+  //     page: 1 as number | null, // не обязательно
+  //     pageCount: 10 as number | null, // не обязательно
+  //     user_id: "" as string | null,
+  //     block: false as boolean | null,
+  //   },
+  // },
+  reducers: {
+    changeFilterParams: (state, action: PayloadAction<GetParamsType>) => {
+      state.filterParams = { ...state.filterParams, ...action.payload }
+    },
+    clearFilter: (state) => {
+      state.filterParams = { ...initialState.filterParams }
+    },
+    //WARNING-QUESTION dont work
+    // showUserPacks: (state, action: PayloadAction<Pick<ProfileType, "_id">>) => {
+    //   state.cardPacks = state.cardPacks.filter((pack) => pack.user_id !== action.payload._id)
+    // },
   },
-  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchPacks.fulfilled, (state, action) => {
@@ -127,6 +158,7 @@ const slice = createSlice({
 })
 
 export const packsReducer = slice.reducer
+export const packsActions = slice.actions
 export const packsThunks = {
   fetchPacks,
   createPack,

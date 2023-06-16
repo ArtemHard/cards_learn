@@ -2,8 +2,19 @@ import React from "react"
 import Button from "@mui/material/Button"
 import styled from "styled-components"
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined"
+import { useActions } from "common/hooks"
+import { packsApi } from "features/packs/packs.api"
+import { packsActions, packsThunks } from "features/packs/packs.slice"
 
 export const ClearFilterButton = () => {
+  const { clearFilter } = useActions(packsActions)
+  const { fetchPacks } = useActions(packsThunks)
+
+  const onClickHandler = () => {
+    clearFilter()
+    fetchPacks()
+  }
+
   return (
     <FilterBtnWrapper>
       <Button
@@ -17,7 +28,7 @@ export const ClearFilterButton = () => {
           textTransform: "none",
           border: "1px solid #D9D9D9",
         }}
-        // onClick={handleChange}
+        onClick={onClickHandler}
       >
         <FilterAltOffOutlinedIcon style={{ color: "#000000" }} />
       </Button>

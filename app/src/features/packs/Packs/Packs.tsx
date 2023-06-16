@@ -20,7 +20,6 @@ export const Packs = () => {
   console.log("Packs render")
   // DANGER FAKE SELECTOR
   const cardPacks = useAppSelector(selectorPacks)
-
   const { fetchPacks, createPack, removePack, updatePack } = useActions(packsThunks)
 
   const dispatch = useAppDispatch()
@@ -75,6 +74,9 @@ export const Packs = () => {
                 </p>
                 <p>
                   <b>user name</b>: {p.user_name}
+                </p>
+                <p>
+                  <b>user id</b>: {p._id}
                 </p>
                 <button onClick={() => removePackHandler(p._id)}>remove</button>
                 <button onClick={() => updatePackHandler(p)}>update</button>
