@@ -40,9 +40,10 @@ export const Profile = () => {
   }
 
   const closeEditModeClickHandler = (event: any) => {
+    // console.log(event.currentTarget.keyCode)
+
     if (edit) {
       if (event.target.tagName === "INPUT" || event.target.tagName === "BUTTON") {
-        // setEdit(false)
       } else {
         reset({ name: profile?.name })
         setEdit(false)
@@ -72,9 +73,11 @@ export const Profile = () => {
       <S.FormModule onClick={closeEditModeClickHandler}>
         <S.TitleForForm>Personal Information</S.TitleForForm>
         <div style={{ height: "100px" }}>
-          <Avatar alt="Remy Sharp" src={staticSrcForEmptyAva} sx={{ width: 96, height: 96, borderRadius: "50%" }}>
-            {/* <FolderIcon sx={{ position: "relative" }} /> */}
-          </Avatar>
+          <Avatar
+            alt="Remy Sharp"
+            src={staticSrcForEmptyAva}
+            sx={{ width: 96, height: 96, borderRadius: "50%" }}
+          ></Avatar>
           <FolderIcon sx={{ zIndex: 1, position: "relative", top: "-24px", left: "66px", cursor: "pointer" }} />
           <UnderFolderCircle />
         </div>

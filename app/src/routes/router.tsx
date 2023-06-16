@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom"
 import { CheckEmail } from "features/auth/CheckEmail/CheckEmail"
 import { Profile } from "components/Profile/Profile"
-import { Learn } from "components/Learn/Learn"
 import App from "app/App"
 import ErrorPage from "components/404/ErrorPage"
 import { Cards } from "components/Cards/Cards"
@@ -9,6 +8,7 @@ import { Auth } from "features/auth/Auth/Auth"
 import { ForgotPassword } from "features/auth/ForgotPassword/ForgotPassword"
 import { SetNewPassword } from "features/auth/SetNewPassword/SetNewPassword"
 import { Packs } from "features/packs/Packs/Packs"
+import { Learn } from "components/Learn/Learn"
 
 export const router = createBrowserRouter([
   {
@@ -50,6 +50,20 @@ export const router = createBrowserRouter([
         path: "packs",
         element: <Packs />,
         // ErrorBoundary: ErrorPage,
+        children: [
+          {
+            path: "pack-name",
+          },
+          {
+            path: "friends-pack",
+          },
+          {
+            path: "my-pack",
+          },
+          {
+            path: "friends-pack",
+          },
+        ],
       },
       {
         path: "cards",
