@@ -7,7 +7,15 @@ import { selectorPacks } from "../pack.selector"
 import { P } from "./Packs.styled"
 import { BasicButton } from "components/Button/BasicButton"
 import Autocomplete from "@mui/material/Autocomplete"
+import InputAdornment from "@mui/material/InputAdornment"
 import TextField from "@mui/material/TextField"
+import SearchIcon from "@mui/icons-material/Search"
+import { SearchInputBlock } from "components/Inputs/SearchInputBlock/SearchInputBlock"
+import TogglerButtonBlock from "components/Button/TogglerButtonBlock/TogglerButtonBlock"
+import RangeSlider from "components/Slider/Slider"
+import SliderBlock from "components/Slider/SliderBlock/SliderBlock"
+import { ClearFilterButton } from "components/Button/ClearFilterButton/ClearFilterButton"
+
 export const Packs = () => {
   console.log("Packs render")
   // DANGER FAKE SELECTOR
@@ -42,40 +50,40 @@ export const Packs = () => {
 
   return (
     <P.Wrapper>
-      <P.Container>
+      <P.Container key={"header"}>
         <P.Title>Packs list</P.Title>
         <BasicButton width="175px" buttonText="Add new pack" marginBottom="8px" />
       </P.Container>
-      <P.Container>
-        <P.ParamContainer>
-          <P.ParamsName>Search</P.ParamsName>
-          <TextField id="outlined-basic" variant="outlined" />
-        </P.ParamContainer>
+      <P.Container key={"params"}>
+        <SearchInputBlock />
+        <TogglerButtonBlock />
+        <SliderBlock />
+        <ClearFilterButton />
       </P.Container>
+      <div>
+        <h1>Packs</h1>
+        <button onClick={addPackHandler}>add pack</button>
+        <div>
+          {cardPacks.map((p) => {
+            return (
+              <PacksContainer key={p._id}>
+                <p>
+                  <b>pack name</b>: {p.name}
+                </p>
+                <p>
+                  <b>cardsCount</b>: {p.cardsCount}
+                </p>
+                <p>
+                  <b>user name</b>: {p.user_name}
+                </p>
+                <button onClick={() => removePackHandler(p._id)}>remove</button>
+                <button onClick={() => updatePackHandler(p)}>update</button>
+              </PacksContainer>
+            )
+          })}
+        </div>
+      </div>
     </P.Wrapper>
-    // <div>
-    //   <h1>Packs</h1>
-    //   <button onClick={addPackHandler}>add pack</button>
-    //   <div>
-    //     {cardPacks.map((p) => {
-    //       return (
-    //         <PacksContainer key={p._id}>
-    //           <p>
-    //             <b>pack name</b>: {p.name}
-    //           </p>
-    //           <p>
-    //             <b>cardsCount</b>: {p.cardsCount}
-    //           </p>
-    //           <p>
-    //             <b>user name</b>: {p.user_name}
-    //           </p>
-    //           <button onClick={() => removePackHandler(p._id)}>remove</button>
-    //           <button onClick={() => updatePackHandler(p)}>update</button>
-    //         </PacksContainer>
-    //       )
-    //     })}
-    //   </div>
-    // </div>
   )
 }
 
