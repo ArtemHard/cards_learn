@@ -4,18 +4,41 @@ import Slider from "@mui/material/Slider"
 import Button from "@mui/material/Button"
 import styled from "styled-components"
 import { P } from "../../../features/packs/Packs/Packs.styled"
+import { useActions, useAppSelector } from "common/hooks"
+import { selectorMaxCardsCount, selectorMinCardsCount } from "features/packs/pack.selector"
+import { packsActions, packsThunks } from "features/packs/packs.slice"
+import { isArray } from "util"
 
 function valuetext(value: number) {
   return `${value}°C`
 }
 
 export default function SliderBlock() {
-  const [value, setValue] = React.useState<number[]>([20, 37])
+  const min = useAppSelector(selectorMinCardsCount)
+  const max = useAppSelector(selectorMaxCardsCount)
+  const minFilter = useAppSelector((state) => state.packs.filterParams.min)
+  const maxFilter = useAppSelector((state) => state.packs.filterParams.max)
+  const [value, setValue] = React.useState<number[]>([min, max])
+  console.log("min>>> " + min)
+  console.log("max>>> " + max)
+
+  const { changeFilterParams } = useActions(packsActions)
+  const { fetchPacks } = useActions(packsThunks)
 
   const handleChange = (event: Event, newValue: number | number[]) => {
-    setValue(newValue as number[])
+    console.log(newValue)
+    if (Array.isArray(newValue)) {
+      changeFilterParams({ min: newValue[0], max: newValue[1] })
+      setValue(newValue as number[])
+      fetchPacks()
+    }
   }
-  // MinCardsCount MaxCards
+
+  React.useEffect(() => {
+    if (minFilter === null || maxFilter === null) {
+      setValue([min, max])
+    }
+  }, [minFilter, maxFilter])
   return (
     <P.ParamContainer>
       <P.ParamsName>Number of cards</P.ParamsName>
@@ -37,8 +60,8 @@ export default function SliderBlock() {
         </Button>
         <Box sx={{ width: 155 }}>
           <Slider
-            min={0}
-            max={110}
+            min={min}
+            max={max}
             defaultValue={1}
             getAriaLabel={() => "Temperature range"}
             value={value}

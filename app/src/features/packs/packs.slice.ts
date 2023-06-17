@@ -125,7 +125,8 @@ const slice = createSlice({
       state.filterParams = { ...state.filterParams, ...action.payload }
     },
     clearFilter: (state) => {
-      state.filterParams = { ...initialState.filterParams }
+      //min max занулять для связи со слайдером
+      state.filterParams = { ...initialState.filterParams, min: null, max: null }
     },
     //WARNING-QUESTION dont work
     // showUserPacks: (state, action: PayloadAction<Pick<ProfileType, "_id">>) => {
@@ -142,6 +143,8 @@ const slice = createSlice({
         state.cardPacksTotalCount = packsPage.cardPacksTotalCount
         state.minCardsCount = packsPage.minCardsCount
         state.maxCardsCount = packsPage.maxCardsCount
+        // state.filterParams.min = packsPage.minCardsCount
+        // state.filterParams.max = packsPage.maxCardsCount
       })
       .addCase(createPack.fulfilled, (state, action) => {
         state.cardPacks.unshift(action.payload.pack)
