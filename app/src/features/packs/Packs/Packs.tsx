@@ -15,6 +15,7 @@ import TogglerButtonBlock from "components/Button/TogglerButtonBlock/TogglerButt
 import RangeSlider from "components/Slider/Slider"
 import SliderBlock from "components/Slider/SliderBlock/SliderBlock"
 import { ClearFilterButton } from "components/Button/ClearFilterButton/ClearFilterButton"
+import { PacksTable } from "./PacksTable/PacksTable"
 
 export const Packs = () => {
   console.log("Packs render")
@@ -59,6 +60,7 @@ export const Packs = () => {
         <SliderBlock />
         <ClearFilterButton />
       </P.Container>
+      <PacksTable packs={cardPacks} />
       <div>
         <h1>Packs</h1>
         <button onClick={addPackHandler}>add pack</button>

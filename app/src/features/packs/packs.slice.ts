@@ -143,8 +143,6 @@ const slice = createSlice({
         state.cardPacksTotalCount = packsPage.cardPacksTotalCount
         state.minCardsCount = packsPage.minCardsCount
         state.maxCardsCount = packsPage.maxCardsCount
-        // state.filterParams.min = packsPage.minCardsCount
-        // state.filterParams.max = packsPage.maxCardsCount
       })
       .addCase(createPack.fulfilled, (state, action) => {
         state.cardPacks.unshift(action.payload.pack)
