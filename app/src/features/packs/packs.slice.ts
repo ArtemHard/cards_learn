@@ -23,10 +23,9 @@ const fetchPacks = createAppAsyncThunk<{ packsPage: FetchPacksResponseType }, vo
       const filteredObj: GetParamsType = Object.fromEntries(
         Object.entries(dataForServer).filter(([key, value]) => !!value)
       )
-      console.log(filteredObj)
 
       // const res = queryParams ? await packsApi.getPacks(queryParams) : await packsApi.getPacks()
-      const res = await packsApi.getPacks(filteredObj)
+      const res = await packsApi.getPacks({ ...filteredObj })
       return { packsPage: res.data }
     })
   }
@@ -58,7 +57,8 @@ const updatePack = createAppAsyncThunk<{ pack: PackType }, PackType>("packs/upda
   return thunkTryCatch(thunkAPI, async () => {
     const res = await packsApi.updatePack(arg)
     //   dispatch(fetchPacks())
-    return { packs: res.data.updatedCardsPack }
+
+    return { pack: res.data.updatedCardsPack }
   })
 })
 
@@ -152,7 +152,7 @@ const slice = createSlice({
         if (index !== -1) state.cardPacks.splice(index, 1)
       })
       .addCase(updatePack.fulfilled, (state, action) => {
-        const index = state.cardPacks.findIndex((todo) => todo._id === "id1")
+        const index = state.cardPacks.findIndex((pack) => pack._id === action.payload.pack._id)
         if (index !== -1) state.cardPacks[index] = action.payload.pack
       })
   },

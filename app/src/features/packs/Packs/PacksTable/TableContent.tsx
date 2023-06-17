@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Table from "@mui/material/Table"
 import TableBody from "@mui/material/TableBody"
 import TableCell from "@mui/material/TableCell"
@@ -15,9 +15,15 @@ import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined"
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined"
 import { useActions, useAppSelector } from "common/hooks"
 import { selectorUserId } from "features/packs/pack.selector"
-import { packsThunks } from "features/packs/packs.slice"
+import { packsActions, packsThunks } from "features/packs/packs.slice"
 import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined"
 import ArrowDropUpOutlinedIcon from "@mui/icons-material/ArrowDropUpOutlined"
+import TableSortLabel from "@mui/material/TableSortLabel"
+import { TableHeader } from "./TableHeader"
+
+type TableContentPropsType = {
+  packs: PackType[]
+}
 
 const longNameCut = (userName: string): string => {
   if (userName.length > maxNameLength) {
@@ -26,13 +32,54 @@ const longNameCut = (userName: string): string => {
   return userName
 }
 
-type PacksTableType = {
+const headerTableParams: headerTableParamsType[] = [
+  { packParams: "name", text: "Name", align: "left" },
+  { packParams: "cardsCount", text: "Cards", align: "center" },
+  { packParams: "updated", text: "Last Updated", align: "center" },
+  { packParams: "user_name", text: "Created by", align: "center" },
+  { packParams: "created", text: "Created", align: "right" },
+]
+
+export type headerTableParamsType = {
+  packParams: Exclude<
+    keyof PackType,
+    "_id" | "user_id" | "path" | "private" | "path" | "grade" | "shots" | "more_id" | "__v" | "rating" | "type"
+  >
+  text: string
+  align: "left" | "center" | "right"
+}
+
+const generateRequestSortString = (orderDirection: "asc" | "desc", valueToOrderBy: keyof PackType) => {
+  if (orderDirection === "asc") return "1" + valueToOrderBy
+  else return "0" + valueToOrderBy
+}
+
+type TableContentType = {
   packs: PackType[]
 }
 
-const headerTitleNames = [{ Name: "name" }]
+export const TableContent = ({ packs }: TableContentType) => {
+  const { changeFilterParams } = useActions(packsActions)
+  const { fetchPacks } = useActions(packsThunks)
 
-export const PacksTable = ({ packs }: PacksTableType) => {
+  const [orderDirection, setOrderDirection] = useState<"asc" | "desc">("asc")
+  const [valueOrderBy, setValueToOrderBy] = useState<keyof PackType>("updated")
+  // const [page, setPage] = useState(0)
+  // const [rowPerPage, setRowsPerPage] = useState(1)
+
+  const handlerRequestSort = (event: React.MouseEvent<unknown>, property: keyof PackType) => {
+    const isAscending = valueOrderBy === property && orderDirection === "asc"
+    setValueToOrderBy(property)
+    setOrderDirection(isAscending ? "desc" : "asc")
+
+    const dataForRequest = {
+      sortPacks: generateRequestSortString(isAscending ? "desc" : "asc", property),
+    }
+
+    changeFilterParams(dataForRequest)
+    fetchPacks()
+  }
+
   const userId = useAppSelector(selectorUserId)
   const { removePack, updatePack } = useActions(packsThunks)
 
@@ -46,22 +93,13 @@ export const PacksTable = ({ packs }: PacksTableType) => {
   return (
     <TableContainer component={Paper} sx={{ marginTop: "24px", marginBottom: "40px" }}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead sx={{ backgroundColor: "#EFEFEF" }}>
-          <TableRow>
-            <TableCell sx={textHeaderTableStyle}>Name</TableCell>
-            <TableCell sx={textHeaderTableStyle} align="right">
-              cards
-            </TableCell>
-            <TableCell sx={textHeaderTableStyle} align="right">
-              Last Updated
-            </TableCell>
-            <TableCell sx={textHeaderTableStyle} align="right">
-              Created by
-            </TableCell>
-            <TableCell sx={textHeaderTableStyle} align="right"></TableCell>
-          </TableRow>
-        </TableHead>
-        {/* <TableBody>
+        <TableHeader
+          textParams={headerTableParams}
+          valueToOrderBy={valueOrderBy}
+          orderDirection={orderDirection}
+          handlerRequestSort={handlerRequestSort}
+        />
+        <TableBody>
           {packs.map((pack) => (
             <TableRow key={pack._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
               <TableCell sx={textTableStyle} component="th" scope="row">
@@ -95,21 +133,10 @@ export const PacksTable = ({ packs }: PacksTableType) => {
               </TableCell>
             </TableRow>
           ))}
-        </TableBody> */}
+        </TableBody>
       </Table>
     </TableContainer>
   )
-}
-
-const textHeaderTableStyle = {
-  fontFamily: "Montserrat, sans-serif",
-  fontStyle: "normal",
-  fonteHight: 500,
-  fontSize: "14px",
-  lineHeight: "17px",
-  /* identical to box height */
-  textAlign: "left",
-  color: "#000000",
 }
 
 const textTableStyle = {

@@ -61,7 +61,6 @@ export const Auth = ({ type }: AuthComponentType) => {
   }
   const queryRegister = (data: FormInputsType) => {
     const { rememberMe, passwordConfirm, ...signUpData } = data
-    console.log(signUpData)
     register(signUpData)
       .unwrap()
       .then(() => {

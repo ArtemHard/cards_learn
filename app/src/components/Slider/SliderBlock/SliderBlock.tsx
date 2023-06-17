@@ -7,7 +7,6 @@ import { P } from "../../../features/packs/Packs/Packs.styled"
 import { useActions, useAppSelector } from "common/hooks"
 import { selectorMaxCardsCount, selectorMinCardsCount } from "features/packs/pack.selector"
 import { packsActions, packsThunks } from "features/packs/packs.slice"
-import { isArray } from "util"
 
 function valuetext(value: number) {
   return `${value}°C`
@@ -19,19 +18,20 @@ export default function SliderBlock() {
   const minFilter = useAppSelector((state) => state.packs.filterParams.min)
   const maxFilter = useAppSelector((state) => state.packs.filterParams.max)
   const [value, setValue] = React.useState<number[]>([min, max])
-  console.log("min>>> " + min)
-  console.log("max>>> " + max)
 
   const { changeFilterParams } = useActions(packsActions)
   const { fetchPacks } = useActions(packsThunks)
 
   const handleChange = (event: Event, newValue: number | number[]) => {
-    console.log(newValue)
     if (Array.isArray(newValue)) {
       changeFilterParams({ min: newValue[0], max: newValue[1] })
       setValue(newValue as number[])
-      fetchPacks()
+      // fetchPacks()
     }
+  }
+
+  const onChangeCommittedHandler = (event: React.SyntheticEvent | Event, value: number | Array<number>) => {
+    fetchPacks()
   }
 
   React.useEffect(() => {
@@ -66,6 +66,7 @@ export default function SliderBlock() {
             getAriaLabel={() => "Temperature range"}
             value={value}
             onChange={handleChange}
+            onChangeCommitted={onChangeCommittedHandler}
             valueLabelDisplay="auto"
             getAriaValueText={valuetext}
           />

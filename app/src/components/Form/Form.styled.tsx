@@ -155,7 +155,6 @@ export type TextBlockPropsType = {
 
 export const TextBlock = ({ text, email }: TextBlockPropsType) => {
   const marginBottomPX = generateMargin(text)
-  console.log(email)
 
   return (
     //props for creating div with default value

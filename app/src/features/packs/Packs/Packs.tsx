@@ -16,9 +16,9 @@ import RangeSlider from "components/Slider/Slider"
 import SliderBlock from "components/Slider/SliderBlock/SliderBlock"
 import { ClearFilterButton } from "components/Button/ClearFilterButton/ClearFilterButton"
 import { PacksTable } from "./PacksTable/PacksTable"
+import { TableContent } from "./PacksTable/TableContent"
 
 export const Packs = () => {
-  console.log("Packs render")
   // DANGER FAKE SELECTOR
   const cardPacks = useAppSelector(selectorPacks)
   const { fetchPacks, createPack, removePack, updatePack } = useActions(packsThunks)
@@ -52,7 +52,7 @@ export const Packs = () => {
     <P.Wrapper>
       <P.Container key={"header"}>
         <P.Title>Packs list</P.Title>
-        <BasicButton width="175px" buttonText="Add new pack" marginBottom="8px" />
+        <BasicButton width="175px" buttonText="Add new pack" marginBottom="8px" onClick={() => alert("ADD ACTION")} />
       </P.Container>
       <P.Container key={"params"}>
         <SearchInputBlock />
@@ -60,7 +60,8 @@ export const Packs = () => {
         <SliderBlock />
         <ClearFilterButton />
       </P.Container>
-      <PacksTable packs={cardPacks} />
+      <TableContent packs={cardPacks} />
+      {/* <PacksTable packs={cardPacks} /> */}
       <div>
         <h1>Packs</h1>
         <button onClick={addPackHandler}>add pack</button>
