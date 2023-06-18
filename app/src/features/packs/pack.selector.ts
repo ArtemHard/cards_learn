@@ -11,6 +11,8 @@ export const selectorMaxCardsCount = (state: RootState) => state.packs.maxCardsC
 
 export const selectorMinCardsCount = (state: RootState) => state.packs.minCardsCount
 
+export const selectorSerchParams = (state: RootState) => state.packs.filterParams.packName
+
 export const _filterByNamePacksSelector = (state: RootState) => {
   return state.packs.cardPacks.filter((pack) => {
     return pack.name.includes("bad")
