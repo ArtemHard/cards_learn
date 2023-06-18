@@ -1,11 +1,9 @@
 import TableCell from "@mui/material/TableCell"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
-import { PackType } from "features/packs/packs.api.types"
 import { maxNameLength } from "common/constants"
-
 import TableSortLabel from "@mui/material/TableSortLabel"
-import { headerTableParamsType } from "./TableContent"
+import { headerTableParamsType, keyFromPackType } from "./TableContent"
 
 const longNameCut = (userName: string): string => {
   if (userName.length > maxNameLength) {
@@ -16,13 +14,13 @@ const longNameCut = (userName: string): string => {
 
 type TableHeaderProps = {
   orderDirection: "asc" | "desc"
-  valueToOrderBy: keyof PackType
-  handlerRequestSort: (event: React.MouseEvent<unknown>, property: keyof PackType) => void
+  valueToOrderBy: keyFromPackType
+  handlerRequestSort: (event: React.MouseEvent<unknown>, property: keyFromPackType) => void
   textParams: headerTableParamsType[]
 }
 
 export const TableHeader = ({ orderDirection, valueToOrderBy, handlerRequestSort, textParams }: TableHeaderProps) => {
-  const createSortHandler = (property: keyof PackType) => (event: React.MouseEvent<unknown>) => {
+  const createSortHandler = (property: keyFromPackType) => (event: React.MouseEvent<unknown>) => {
     handlerRequestSort(event, property)
   }
 
@@ -32,13 +30,17 @@ export const TableHeader = ({ orderDirection, valueToOrderBy, handlerRequestSort
         {textParams.map((el) => {
           return (
             <TableCell key={el.packParams} sx={textHeaderTableStyle} align={el.align}>
-              <TableSortLabel
-                active={valueToOrderBy === el.packParams}
-                direction={valueToOrderBy === el.packParams ? orderDirection : "asc"}
-                onClick={createSortHandler(el.packParams)}
-              >
-                {el.text}
-              </TableSortLabel>
+              {el.packParams !== "actions" ? (
+                <TableSortLabel
+                  active={valueToOrderBy === el.packParams}
+                  direction={valueToOrderBy === el.packParams ? orderDirection : "asc"}
+                  onClick={createSortHandler(el.packParams)}
+                >
+                  {el.text}
+                </TableSortLabel>
+              ) : (
+                el.text
+              )}
             </TableCell>
           )
         })}

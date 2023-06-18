@@ -16,14 +16,7 @@ import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined"
 import { useActions, useAppSelector } from "common/hooks"
 import { selectorUserId } from "features/packs/pack.selector"
 import { packsActions, packsThunks } from "features/packs/packs.slice"
-import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined"
-import ArrowDropUpOutlinedIcon from "@mui/icons-material/ArrowDropUpOutlined"
-import TableSortLabel from "@mui/material/TableSortLabel"
 import { TableHeader } from "./TableHeader"
-
-type TableContentPropsType = {
-  packs: PackType[]
-}
 
 const longNameCut = (userName: string): string => {
   if (userName.length > maxNameLength) {
@@ -37,19 +30,16 @@ const headerTableParams: headerTableParamsType[] = [
   { packParams: "cardsCount", text: "Cards", align: "center" },
   { packParams: "updated", text: "Last Updated", align: "center" },
   { packParams: "user_name", text: "Created by", align: "center" },
-  { packParams: "created", text: "Created", align: "right" },
+  { packParams: "actions", text: "Actions", align: "right" },
 ]
 
 export type headerTableParamsType = {
-  packParams: Exclude<
-    keyof PackType,
-    "_id" | "user_id" | "path" | "private" | "path" | "grade" | "shots" | "more_id" | "__v" | "rating" | "type"
-  >
+  packParams: keyFromPackType
   text: string
   align: "left" | "center" | "right"
 }
 
-const generateRequestSortString = (orderDirection: "asc" | "desc", valueToOrderBy: keyof PackType) => {
+const generateRequestSortString = (orderDirection: "asc" | "desc", valueToOrderBy: keyFromPackType) => {
   if (orderDirection === "asc") return "1" + valueToOrderBy
   else return "0" + valueToOrderBy
 }
@@ -58,16 +48,23 @@ type TableContentType = {
   packs: PackType[]
 }
 
+export type keyFromPackType =
+  | Exclude<
+      keyof PackType,
+      "_id" | "user_id" | "path" | "private" | "path" | "grade" | "shots" | "more_id" | "__v" | "rating" | "type"
+    >
+  | "actions"
+
 export const TableContent = ({ packs }: TableContentType) => {
   const { changeFilterParams } = useActions(packsActions)
   const { fetchPacks } = useActions(packsThunks)
 
   const [orderDirection, setOrderDirection] = useState<"asc" | "desc">("asc")
-  const [valueOrderBy, setValueToOrderBy] = useState<keyof PackType>("updated")
+  const [valueOrderBy, setValueToOrderBy] = useState<keyFromPackType>("updated")
   // const [page, setPage] = useState(0)
   // const [rowPerPage, setRowsPerPage] = useState(1)
 
-  const handlerRequestSort = (event: React.MouseEvent<unknown>, property: keyof PackType) => {
+  const handlerRequestSort = (event: React.MouseEvent<unknown>, property: keyFromPackType) => {
     const isAscending = valueOrderBy === property && orderDirection === "asc"
     setValueToOrderBy(property)
     setOrderDirection(isAscending ? "desc" : "asc")
