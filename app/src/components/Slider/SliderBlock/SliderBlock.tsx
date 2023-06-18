@@ -35,7 +35,10 @@ export default function SliderBlock() {
 
   useEffect(() => {
     setValue([min, max])
+    changeFilterParams({ min: min, max: max })
   }, [min, max])
+
+  // для сброса параметров после нажатия clearFilter
   useEffect(() => {
     if (minFilter === min && maxFilter === max) setValue([min, max])
   }, [minFilter, maxFilter])
