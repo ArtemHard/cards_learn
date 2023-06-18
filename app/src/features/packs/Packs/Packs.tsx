@@ -1,9 +1,9 @@
-import { useEffect } from "react"
+import { useEffect, useLayoutEffect } from "react"
 import { useActions, useAppDispatch, useAppSelector } from "common/hooks"
 import { packsThunks } from "features/packs/packs.slice"
 import { PackType } from "../packs.api.types"
 import styled from "styled-components"
-import { selectorPacks } from "../pack.selector"
+import { selectorPacks, selectorSerchPackName } from "../pack.selector"
 import { P } from "./Packs.styled"
 import { BasicButton } from "components/Button/BasicButton"
 import Autocomplete from "@mui/material/Autocomplete"
@@ -21,20 +21,16 @@ import { TableContent } from "./PacksTable/TableContent"
 export const Packs = () => {
   // DANGER FAKE SELECTOR
   const cardPacks = useAppSelector(selectorPacks)
+  const searchPackName = useAppSelector(selectorSerchPackName)
   const { fetchPacks, createPack, removePack, updatePack } = useActions(packsThunks)
 
-  const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    // dispatch(packsThunks.fetchPacks())
-
-    // bindActionCreators(packsThunks.fetchPacks, dispatch)()
+  useLayoutEffect(() => {
     fetchPacks()
   }, [])
 
   const addPackHandler = () => {
     const newPack = {
-      name: "🦁" + Math.random(),
+      name: "🦁" + Math.random() + "Rassel",
     }
     createPack(newPack)
   }
@@ -62,6 +58,9 @@ export const Packs = () => {
       </P.Container>
       <TableContent packs={cardPacks} />
       {/* <PacksTable packs={cardPacks} /> */}
+      {searchPackName && cardPacks.length === 0 && (
+        <>"Колоды с введенным название не найдены. Измените параметры запроса"</>
+      )}
       <div>
         <h1>Packs</h1>
         <button onClick={addPackHandler}>add pack</button>

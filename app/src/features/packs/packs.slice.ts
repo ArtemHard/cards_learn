@@ -2,7 +2,6 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { createAppAsyncThunk, thunkTryCatch } from "common/utils"
 import { ArgCreatePackType, FetchPacksResponseType, PackType } from "features/packs/packs.api.types"
 import { GetParamsType, packsApi } from "./packs.api"
-import { ProfileType } from "features/auth/auth.api"
 
 const fetchPacks = createAppAsyncThunk<{ packsPage: FetchPacksResponseType }, void>(
   "packs/fetchPacks",
@@ -62,17 +61,8 @@ const updatePack = createAppAsyncThunk<{ pack: PackType }, PackType>("packs/upda
   })
 })
 
-// type GetParamsType = {
-//   packName?: string // не обязательно
-//   min?: number // не обязательно
-//   max?: number // не обязательно
-//   sortPacks?: string // не обязательно //WARNING-QUESTION &sortPacks=0updated => Если харкор параметр в виде стринги то какие ещё варианты
-//   page?: number // не обязательно
-//   pageCount?: number // не обязательно
-//   user_id?: string
-//   // чьи колоды не обязательно, или придут все
-//   block?: boolean // не обязательно
-// }
+type FilterParams = Partial<typeof initialState.filterParams>
+
 const initialState = {
   cardPacks: [] as PackType[],
   page: 1,
@@ -80,10 +70,6 @@ const initialState = {
   cardPacksTotalCount: 2000,
   minCardsCount: 0,
   maxCardsCount: 100,
-  // packName: "" as string | null,
-  // sortPacks: "" as string | null,
-  // user_id: "" as string | null,
-  // block: false,
   filterParams: {
     packName: "" as string | null,
     min: 0 as number | null, // не обязательно
@@ -98,35 +84,17 @@ const initialState = {
 const slice = createSlice({
   name: "packs",
   initialState,
-  // {
-  //   cardPacks: [] as PackType[],
-  //   page: 1,
-  //   pageCount: 10,
-  //   cardPacksTotalCount: 2000,
-  //   minCardsCount: 0,
-  //   maxCardsCount: 100,
-  //   // packName: "" as string | null,
-  //   // sortPacks: "" as string | null,
-  //   // user_id: "" as string | null,
-  //   // block: false,
-  //   filterParams: {
-  //     packName: "" as string | null,
-  //     min: 0 as number | null, // не обязательно
-  //     max: 100 as number | null, // не обязательно
-  //     sortPacks: "" as string | null,
-  //     page: 1 as number | null, // не обязательно
-  //     pageCount: 10 as number | null, // не обязательно
-  //     user_id: "" as string | null,
-  //     block: false as boolean | null,
-  //   },
-  // },
   reducers: {
-    changeFilterParams: (state, action: PayloadAction<GetParamsType>) => {
+    changeFilterParams: (state, action: PayloadAction<FilterParams>) => {
       state.filterParams = { ...state.filterParams, ...action.payload }
     },
     clearFilter: (state) => {
       //min max занулять для связи со слайдером
-      state.filterParams = { ...initialState.filterParams, min: null, max: null }
+      state.filterParams = {
+        ...initialState.filterParams,
+        min: state.minCardsCount,
+        max: state.maxCardsCount,
+      }
     },
     //WARNING-QUESTION dont work
     // showUserPacks: (state, action: PayloadAction<Pick<ProfileType, "_id">>) => {

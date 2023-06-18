@@ -1,4 +1,4 @@
-import * as React from "react"
+import { useEffect, useState } from "react"
 import Box from "@mui/material/Box"
 import Slider from "@mui/material/Slider"
 import Button from "@mui/material/Button"
@@ -17,7 +17,7 @@ export default function SliderBlock() {
   const max = useAppSelector(selectorMaxCardsCount)
   const minFilter = useAppSelector((state) => state.packs.filterParams.min)
   const maxFilter = useAppSelector((state) => state.packs.filterParams.max)
-  const [value, setValue] = React.useState<number[]>([min, max])
+  const [value, setValue] = useState<number[]>([minFilter || 0, maxFilter || 100])
 
   const { changeFilterParams } = useActions(packsActions)
   const { fetchPacks } = useActions(packsThunks)
@@ -26,7 +26,6 @@ export default function SliderBlock() {
     if (Array.isArray(newValue)) {
       changeFilterParams({ min: newValue[0], max: newValue[1] })
       setValue(newValue as number[])
-      // fetchPacks()
     }
   }
 
@@ -34,10 +33,11 @@ export default function SliderBlock() {
     fetchPacks()
   }
 
-  React.useEffect(() => {
-    if (minFilter === null || maxFilter === null) {
-      setValue([min, max])
-    }
+  useEffect(() => {
+    setValue([min, max])
+  }, [min, max])
+  useEffect(() => {
+    if (minFilter === min && maxFilter === max) setValue([min, max])
   }, [minFilter, maxFilter])
   return (
     <P.ParamContainer>
@@ -54,7 +54,6 @@ export default function SliderBlock() {
             textTransform: "none",
             border: "1px solid #D9D9D9",
           }}
-          // onClick={handleChange}
         >
           <NumberInBtn>{value[0]}</NumberInBtn>
         </Button>
@@ -69,6 +68,7 @@ export default function SliderBlock() {
             onChangeCommitted={onChangeCommittedHandler}
             valueLabelDisplay="auto"
             getAriaValueText={valuetext}
+            disabled={min === max}
           />
         </Box>
         <Button

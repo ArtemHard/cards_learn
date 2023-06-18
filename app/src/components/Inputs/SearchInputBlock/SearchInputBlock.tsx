@@ -4,12 +4,12 @@ import SearchIcon from "@mui/icons-material/Search"
 import { P } from "../../../features/packs/Packs/Packs.styled"
 import { useDebounce } from "common/utils/useDebounce"
 import { useActions, useAppSelector } from "common/hooks"
-import { selectorSerchParams } from "features/packs/pack.selector"
+import { selectorSerchPackName } from "features/packs/pack.selector"
 import { packsActions, packsThunks } from "features/packs/packs.slice"
 import { useEffect } from "react"
 
 export const SearchInputBlock = () => {
-  const searchQuery = useAppSelector(selectorSerchParams)
+  const searchQuery = useAppSelector(selectorSerchPackName)
   const { changeFilterParams } = useActions(packsActions)
   const { fetchPacks } = useActions(packsThunks)
   const debouncedSearchTerm = useDebounce(searchQuery, 2000)
@@ -18,15 +18,15 @@ export const SearchInputBlock = () => {
   }
 
   useEffect(() => {
-    if (debouncedSearchTerm) {
+    if (debouncedSearchTerm || "") {
       fetchPacks()
     }
     return () => {}
-  }, [debouncedSearchTerm])
+  }, [debouncedSearchTerm, searchQuery])
 
   useEffect(() => {
     return () => {
-      changeFilterParams({ packName: "" })
+      changeFilterParams({ packName: null })
     }
   }, [])
   return (
@@ -41,14 +41,14 @@ export const SearchInputBlock = () => {
           autoComplete: "off",
           startAdornment: (
             <InputAdornment position="start">
-              <SearchIcon />
+              <SearchIcon />{" "}
             </InputAdornment>
           ),
         }}
-        autoComplete="off"
         fullWidth={true}
         sx={{ height: "36px", width: "413px" }}
         onChange={onChangeHanler}
+        autoComplete="off"
       />
     </P.ParamContainer>
   )
