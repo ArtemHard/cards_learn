@@ -4,6 +4,7 @@ import { P } from "../../../features/packs/Packs/Packs.styled"
 import { useActions, useAppSelector } from "common/hooks"
 import { packsActions, packsThunks } from "features/packs/packs.slice"
 import { selectorSearchParamsIsUserId, selectorUserId } from "features/packs/pack.selector"
+import { selectorIsLoading } from "app/app.selectors"
 
 export default function TogglerButtonBlock() {
   const [alignment, setAlignment] = React.useState<"My" | "All">("My")
@@ -13,6 +14,7 @@ export default function TogglerButtonBlock() {
 
   const userId = useAppSelector(selectorUserId)
   const serchParamsUserId = useAppSelector(selectorSearchParamsIsUserId)
+  const isLoading = useAppSelector(selectorIsLoading)
 
   const handleChange = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (event.currentTarget.innerText === "My" && userId) {
@@ -41,6 +43,7 @@ export default function TogglerButtonBlock() {
           size="small"
           sx={{ borderRadius: "2px", width: "98px", height: "36px", textTransform: "none" }}
           onClick={handleChange}
+          disabled={isLoading}
         >
           My
         </Button>
@@ -50,6 +53,7 @@ export default function TogglerButtonBlock() {
           size="small"
           sx={{ borderRadius: "2px", width: "98px", height: "36px", textTransform: "none" }}
           onClick={handleChange}
+          disabled={isLoading}
         >
           All
         </Button>

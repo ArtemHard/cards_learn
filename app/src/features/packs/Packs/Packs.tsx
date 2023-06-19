@@ -17,11 +17,13 @@ import SliderBlock from "components/Slider/SliderBlock/SliderBlock"
 import { ClearFilterButton } from "components/Button/ClearFilterButton/ClearFilterButton"
 import { PacksTable } from "./PacksTable/PacksTable"
 import { TableContent } from "./PacksTable/TableContent"
+import { selectorIsLoading } from "app/app.selectors"
 
 export const Packs = () => {
   // DANGER FAKE SELECTOR
   const cardPacks = useAppSelector(selectorPacks)
   const searchPackName = useAppSelector(selectorSerchPackName)
+  const isLoading = useAppSelector(selectorIsLoading)
   const { fetchPacks, createPack, removePack, updatePack } = useActions(packsThunks)
 
   useLayoutEffect(() => {
@@ -48,7 +50,13 @@ export const Packs = () => {
     <P.Wrapper>
       <P.Container key={"header"}>
         <P.Title>Packs list</P.Title>
-        <BasicButton width="175px" buttonText="Add new pack" marginBottom="8px" onClick={() => alert("ADD ACTION")} />
+        <BasicButton
+          width="175px"
+          buttonText="Add new pack"
+          marginBottom="8px"
+          onClick={addPackHandler}
+          isLoading={isLoading}
+        />
       </P.Container>
       <P.Container key={"params"}>
         <SearchInputBlock />

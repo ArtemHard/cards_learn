@@ -12,13 +12,10 @@ const slice = createSlice({
     isAppInitialized: false,
     unHandleActions: [] as string[],
   },
-  // reducers состоит из подредьюсеров, каждый из которых эквивалентен одному оператору case в switch, как мы делали раньше (обычный redux)
+
   reducers: {
-    // Подредьюсер.
     // Action - это payload объект. Типизация через PayloadAction
     setIsLoading: (state, action: PayloadAction<{ isLoading: boolean }>) => {
-      // Логику в подредьюсерах пишем мутабельным образом,
-      // т.к. иммутабельность достигается благодаря immer.js
       state.isLoading = action.payload.isLoading
     },
     setError: (state, action: PayloadAction<{ error: string | null }>) => {

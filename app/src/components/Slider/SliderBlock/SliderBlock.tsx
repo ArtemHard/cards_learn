@@ -7,6 +7,7 @@ import { P } from "../../../features/packs/Packs/Packs.styled"
 import { useActions, useAppSelector } from "common/hooks"
 import { selectorMaxCardsCount, selectorMinCardsCount } from "features/packs/pack.selector"
 import { packsActions, packsThunks } from "features/packs/packs.slice"
+import { selectorIsLoading } from "app/app.selectors"
 
 function valuetext(value: number) {
   return `${value}°C`
@@ -15,6 +16,7 @@ function valuetext(value: number) {
 export default function SliderBlock() {
   const min = useAppSelector(selectorMinCardsCount)
   const max = useAppSelector(selectorMaxCardsCount)
+  const isLoading = useAppSelector(selectorIsLoading)
   const minFilter = useAppSelector((state) => state.packs.filterParams.min)
   const maxFilter = useAppSelector((state) => state.packs.filterParams.max)
   const [value, setValue] = useState<number[]>([minFilter || 0, maxFilter || 100])
@@ -50,6 +52,7 @@ export default function SliderBlock() {
           name="My"
           variant="outlined"
           size="small"
+          disabled={true}
           sx={{
             borderRadius: "2px",
             width: "36px",
@@ -71,13 +74,14 @@ export default function SliderBlock() {
             onChangeCommitted={onChangeCommittedHandler}
             valueLabelDisplay="auto"
             getAriaValueText={valuetext}
-            disabled={min === max}
+            disabled={min === max || isLoading}
           />
         </Box>
         <Button
           name="My"
           variant="outlined"
           size="small"
+          disabled={true}
           sx={{
             borderRadius: "2px",
             width: "36px",

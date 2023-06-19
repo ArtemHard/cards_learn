@@ -3,12 +3,13 @@ import Button from "@mui/material/Button"
 
 type BasicButtonPropsType = {
   buttonText: string
+  isLoading?: boolean
   width?: string
   marginBottom?: string
   type?: "button" | "submit" | "reset" | undefined
 } & React.HTMLAttributes<HTMLButtonElement>
 
-export const BasicButton = ({ buttonText, type, width, marginBottom, onClick }: BasicButtonPropsType) => {
+export const BasicButton = ({ buttonText, type, width, marginBottom, onClick, isLoading }: BasicButtonPropsType) => {
   return (
     <Button
       sx={{
@@ -24,6 +25,7 @@ export const BasicButton = ({ buttonText, type, width, marginBottom, onClick }: 
       onClick={onClick}
       type={type ? type : "submit"}
       variant="contained"
+      disabled={isLoading ? isLoading : undefined}
     >
       {buttonText}
     </Button>

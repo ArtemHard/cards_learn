@@ -7,12 +7,17 @@ import { useActions, useAppSelector } from "common/hooks"
 import { selectorSerchPackName } from "features/packs/pack.selector"
 import { packsActions, packsThunks } from "features/packs/packs.slice"
 import { useEffect } from "react"
+import { selectorIsLoading } from "app/app.selectors"
 
 export const SearchInputBlock = () => {
   const searchQuery = useAppSelector(selectorSerchPackName)
+  const isLoading = useAppSelector(selectorIsLoading)
+
   const { changeFilterParams } = useActions(packsActions)
   const { fetchPacks } = useActions(packsThunks)
+
   const debouncedSearchTerm = useDebounce(searchQuery, 2000)
+
   const onChangeHanler = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     changeFilterParams({ packName: event.currentTarget.value })
   }
@@ -49,6 +54,7 @@ export const SearchInputBlock = () => {
         sx={{ height: "36px", width: "413px" }}
         onChange={onChangeHanler}
         autoComplete="off"
+        disabled={isLoading}
       />
     </P.ParamContainer>
   )
