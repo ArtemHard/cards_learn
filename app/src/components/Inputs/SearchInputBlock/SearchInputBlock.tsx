@@ -7,27 +7,23 @@ import { useActions, useAppSelector } from "common/hooks"
 import { selectorSerchPackName } from "features/packs/pack.selector"
 import { packsActions, packsThunks } from "features/packs/packs.slice"
 import { useEffect } from "react"
-import { selectorIsLoading } from "app/app.selectors"
 
 export const SearchInputBlock = () => {
   const searchQuery = useAppSelector(selectorSerchPackName)
-  const isLoading = useAppSelector(selectorIsLoading)
-
   const { changeFilterParams } = useActions(packsActions)
   const { fetchPacks } = useActions(packsThunks)
-
   const debouncedSearchTerm = useDebounce(searchQuery, 2000)
-
   const onChangeHanler = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    changeFilterParams({ packName: event.currentTarget.value })
+    const searchParams = event.currentTarget.value
+    changeFilterParams({ packName: searchParams === "" ? "" : searchParams })
   }
 
   useEffect(() => {
-    if (debouncedSearchTerm || "") {
+    if (debouncedSearchTerm || debouncedSearchTerm === "") {
       fetchPacks()
     }
-    return () => {}
-  }, [debouncedSearchTerm, searchQuery])
+    // return () => {}
+  }, [debouncedSearchTerm, changeFilterParams])
 
   useEffect(() => {
     return () => {
@@ -45,16 +41,16 @@ export const SearchInputBlock = () => {
         InputProps={{
           autoComplete: "off",
           startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon />{" "}
-            </InputAdornment>
+            // <InputAdornment position="start">
+            <SearchIcon />
+            // </InputAdornment>
           ),
         }}
         fullWidth={true}
+        value={searchQuery}
         sx={{ height: "36px", width: "413px" }}
         onChange={onChangeHanler}
         autoComplete="off"
-        disabled={isLoading}
       />
     </P.ParamContainer>
   )

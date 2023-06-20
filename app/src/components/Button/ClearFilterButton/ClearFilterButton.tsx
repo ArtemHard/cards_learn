@@ -2,17 +2,23 @@ import React from "react"
 import Button from "@mui/material/Button"
 import styled from "styled-components"
 import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined"
-import { useActions } from "common/hooks"
+import { useActions, useAppSelector } from "common/hooks"
 import { packsApi } from "features/packs/packs.api"
 import { packsActions, packsThunks } from "features/packs/packs.slice"
+import { selectorSerchPackName } from "features/packs/pack.selector"
 
 export const ClearFilterButton = () => {
   const { clearFilter } = useActions(packsActions)
   const { fetchPacks } = useActions(packsThunks)
+  const searchPackName = useAppSelector(selectorSerchPackName)
 
   const onClickHandler = () => {
+    // if (searchPackName === "") {
+    //   clearFilter()
+    // } else {
     clearFilter()
     fetchPacks()
+    // }
   }
 
   return (

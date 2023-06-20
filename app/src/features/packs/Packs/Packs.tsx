@@ -18,6 +18,7 @@ import { ClearFilterButton } from "components/Button/ClearFilterButton/ClearFilt
 import { PacksTable } from "./PacksTable/PacksTable"
 import { TableContent } from "./PacksTable/TableContent"
 import { selectorIsLoading } from "app/app.selectors"
+import { PaginationRounded } from "components/Pagination/Pagination"
 
 export const Packs = () => {
   // DANGER FAKE SELECTOR
@@ -65,6 +66,7 @@ export const Packs = () => {
         <ClearFilterButton />
       </P.Container>
       <TableContent packs={cardPacks} />
+      <PaginationRounded />
       {/* <PacksTable packs={cardPacks} /> */}
       {searchPackName && cardPacks.length === 0 && (
         <>"Колоды с введенным название не найдены. Измените параметры запроса"</>
