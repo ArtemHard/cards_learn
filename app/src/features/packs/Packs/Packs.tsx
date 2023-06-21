@@ -1,9 +1,9 @@
 import { useEffect, useLayoutEffect } from "react"
 import { useActions, useAppDispatch, useAppSelector } from "common/hooks"
-import { packsThunks } from "features/packs/packs.slice"
+import { packsActions, packsThunks } from "features/packs/packs.slice"
 import { PackType } from "../packs.api.types"
 import styled from "styled-components"
-import { selectorPacks, selectorSerchPackName } from "../pack.selector"
+import { selectorPacks, selectorPageCount, selectorSerchPackName } from "../pack.selector"
 import { P } from "./Packs.styled"
 import { BasicButton } from "components/Button/BasicButton"
 import Autocomplete from "@mui/material/Autocomplete"
@@ -28,6 +28,7 @@ export const Packs = () => {
   const cardPacks = useAppSelector(selectorPacks)
   const searchPackName = useAppSelector(selectorSerchPackName)
   const isLoading = useAppSelector(selectorIsLoading)
+  const pageCount = useAppSelector(selectorPageCount)
   const { fetchPacks, createPack, removePack, updatePack } = useActions(packsThunks)
 
   useLayoutEffect(() => {
@@ -71,9 +72,11 @@ export const Packs = () => {
       <TableContent packs={cardPacks} />
       <P.Container key={"paginator"} justifyContent={"flex-start"}>
         <PaginationRounded />
-        <P.Span>Show</P.Span>
-        <SelectButton cardsCount={[10, 20, 30, 40, 50]} />
-        <P.Span>Cards per Page</P.Span>
+        <P.SpanPageContainer>
+          <P.Span>Show</P.Span>
+          <SelectButton cardsCount={[pageCount, 20, 30, 40, 50]} />
+          <P.Span>Cards per Page</P.Span>
+        </P.SpanPageContainer>
       </P.Container>
       {/* <PacksTable packs={cardPacks} /> */}
       {searchPackName && cardPacks.length === 0 && (

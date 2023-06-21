@@ -18,6 +18,13 @@ const Container = styled.div<ContainerType>`
   justify-content: ${(props) => (props.justifyContent ? props.justifyContent : "space-between")};
   align-items: ${(props) => (props.justifyContent === "flex-start" ? "center" : null)};
 `
+const SpanPageContainer = styled.div`
+  margin-left: 28px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`
+
 const Title = styled.h1`
   font-family: "Montserrat", sans-serif;
   font-style: normal;
@@ -70,4 +77,5 @@ export const P = {
   Title,
   ParamsName,
   Span,
+  SpanPageContainer,
 }

@@ -4,6 +4,8 @@ import MenuItem from "@mui/material/MenuItem"
 import FormControl from "@mui/material/FormControl"
 import Select from "@mui/material/Select"
 import InputBase from "@mui/material/InputBase"
+import { useActions } from "common/hooks"
+import { packsActions, packsThunks } from "features/packs/packs.slice"
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   "label + &": {
@@ -43,10 +45,15 @@ type SelectButtonProps = {
 }
 
 export default function SelectButton({ cardsCount }: SelectButtonProps) {
+  const { changeFilterParams } = useActions(packsActions)
+  const { fetchPacks } = useActions(packsThunks)
   const initialParam = cardsCount[0].toString()
   const [age, setAge] = useState<string>(initialParam)
   const handleChange = (event: { target: { value: string } }) => {
-    setAge(event.target.value)
+    changeFilterParams({ pageCount: +event.target.value })
+    fetchPacks().then(() => {
+      setAge(event.target.value)
+    })
   }
   return (
     <div>
