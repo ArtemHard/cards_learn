@@ -23,7 +23,7 @@ export const SearchInputBlock = () => {
       fetchPacks()
     }
     // return () => {}
-  }, [debouncedSearchTerm, changeFilterParams])
+  }, [debouncedSearchTerm])
 
   useEffect(() => {
     return () => {

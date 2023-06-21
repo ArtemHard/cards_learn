@@ -19,6 +19,9 @@ import { PacksTable } from "./PacksTable/PacksTable"
 import { TableContent } from "./PacksTable/TableContent"
 import { selectorIsLoading } from "app/app.selectors"
 import { PaginationRounded } from "components/Pagination/Pagination"
+import { Pagination } from "@mui/material"
+import { TextBlock } from "components/Form/Form.styled"
+import SelectButton from "components/Selector/SelectButton"
 
 export const Packs = () => {
   // DANGER FAKE SELECTOR
@@ -66,7 +69,12 @@ export const Packs = () => {
         <ClearFilterButton />
       </P.Container>
       <TableContent packs={cardPacks} />
-      <PaginationRounded />
+      <P.Container key={"paginator"} justifyContent={"flex-start"}>
+        <PaginationRounded />
+        <P.Span>Show</P.Span>
+        <SelectButton cardsCount={[10, 20, 30, 40, 50]} />
+        <P.Span>Cards per Page</P.Span>
+      </P.Container>
       {/* <PacksTable packs={cardPacks} /> */}
       {searchPackName && cardPacks.length === 0 && (
         <>"Колоды с введенным название не найдены. Измените параметры запроса"</>

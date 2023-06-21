@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import Pagination, { PaginationProps } from "@mui/material/Pagination"
 import Stack from "@mui/material/Stack"
-import { useActions, useAppDispatch, useAppSelector } from "common/hooks"
+import { useActions, useAppSelector } from "common/hooks"
 import { packsActions, packsThunks } from "features/packs/packs.slice"
 import { selectorIsLoading } from "app/app.selectors"
 import { selectorCardPacksTotalCount, selectorPage, selectorPageCount } from "features/packs/pack.selector"
@@ -25,12 +25,21 @@ export const PaginationRounded = () => {
     fetchPacks()
   }
 
+  const pagesCount = (cardPacksTotalCount: number, pageCount: number) => Math.ceil(cardPacksTotalCount / pageCount)
+
   useEffect(() => {}, [])
 
   useEffect(() => {}, [])
   return (
     <Stack spacing={2}>
-      <Pagination count={pageCount} page={page} shape="rounded" onChange={handleChange} disabled={isLoading} />
+      <Pagination
+        count={pagesCount(cardPacksTotalCount, pageCount)}
+        page={page}
+        shape="rounded"
+        onChange={handleChange}
+        disabled={isLoading}
+        color="primary"
+      />
       {/* <Pagination count={10} variant="outlined" shape="rounded" /> */}
     </Stack>
   )

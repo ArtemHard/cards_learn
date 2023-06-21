@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { checkEmailInstructions, createNewPassInstructions, forgotPassInstructions } from "common/constants"
 import { FormPropsType } from "./Form"
 import emailIcon from "../../common/assets/icons/email-svg.svg"
+import { ReactNode } from "react"
 
 const links = [
   {
@@ -151,9 +152,10 @@ export type TextInstructionsType =
 
 export type TextBlockPropsType = {
   text: TextInstructionsType
+  children?: ReactNode
 } & Pick<FormPropsType, "email">
 
-export const TextBlock = ({ text, email }: TextBlockPropsType) => {
+export const TextBlock = ({ text, email, children }: TextBlockPropsType) => {
   const marginBottomPX = generateMargin(text)
 
   return (
@@ -161,6 +163,7 @@ export const TextBlock = ({ text, email }: TextBlockPropsType) => {
     <ForgotPassWrapper innerText="Sign In">
       <SpanText marginBottom={marginBottomPX}>
         {text}
+        {children ? children : null}
         {email ? email : null}
       </SpanText>
     </ForgotPassWrapper>

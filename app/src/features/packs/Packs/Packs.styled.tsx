@@ -1,3 +1,4 @@
+import { ReactNode } from "react"
 import styled from "styled-components"
 
 const Wrapper = styled.div`
@@ -7,10 +8,15 @@ const Wrapper = styled.div`
   /* max-width: 1008px; */
 `
 
-const Container = styled.div`
+type ContainerType = {
+  justifyContent?: "flex-start" | "space-between"
+}
+
+const Container = styled.div<ContainerType>`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: ${(props) => (props.justifyContent ? props.justifyContent : "space-between")};
+  align-items: ${(props) => (props.justifyContent === "flex-start" ? "center" : null)};
 `
 const Title = styled.h1`
   font-family: "Montserrat", sans-serif;
@@ -45,10 +51,23 @@ const ParamsName = styled.h2`
 
   color: #000000;
 `
+
+export const Span = styled.span`
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  /* identical to box height */
+
+  color: #000000;
+`
+
 export const P = {
   Wrapper,
   Container,
   ParamContainer,
   Title,
   ParamsName,
+  Span,
 }
