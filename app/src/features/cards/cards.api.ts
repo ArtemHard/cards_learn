@@ -1,14 +1,25 @@
 import axios from "axios"
 import { instance } from "common/api"
 
-const cards = "cards/"
+const cards = "cards/card"
 
 const cardsApi = {
   getCard(queryParams: getCardRequest) {
-    return instance.get<Cards>(cards + "cards", { params: { ...queryParams } })
+    return instance.get<Cards>(cards, { params: { ...queryParams } })
   },
   createCard(data: NewCardRequestType) {
-    return instance.post<NewCardResponse>(cards + "cards", data)
+    return instance.post<NewCardResponse>(cards, { card: data })
+  },
+  deleteCard(queryCardId: QueryCardId) {
+    return instance.delete(cards, {
+      params: queryCardId,
+    })
+  },
+  updateCards(updateData: UpdateCard) {
+    return instance.put(cards, { card: updateData })
+  },
+  updateGradeCard(updateGradeData: UpdateCardGrade) {
+    return instance.put<UpdateCardResponse>("cards/grade", { updatedGrade: updateGradeData })
   },
 }
 
@@ -87,3 +98,10 @@ type NewCardRequestType = Partial<Pick<Card, "question" | "answer" | "grade" | "
   questionVideo?: string
   answerVideo?: string
 }
+
+type QueryCardId = Pick<Card, "_id">
+
+type UpdateCard = Partial<Omit<NewCardRequestType, "cardsPack_id" | "grade">> & Pick<Card, "_id" | "question">
+
+type UpdateCardGrade = Pick<Card, "grade"> & { gard_id: string }
+type UpdateCardResponse = Omit<Card, "answer" | "question" | "created" | "updated"> & { gard_id: string }
