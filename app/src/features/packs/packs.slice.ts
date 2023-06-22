@@ -7,23 +7,21 @@ const fetchPacks = createAppAsyncThunk<{ packsPage: FetchPacksResponseType }, vo
   "packs/fetchPacks",
   async (_, thunkAPI) => {
     return thunkTryCatch(thunkAPI, async () => {
-      const state = thunkAPI.getState().packs
+      const { packName, min, max, sortPacks, page, pageCount, user_id, block } = thunkAPI.getState().packs.filterParams
       const dataForServer = {
-        packName: state.filterParams.packName, // не обязательно
-        min: state.filterParams.min, // не обязательно
-        max: state.filterParams.max, // не обязательно
-        sortPacks: state.filterParams.sortPacks, // не обязательно //WARNING-QUESTION &sortPacks=0updated => Если харкор параметр в виде стринги то какие ещё варианты
-        page: state.filterParams.page, // не обязательно
-        pageCount: state.filterParams.pageCount, // не обязательно
-        user_id: state.filterParams.user_id,
+        packName: packName, // не обязательно
+        min: min, // не обязательно
+        max: max, // не обязательно
+        sortPacks: sortPacks, // не обязательно
+        page: page, // не обязательно
+        pageCount: pageCount, // не обязательно
+        user_id: user_id,
         // чьи колоды не обязательно, или придут все
-        block: state.filterParams.block, // не обязательно
+        block: block, // не обязательно
       }
       const filteredObj: GetParamsType = Object.fromEntries(
         Object.entries(dataForServer).filter(([key, value]) => !!value)
       )
-
-      // const res = queryParams ? await packsApi.getPacks(queryParams) : await packsApi.getPacks()
       const res = await packsApi.getPacks({ ...filteredObj })
       return { packsPage: res.data }
     })
@@ -37,25 +35,20 @@ const createPack = createAppAsyncThunk<{ pack: PackType }, ArgCreatePackType>(
     return thunkTryCatch(thunkAPI, async () => {
       const res = await packsApi.createPack(arg)
       return { pack: res.data.newCardsPack }
-      //   dispatch(fetchPacks())
     })
   }
 )
 
 const removePack = createAppAsyncThunk<{ packId: string }, string>("packs/removePack", async (id, thunkAPI) => {
-  // const { dispatch } = thunkAPI
   return thunkTryCatch(thunkAPI, async () => {
     const res = await packsApi.removePack(id)
     return { packId: res.data.deletedCardsPack._id }
-    //   dispatch(fetchPacks())
   })
 })
 
 const updatePack = createAppAsyncThunk<{ pack: PackType }, PackType>("packs/updatePack", async (arg, thunkAPI) => {
-  // const { dispatch } = thunkAPI
   return thunkTryCatch(thunkAPI, async () => {
     const res = await packsApi.updatePack(arg)
-    //   dispatch(fetchPacks())
 
     return { pack: res.data.updatedCardsPack }
   })

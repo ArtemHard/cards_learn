@@ -17,6 +17,7 @@ import { useActions, useAppSelector } from "common/hooks"
 import { selectorUserId } from "features/packs/pack.selector"
 import { packsActions, packsThunks } from "features/packs/packs.slice"
 import { TableHeader } from "./TableHeader"
+import { NavLink } from "react-router-dom"
 
 const longNameCut = (userName: string): string => {
   if (userName.length > maxNameLength) {
@@ -100,7 +101,9 @@ export const TableContent = ({ packs }: TableContentType) => {
           {packs.map((pack) => (
             <TableRow key={pack._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
               <TableCell sx={textTableStyle} component="th" scope="row">
-                {longNameCut(pack.name)}
+                <NavLink to={"/cards/" + pack._id} style={{ textDecoration: "none", color: "inherit" }}>
+                  {longNameCut(pack.name)}
+                </NavLink>
               </TableCell>
               <TableCell sx={textTableStyle} align="left">
                 {pack.cardsCount}

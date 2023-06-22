@@ -50,23 +50,23 @@ export const router = createBrowserRouter([
         path: "packs",
         element: <Packs />,
         // ErrorBoundary: ErrorPage,
-        children: [
-          {
-            path: "pack-name",
-          },
-          {
-            path: "friends-pack",
-          },
-          {
-            path: "my-pack",
-          },
-          {
-            path: "friends-pack",
-          },
-        ],
+        // children: [
+        //   {
+        //     path: "pack-name",
+        //   },
+        //   {
+        //     path: "friends-pack",
+        //   },
+        //   {
+        //     path: "my-pack",
+        //   },
+        //   {
+        //     path: "friends-pack",
+        //   },
+        // ],
       },
       {
-        path: "cards",
+        path: "cards/:cardId",
         element: <Cards />,
         // ErrorBoundary: ErrorPage,
       },
