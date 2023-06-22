@@ -3,12 +3,12 @@ import { CheckEmail } from "features/auth/CheckEmail/CheckEmail"
 import { Profile } from "components/Profile/Profile"
 import App from "app/App"
 import ErrorPage from "components/404/ErrorPage"
-import { Cards } from "components/Cards/Cards"
 import { Auth } from "features/auth/Auth/Auth"
 import { ForgotPassword } from "features/auth/ForgotPassword/ForgotPassword"
 import { SetNewPassword } from "features/auth/SetNewPassword/SetNewPassword"
 import { Packs } from "features/packs/Packs/Packs"
 import { Learn } from "components/Learn/Learn"
+import { Cards } from "features/cards/Cards/Cards"
 
 export const router = createBrowserRouter([
   {
@@ -66,7 +66,7 @@ export const router = createBrowserRouter([
         // ],
       },
       {
-        path: "cards/:cardId",
+        path: "cards/",
         element: <Cards />,
         // ErrorBoundary: ErrorPage,
       },

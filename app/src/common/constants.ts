@@ -4,3 +4,5 @@ export const checkEmailInstructions = "We'va sent an Email with instructions to 
 export const staticSrcForEmptyAva = "/static/images/avatar/1.jpg"
 export const maxNameLength = 35
 export const tabelsPacksName = ["Name", "Cards", "Last Updated", "Created by", "Actions"]
+
+export const emptyPackAlertText = "This pack is empty. Click add new card to fill this pack"

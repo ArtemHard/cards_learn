@@ -62,7 +62,7 @@ const slice = createSlice({
   initialState: {
     cards: [] as Card[],
     packUserId: "" as string | null,
-    packName: "" as string | null,
+    packName: "123" as string | null,
     packPrivate: false as boolean | null,
     packDeckCover: "" as string | null,
     packCreated: "" as string | null,

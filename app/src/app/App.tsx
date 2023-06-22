@@ -38,6 +38,7 @@ function App() {
       <button onClick={() => navigate("/forgot-password")}>forgot-password</button>
       <button onClick={() => navigate("/profile")}>Profile</button>
       <button onClick={() => navigate("/packs")}>Packs</button>
+      <button onClick={() => navigate("/cards")}>Packs</button>
       <GlobalError />
       {isLoading && <LinearProgress />}
       {/* <Counter /> */}
