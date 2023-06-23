@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import {
   Card,
   Cards,
@@ -13,15 +13,20 @@ import {
 import { createAppAsyncThunk, thunkTryCatch } from "common/utils"
 import { cardsApi } from "./cards.api"
 
-const fetchCards = createAppAsyncThunk<{ cardsPage: Cards }, getCardRequest>(
-  "cards/fetchCards",
-  async (params, thunkAPI) => {
-    return thunkTryCatch(thunkAPI, async () => {
-      const res = await cardsApi.getCard(params)
-      return { cardsPage: res.data }
-    })
-  }
-)
+const fetchCards = createAppAsyncThunk<{ cardsPage: Cards }, void>("cards/fetchCards", async (params, thunkAPI) => {
+  return thunkTryCatch(thunkAPI, async () => {
+    const { cardAnswer, cardQuestion, cardsPack_id, max, min, page, pageCount, sortCards } =
+      thunkAPI.getState().cards.filterParams
+
+    const filteredObj: Omit<getCardRequest, "cardsPack_id"> = Object.fromEntries(
+      Object.entries({ cardAnswer, cardQuestion, max, min, page, pageCount, sortCards }).filter(
+        ([key, value]) => !!value
+      )
+    )
+    const res = await cardsApi.getCard({ cardsPack_id, ...filteredObj })
+    return { cardsPage: res.data }
+  })
+})
 
 const createCard = createAppAsyncThunk<{ card: NewCardResponse }, NewCardRequestType>(
   "cards/createCard",
@@ -56,30 +61,64 @@ const updateGradeCard = createAppAsyncThunk<{ card: UpdateCardResponse }, Update
     })
   }
 )
+type FilterParams = Partial<typeof initialState.filterParams>
+
+const initialState = {
+  cards: [] as Card[],
+  packUserId: "" as string | null,
+  packName: "" as string | null,
+  packPrivate: false as boolean | null,
+  packDeckCover: "" as string | null,
+  packCreated: "" as string | null,
+  packUpdated: "" as string | null,
+  page: null as number | null,
+  pageCount: null as number | null,
+  cardsTotalCount: null as number | null,
+  minGrade: null as number | null,
+  maxGrade: null as number | null,
+  token: "" as string | null,
+  tokenDeathTime: null as number | null,
+  filterParams: {
+    cardAnswer: null as null | string, // не обязательно
+    cardQuestion: null as null | string, // не обязательно
+    cardsPack_id: "" as string,
+    min: null as null | number, // не обязательно
+    max: null as null | number, // не обязательно
+    sortCards: null as null | string, //0grade, // не обязательно
+    page: null as null | number, // не обязательно
+    pageCount: null as null | number, // не обязательно
+  },
+}
 
 const slice = createSlice({
   name: "cards",
-  initialState: {
-    cards: [] as Card[],
-    packUserId: "" as string | null,
-    packName: "123" as string | null,
-    packPrivate: false as boolean | null,
-    packDeckCover: "" as string | null,
-    packCreated: "" as string | null,
-    packUpdated: "" as string | null,
-    page: null as number | null,
-    pageCount: null as number | null,
-    cardsTotalCount: null as number | null,
-    minGrade: null as number | null,
-    maxGrade: null as number | null,
-    token: "" as string | null,
-    tokenDeathTime: null as number | null,
+  initialState,
+  reducers: {
+    changeFilterParams: (state, action: PayloadAction<FilterParams>) => {
+      state.filterParams = { ...state.filterParams, ...action.payload }
+    },
+    clearFilter: (state) => {
+      state.filterParams = {
+        ...initialState.filterParams,
+      }
+    },
   },
-  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchCards.fulfilled, (state, action) => {
-        state = action.payload.cardsPage
+        const newState = action.payload.cardsPage
+        state.cards = newState.cards
+        state.packUserId = newState.packUserId
+        state.packName = newState.packName
+        state.packPrivate = newState.packPrivate
+        state.packDeckCover = newState.packDeckCover
+        state.packCreated = newState.packCreated
+        state.packUpdated = newState.packUpdated
+        state.page = newState.page
+        state.pageCount = newState.pageCount
+        state.cardsTotalCount = newState.cardsTotalCount
+        state.minGrade = newState.minGrade
+        state.maxGrade = newState.maxGrade
       })
       .addCase(updateGradeCard.fulfilled, (state, action) => {
         const index = state.cards.findIndex((card) => card._id === action.payload.card._id)

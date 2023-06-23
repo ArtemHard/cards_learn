@@ -66,7 +66,7 @@ export const router = createBrowserRouter([
         // ],
       },
       {
-        path: "cards/",
+        path: "cards/:cardId",
         element: <Cards />,
         // ErrorBoundary: ErrorPage,
       },

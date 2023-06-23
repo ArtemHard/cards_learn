@@ -9,6 +9,7 @@ const Wrapper = styled.div`
 
 type ContainerType = {
   justifyContent?: "flex-start" | "space-between"
+  width?: string
 }
 
 const Container = styled.div<ContainerType>`
@@ -16,6 +17,7 @@ const Container = styled.div<ContainerType>`
   flex-direction: row;
   justify-content: ${(props) => (props.justifyContent ? props.justifyContent : "space-between")};
   align-items: ${(props) => (props.justifyContent === "flex-start" ? "center" : null)};
+  width: ${(props) => (props.width ? props.width : undefined)};
 `
 const SpanPageContainer = styled.div`
   margin-left: 28px;
@@ -37,6 +39,7 @@ const Title = styled.h1`
 
 type ParamContainerType = {
   marginRight?: string
+  width?: string
 }
 const ParamContainer = styled.div<ParamContainerType>`
   display: flex;
@@ -44,6 +47,7 @@ const ParamContainer = styled.div<ParamContainerType>`
   /* width: 100%; */
   justify-content: space-between;
   margin-right: ${(props) => (props.marginRight ? props.marginRight : "50px")};
+  width: ${(props) => (props.width ? props.width : undefined)};
 `
 
 const ParamsName = styled.h2`

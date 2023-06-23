@@ -9,11 +9,10 @@ import { selectorMaxCardsCount, selectorMinCardsCount } from "features/packs/pac
 import { packsActions, packsThunks } from "features/packs/packs.slice"
 import { selectorIsLoading } from "app/app.selectors"
 
-function valuetext(value: number) {
-  return `${value}°C`
-}
-
 export default function SliderBlock() {
+  // т.к. бэк выдаёт что можно изменять параметры - дизэйбл на ui
+  const packsLength = useAppSelector((state) => state.packs.cardPacks.length)
+
   const min = useAppSelector(selectorMinCardsCount)
   const max = useAppSelector(selectorMaxCardsCount)
   const isLoading = useAppSelector(selectorIsLoading)
@@ -73,8 +72,7 @@ export default function SliderBlock() {
             onChange={handleChange}
             onChangeCommitted={onChangeCommittedHandler}
             valueLabelDisplay="auto"
-            getAriaValueText={valuetext}
-            disabled={min === max || isLoading}
+            disabled={min === max || isLoading || !packsLength}
           />
         </Box>
         <Button

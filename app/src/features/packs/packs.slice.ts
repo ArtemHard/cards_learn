@@ -64,7 +64,7 @@ const initialState = {
   minCardsCount: 0,
   maxCardsCount: 100,
   filterParams: {
-    packName: "" as string | null,
+    packName: null as string | null,
     min: 0 as number | null, // не обязательно
     max: 100 as number | null, // не обязательно
     sortPacks: "" as string | null,

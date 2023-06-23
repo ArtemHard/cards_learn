@@ -1,6 +1,6 @@
 import { useLayoutEffect } from "react"
 import { useActions, useAppSelector } from "common/hooks"
-import { packsThunks } from "features/packs/packs.slice"
+import { packsActions, packsThunks } from "features/packs/packs.slice"
 import { PackType } from "../packs.api.types"
 import styled from "styled-components"
 import { selectorPacks, selectorPageCount, selectorSerchPackName } from "../pack.selector"
@@ -43,6 +43,17 @@ export const Packs = () => {
     updatePack({ ...pack, name: newName })
   }
 
+  const searchQuery = useAppSelector(selectorSerchPackName)
+  const { changeFilterParams } = useActions(packsActions)
+
+  const changeFilterParamsCallback = (params: string | null) => {
+    if (typeof params === "string") {
+      changeFilterParams({ packName: params === "" ? "" : params })
+    } else {
+      changeFilterParams({ packName: params })
+    }
+  }
+
   return (
     <P.Wrapper>
       <P.Container key={"header"}>
@@ -56,7 +67,13 @@ export const Packs = () => {
         />
       </P.Container>
       <P.Container key={"params"}>
-        <SearchInputBlock />
+        <P.ParamContainer key={"search"}>
+          <SearchInputBlock
+            changeFilterParams={changeFilterParamsCallback}
+            searchQuery={searchQuery}
+            fetch={fetchPacks}
+          />
+        </P.ParamContainer>
         <TogglerButtonBlock />
         <SliderBlock />
         <ClearFilterButton />
