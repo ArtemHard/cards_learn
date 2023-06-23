@@ -10,7 +10,7 @@ import { SearchInputBlock } from "components/Inputs/SearchInputBlock/SearchInput
 import TogglerButtonBlock from "components/Button/TogglerButtonBlock/TogglerButtonBlock"
 import SliderBlock from "components/Slider/SliderBlock/SliderBlock"
 import { ClearFilterButton } from "components/Button/ClearFilterButton/ClearFilterButton"
-import { TableContent } from "./PacksTable/TableContent"
+import { TablePacks } from "./PacksTable/TablePacks"
 import { selectorIsLoading } from "app/app.selectors"
 import { PaginationRounded } from "components/Pagination/Pagination"
 import SelectButton from "components/Selector/SelectButton"
@@ -78,7 +78,7 @@ export const Packs = () => {
         <SliderBlock />
         <ClearFilterButton />
       </P.Container>
-      <TableContent packs={cardPacks} />
+      <TablePacks packs={cardPacks} />
       <P.Container key={"paginator"} justifyContent={"flex-start"}>
         <PaginationRounded />
         <P.SpanPageContainer>

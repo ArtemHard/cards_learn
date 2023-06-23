@@ -3,18 +3,38 @@ import { P } from "../../packs/Packs/Packs.styled"
 import KeyboardBackspaceOutlinedIcon from "@mui/icons-material/KeyboardBackspaceOutlined"
 import styled from "styled-components"
 import { useActions, useAppSelector } from "common/hooks"
-import { selectCardsSearhQuestion, selectIsUserPack, selectPackLength, selectPackName } from "../cards.selector"
+import {
+  selectCards,
+  selectCardsSearhQuestion,
+  selectIsUserPack,
+  selectPackLength,
+  selectPackName,
+} from "../cards.selector"
 import { TextLinkBlock } from "components/Form/Form.styled"
 import { emptyPackAlertText } from "common/constants"
 import { BasicButton } from "components/Button/BasicButton"
 import { useNavigate, useParams } from "react-router-dom"
 import { cardsActions, cardsThunks } from "../cards.slice"
 import { SearchInputBlock } from "components/Inputs/SearchInputBlock/SearchInputBlock"
+import { TableCards } from "features/cards/Cards/TableCards/TableCards"
+
+export type headerTableParamsType = {
+  dataParams: string
+  text: string
+  align: "left" | "center" | "right"
+}
+const headerTableParams: headerTableParamsType[] = [
+  { dataParams: "name", text: "Question", align: "left" },
+  { dataParams: "cardsCount", text: "Answer", align: "center" },
+  { dataParams: "updated", text: "Last Updated", align: "center" },
+  { dataParams: "user_name", text: "Grade", align: "right" },
+]
 
 export const Cards = () => {
   const { cardId } = useParams()
   const packName = useAppSelector(selectPackName)
   const cardsLength = useAppSelector(selectPackLength)
+  const cards = useAppSelector(selectCards)
   const isUserPack = useAppSelector(selectIsUserPack)
   const searchParamsQuestion = useAppSelector(selectCardsSearhQuestion)
   const { fetchCards } = useActions(cardsThunks)
@@ -71,6 +91,9 @@ export const Cards = () => {
             width="100%"
           />
         </ParamContainer>
+      </P.Container>
+      <P.Container>
+        <TableCards headerParams={headerTableParams} data={cards} />
       </P.Container>
       {!cardsLength && isUserPack && searchParamsQuestion === "" && searchParamsQuestion === null && (
         <P.Container>
