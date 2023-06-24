@@ -17,7 +17,7 @@ export const selectorPage = (state: RootState) => state.packs.page
 
 export const selectorPageCount = (state: RootState) => state.packs.pageCount
 
-export const selectorCardPacksTotalCount = (state: RootState) => state.packs.cardPacksTotalCount
+export const selectorPacksTotalCount = (state: RootState) => state.packs.cardPacksTotalCount
 
 export const _filterByNamePacksSelector = (state: RootState) => {
   return state.packs.cardPacks.filter((pack) => {

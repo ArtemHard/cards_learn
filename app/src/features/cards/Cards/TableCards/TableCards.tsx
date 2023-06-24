@@ -10,6 +10,7 @@ import { Card } from "features/cards/cards.api.types"
 import { TableHeader } from "../../../../components/Table/TableHeader"
 import { headerTableParamsType } from "features/cards/Cards/Cards"
 import { TableBodyCards } from "../../../../components/Table/TableBodyCards"
+import { cardsActions, cardsThunks } from "features/cards/cards.slice"
 
 const generateRequestSortString = (orderDirection: "asc" | "desc", valueToOrderBy: string) => {
   if (orderDirection === "asc") return "1" + valueToOrderBy
@@ -22,11 +23,11 @@ type TableContentRefactProps = {
 }
 
 export const TableCards = ({ data, headerParams }: TableContentRefactProps) => {
-  const { changeFilterParams } = useActions(packsActions)
-  const { fetchPacks } = useActions(packsThunks)
+  const { changeFilterParams } = useActions(cardsActions)
+  const { fetchCards } = useActions(cardsThunks)
 
   const [orderDirection, setOrderDirection] = useState<"asc" | "desc">("asc")
-  const [valueOrderBy, setValueToOrderBy] = useState<string>("updated")
+  const [valueOrderBy, setValueToOrderBy] = useState<string>("0grade")
   // const [page, setPage] = useState(0)
   // const [rowPerPage, setRowsPerPage] = useState(1)
 
@@ -36,21 +37,11 @@ export const TableCards = ({ data, headerParams }: TableContentRefactProps) => {
     setOrderDirection(isAscending ? "desc" : "asc")
 
     const dataForRequest = {
-      sortPacks: generateRequestSortString(isAscending ? "desc" : "asc", property),
+      sortCards: generateRequestSortString(isAscending ? "desc" : "asc", property),
     }
 
     changeFilterParams(dataForRequest)
-    fetchPacks()
-  }
-
-  const userId = useAppSelector(selectorUserId)
-  const { removePack, updatePack } = useActions(packsThunks)
-
-  const deleteHandler = (packId: string) => {
-    removePack(packId)
-  }
-  const updateHandler = (pack: PackType) => {
-    updatePack({ ...pack, name: "UPDATE_PACK" })
+    fetchCards()
   }
 
   return (

@@ -5,7 +5,10 @@ import styled from "styled-components"
 import { useActions, useAppSelector } from "common/hooks"
 import {
   selectCards,
+  selectCardsPage,
+  selectCardsPageCount,
   selectCardsSearhQuestion,
+  selectCardsTotalCount,
   selectIsUserPack,
   selectPackLength,
   selectPackName,
@@ -17,6 +20,8 @@ import { useNavigate, useParams } from "react-router-dom"
 import { cardsActions, cardsThunks } from "../cards.slice"
 import { SearchInputBlock } from "components/Inputs/SearchInputBlock/SearchInputBlock"
 import { TableCards } from "features/cards/Cards/TableCards/TableCards"
+import { PaginationCommon } from "components/Pagination/PaginationCommon"
+import SelectButtonCommon from "components/Selector/SelectButtonCommon"
 
 export type headerTableParamsType = {
   dataParams: string
@@ -37,11 +42,30 @@ export const Cards = () => {
   const cards = useAppSelector(selectCards)
   const isUserPack = useAppSelector(selectIsUserPack)
   const searchParamsQuestion = useAppSelector(selectCardsSearhQuestion)
-  const { fetchCards } = useActions(cardsThunks)
+  const { fetchCards, createCard } = useActions(cardsThunks)
   const { changeFilterParams } = useActions(cardsActions)
+
+  //for paginator
+  // pageCount: number
+  // page: number
+  // cardPacksTotalCount: number
+  // fetch: () => void
+  // changeFilterParams: (page: number) => void
+  const pageCount = useAppSelector(selectCardsPageCount)
+  const page = useAppSelector(selectCardsPage)
+  const cardsTotalCount = useAppSelector(selectCardsTotalCount)
+
   const onClickHandler = () => {
-    if (isUserPack) {
-      alert("Add pack action")
+    if (isUserPack && cardId) {
+      const temproraryData = {
+        cardsPack_id: cardId,
+        question: "how long you need to create app?",
+        answer: "more than 1 month",
+        grade: 3,
+      }
+      createCard(temproraryData)
+        .unwrap()
+        .then(() => fetchCards())
     } else {
       alert("Learn friends pack")
     }
@@ -53,6 +77,16 @@ export const Cards = () => {
     } else {
       changeFilterParams({ cardQuestion: params })
     }
+  }
+
+  const changePageCallback = (page: number) => {
+    changeFilterParams({ page })
+    fetchCards()
+  }
+
+  const changePageCount = (pageCount: number) => {
+    changeFilterParams({ pageCount })
+    fetchCards()
   }
 
   const navigate = useNavigate()
@@ -100,6 +134,23 @@ export const Cards = () => {
           <EmptyPack />
         </P.Container>
       )}
+      <P.Container key={"paginator"} justifyContent={"flex-start"}>
+        <PaginationCommon
+          page={page}
+          pageCount={pageCount}
+          cardPacksTotalCount={cardsTotalCount}
+          changeFilterParams={changePageCallback}
+        />
+        <P.SpanPageContainer>
+          <P.Span>Show</P.Span>
+          <SelectButtonCommon
+            pageCount={pageCount}
+            changePageCount={changePageCount}
+            cardsCount={[10, 20, 30, 40, 50]}
+          />
+          <P.Span>Cards per Page</P.Span>
+        </P.SpanPageContainer>
+      </P.Container>
     </P.Wrapper>
   )
 }

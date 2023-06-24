@@ -3,7 +3,13 @@ import { useActions, useAppSelector } from "common/hooks"
 import { packsActions, packsThunks } from "features/packs/packs.slice"
 import { PackType } from "../packs.api.types"
 import styled from "styled-components"
-import { selectorPacks, selectorSearchPackName } from "../pack.selector"
+import {
+  selectorPacks,
+  selectorPacksTotalCount,
+  selectorPage,
+  selectorPageCount,
+  selectorSearchPackName,
+} from "../pack.selector"
 import { P } from "./Packs.styled"
 import { BasicButton } from "components/Button/BasicButton"
 import { SearchInputBlock } from "components/Inputs/SearchInputBlock/SearchInputBlock"
@@ -12,15 +18,17 @@ import SliderBlock from "components/Slider/SliderBlock/SliderBlock"
 import { ClearFilterButton } from "components/Button/ClearFilterButton/ClearFilterButton"
 import { TablePacks } from "./PacksTable/TablePacks"
 import { selectorIsLoading } from "app/app.selectors"
-import { PaginationRounded } from "components/Pagination/Pagination"
-import SelectButton from "components/Selector/SelectButton"
+import SelectButtonCommon from "components/Selector/SelectButtonCommon"
+import { PaginationCommon } from "components/Pagination/PaginationCommon"
 
 export const Packs = () => {
   // DANGER FAKE SELECTOR
   const cardPacks = useAppSelector(selectorPacks)
+  const packsTotalCount = useAppSelector(selectorPacksTotalCount)
   const searchPackName = useAppSelector(selectorSearchPackName)
   const isLoading = useAppSelector(selectorIsLoading)
-  // const pageCount = useAppSelector(selectorPageCount)
+  const pageCount = useAppSelector(selectorPageCount)
+  const page = useAppSelector(selectorPage)
   const { fetchPacks, createPack, removePack, updatePack } = useActions(packsThunks)
 
   useLayoutEffect(() => {
@@ -53,8 +61,14 @@ export const Packs = () => {
       changeFilterParams({ packName: params })
     }
   }
-  console.log(searchQuery)
-
+  const changePage = (page: number) => {
+    changeFilterParams({ page })
+    fetchPacks()
+  }
+  const changePageCount = (pageCount: number) => {
+    changeFilterParams({ pageCount })
+    fetchPacks()
+  }
   return (
     <P.Wrapper>
       <P.Container key={"header"}>
@@ -81,10 +95,19 @@ export const Packs = () => {
       </P.Container>
       <TablePacks packs={cardPacks} />
       <P.Container key={"paginator"} justifyContent={"flex-start"}>
-        <PaginationRounded />
+        <PaginationCommon
+          cardPacksTotalCount={packsTotalCount}
+          page={page}
+          pageCount={pageCount}
+          changeFilterParams={changePage}
+        />
         <P.SpanPageContainer>
           <P.Span>Show</P.Span>
-          <SelectButton cardsCount={[10, 20, 30, 40, 50]} />
+          <SelectButtonCommon
+            pageCount={pageCount}
+            changePageCount={changePageCount}
+            cardsCount={[10, 20, 30, 40, 50]}
+          />
           <P.Span>Cards per Page</P.Span>
         </P.SpanPageContainer>
       </P.Container>

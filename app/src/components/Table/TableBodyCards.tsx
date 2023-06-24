@@ -10,6 +10,17 @@ type TableBodyContentProps = {
   cards: Card[]
 }
 export const TableBodyCards = ({ cards }: TableBodyContentProps) => {
+  // const { deleteCard, updateCard } = useActions(cardsThunks)
+
+  // const userId = useAppSelector(selectorUserId)
+
+  // const deleteHandler = (_id: string) => {
+  //   deleteCard({ _id })
+  // }
+  // const updateHandler = (card: Card) => {
+  //   updateCard({ ...card, question: "UPDATEd_Card" })
+  // }
+
   return (
     <TableBody>
       {cards.map((card) => (

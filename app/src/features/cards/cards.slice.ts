@@ -71,9 +71,9 @@ const initialState = {
   packDeckCover: "" as string | null,
   packCreated: "" as string | null,
   packUpdated: "" as string | null,
-  page: null as number | null,
-  pageCount: null as number | null,
-  cardsTotalCount: null as number | null,
+  page: 1 as number,
+  pageCount: 10 as number,
+  cardsTotalCount: 100 as number,
   minGrade: null as number | null,
   maxGrade: null as number | null,
   token: "" as string | null,
@@ -84,9 +84,9 @@ const initialState = {
     cardsPack_id: "" as string,
     min: null as null | number, // не обязательно
     max: null as null | number, // не обязательно
-    sortCards: null as null | string, //0grade, // не обязательно
-    page: null as null | number, // не обязательно
-    pageCount: null as null | number, // не обязательно
+    sortCards: "0grade" as null | string, //0grade, // не обязательно
+    page: 1 as null | number, // не обязательно
+    pageCount: 10 as null | number, // не обязательно
   },
 }
 

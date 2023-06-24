@@ -31,7 +31,7 @@ export const TablePacks = ({ packs }: TableContentType) => {
   const { fetchPacks } = useActions(packsThunks)
 
   const [orderDirection, setOrderDirection] = useState<"asc" | "desc">("asc")
-  const [valueOrderBy, setValueToOrderBy] = useState<string>("updated")
+  const [valueOrderBy, setValueToOrderBy] = useState<string>("0updated")
 
   const handlerRequestSort = (event: React.MouseEvent<unknown>, property: string) => {
     const isAscending = valueOrderBy === property && orderDirection === "asc"

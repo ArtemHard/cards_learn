@@ -67,7 +67,7 @@ const initialState = {
     packName: null as string | null,
     min: 0 as number | null, // не обязательно
     max: 100 as number | null, // не обязательно
-    sortPacks: "" as string | null,
+    sortPacks: "0updated" as string | null,
     page: 1 as number | null, // не обязательно
     pageCount: 10 as number | null, // не обязательно
     user_id: "" as string | null,

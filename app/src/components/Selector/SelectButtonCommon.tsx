@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { styled } from "@mui/material/styles"
 import MenuItem from "@mui/material/MenuItem"
 import FormControl from "@mui/material/FormControl"
@@ -40,21 +40,22 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
   },
 }))
 
-type SelectButtonProps = {
+type SelectButtonCommonProps = {
   cardsCount: number[]
+  changePageCount: (number: number) => void
+  pageCount: number
 }
 
-export default function SelectButton({ cardsCount }: SelectButtonProps) {
-  const { changeFilterParams } = useActions(packsActions)
-  const { fetchPacks } = useActions(packsThunks)
+export default function SelectButtonCommon({ cardsCount, changePageCount, pageCount }: SelectButtonCommonProps) {
   const initialParam = cardsCount[0].toString()
   const [age, setAge] = useState<string>(initialParam)
   const handleChange = (event: { target: { value: string } }) => {
-    changeFilterParams({ pageCount: +event.target.value })
-    fetchPacks().then(() => {
-      setAge(event.target.value)
-    })
+    changePageCount(+event.target.value)
   }
+
+  useEffect(() => {
+    setAge(pageCount.toString())
+  }, [pageCount])
   return (
     <div>
       <FormControl sx={{ m: 1 }} variant="standard" size="small">
