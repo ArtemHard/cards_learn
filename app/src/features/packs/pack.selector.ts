@@ -11,7 +11,7 @@ export const selectorMaxCardsCount = (state: RootState) => state.packs.maxCardsC
 
 export const selectorMinCardsCount = (state: RootState) => state.packs.minCardsCount
 
-export const selectorSerchPackName = (state: RootState) => state.packs.filterParams.packName
+export const selectorSearchPackName = (state: RootState) => state.packs.filterParams.packName
 
 export const selectorPage = (state: RootState) => state.packs.page
 

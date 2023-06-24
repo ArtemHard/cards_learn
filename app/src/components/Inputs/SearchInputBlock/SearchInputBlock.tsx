@@ -1,11 +1,7 @@
-import InputAdornment from "@mui/material/InputAdornment"
 import TextField from "@mui/material/TextField"
 import SearchIcon from "@mui/icons-material/Search"
 import { P } from "../../../features/packs/Packs/Packs.styled"
 import { useDebounce } from "common/utils/useDebounce"
-import { useActions, useAppSelector } from "common/hooks"
-import { selectorSerchPackName } from "features/packs/pack.selector"
-import { packsActions, packsThunks } from "features/packs/packs.slice"
 import { useEffect } from "react"
 
 type SearchInputBlockProps = {
@@ -16,7 +12,7 @@ type SearchInputBlockProps = {
 }
 
 export const SearchInputBlock = ({ changeFilterParams, fetch, searchQuery, width }: SearchInputBlockProps) => {
-  // const searchQuery = useAppSelector(selectorSerchPackName)
+  // const searchQuery = useAppSelector(selectorSearchPackName)
   // const { changeFilterParams } = useActions(packsActions)
   // const { fetchPacks } = useActions(packsThunks)
   const debouncedSearchTerm = useDebounce(searchQuery, 2000)
@@ -41,7 +37,6 @@ export const SearchInputBlock = ({ changeFilterParams, fetch, searchQuery, width
     }
   }, [])
   return (
-    // <P.ParamContainer key={"search"} width={width}>
     <>
       <P.ParamsName>Search</P.ParamsName>
       <TextField
@@ -58,12 +53,11 @@ export const SearchInputBlock = ({ changeFilterParams, fetch, searchQuery, width
           ),
         }}
         fullWidth={true}
-        value={searchQuery}
+        value={searchQuery === null ? "" : searchQuery}
         sx={{ height: "36px", width: width ? width : "413px" }}
         onChange={onChangeHanler}
         autoComplete="off"
       />
     </>
-    // </P.ParamContainer>
   )
 }

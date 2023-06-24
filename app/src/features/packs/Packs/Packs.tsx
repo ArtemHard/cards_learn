@@ -3,7 +3,7 @@ import { useActions, useAppSelector } from "common/hooks"
 import { packsActions, packsThunks } from "features/packs/packs.slice"
 import { PackType } from "../packs.api.types"
 import styled from "styled-components"
-import { selectorPacks, selectorPageCount, selectorSerchPackName } from "../pack.selector"
+import { selectorPacks, selectorSearchPackName } from "../pack.selector"
 import { P } from "./Packs.styled"
 import { BasicButton } from "components/Button/BasicButton"
 import { SearchInputBlock } from "components/Inputs/SearchInputBlock/SearchInputBlock"
@@ -18,7 +18,7 @@ import SelectButton from "components/Selector/SelectButton"
 export const Packs = () => {
   // DANGER FAKE SELECTOR
   const cardPacks = useAppSelector(selectorPacks)
-  const searchPackName = useAppSelector(selectorSerchPackName)
+  const searchPackName = useAppSelector(selectorSearchPackName)
   const isLoading = useAppSelector(selectorIsLoading)
   // const pageCount = useAppSelector(selectorPageCount)
   const { fetchPacks, createPack, removePack, updatePack } = useActions(packsThunks)
@@ -43,7 +43,7 @@ export const Packs = () => {
     updatePack({ ...pack, name: newName })
   }
 
-  const searchQuery = useAppSelector(selectorSerchPackName)
+  const searchQuery = useAppSelector(selectorSearchPackName)
   const { changeFilterParams } = useActions(packsActions)
 
   const changeFilterParamsCallback = (params: string | null) => {
@@ -53,6 +53,7 @@ export const Packs = () => {
       changeFilterParams({ packName: params })
     }
   }
+  console.log(searchQuery)
 
   return (
     <P.Wrapper>

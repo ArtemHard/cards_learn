@@ -5,12 +5,12 @@ import FilterAltOffOutlinedIcon from "@mui/icons-material/FilterAltOffOutlined"
 import { useActions, useAppSelector } from "common/hooks"
 import { packsApi } from "features/packs/packs.api"
 import { packsActions, packsThunks } from "features/packs/packs.slice"
-import { selectorSerchPackName } from "features/packs/pack.selector"
+import { selectorSearchPackName } from "features/packs/pack.selector"
 
 export const ClearFilterButton = () => {
   const { clearFilter } = useActions(packsActions)
   const { fetchPacks } = useActions(packsThunks)
-  const searchPackName = useAppSelector(selectorSerchPackName)
+  const searchPackName = useAppSelector(selectorSearchPackName)
 
   const onClickHandler = () => {
     // if (searchPackName === "") {
