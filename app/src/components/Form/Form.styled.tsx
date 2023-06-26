@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom"
 import {
   checkEmailInstructions,
   createNewPassInstructions,
-  emptyPackAlertText,
+  emptyFriendPackAlertText,
+  emptyUserPackAlertText,
   forgotPassInstructions,
 } from "common/constants"
 import { FormPropsType } from "./Form"
@@ -70,7 +71,8 @@ const ForgotPassLink = styled.span<Pick<TextLinkBlockPropsType, "innerText">>`
     props.innerText === "Don't have an account?" ||
     props.innerText === "Already have an account?" ||
     props.innerText === "Did you remember your password?" ||
-    props.innerText === emptyPackAlertText
+    props.innerText === emptyUserPackAlertText ||
+    props.innerText === emptyFriendPackAlertText
       ? null
       : "pointer"};
   display: flex;
@@ -83,7 +85,8 @@ const ForgotPassLink = styled.span<Pick<TextLinkBlockPropsType, "innerText">>`
     props.innerText === "Sign In" ||
     props.innerText === "Did you remember your password?" ||
     props.innerText === "Try logging in" ||
-    props.innerText === emptyPackAlertText
+    props.innerText === emptyUserPackAlertText ||
+    props.innerText === emptyFriendPackAlertText
       ? "600"
       : "500"};
   font-size: ${(props) => (props.innerText === "Sign Up" || props.innerText === "Sign In" ? "16px" : "14px")};
@@ -94,7 +97,8 @@ const ForgotPassLink = styled.span<Pick<TextLinkBlockPropsType, "innerText">>`
     props.innerText === "Sign In" ||
     props.innerText === "Did you remember your password?" ||
     props.innerText === "Try logging in" ||
-    props.innerText === emptyPackAlertText
+    props.innerText === emptyUserPackAlertText ||
+    props.innerText === emptyFriendPackAlertText
       ? "24px"
       : "17px"};
   text-align: center;
@@ -102,7 +106,8 @@ const ForgotPassLink = styled.span<Pick<TextLinkBlockPropsType, "innerText">>`
     props.innerText === "Don't have an account?" ||
     props.innerText === "Already have an account?" ||
     props.innerText === "Did you remember your password?" ||
-    props.innerText === emptyPackAlertText
+    props.innerText === emptyUserPackAlertText ||
+    props.innerText === emptyFriendPackAlertText
       ? "0.5"
       : null};
   color: ${(props) =>
@@ -135,7 +140,8 @@ export type TextLinkBlockPropsType = {
     | "Send Instructions"
     | "Create new password"
     | "Back to login"
-    | typeof emptyPackAlertText
+    | typeof emptyUserPackAlertText
+    | typeof emptyFriendPackAlertText
 }
 export const TextLinkBlock = ({ innerText }: TextLinkBlockPropsType) => {
   const navigate = useNavigate()

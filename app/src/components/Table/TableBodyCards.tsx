@@ -5,22 +5,19 @@ import { NavLink } from "react-router-dom"
 import { formatDate } from "common/utils"
 import { Card } from "features/cards/cards.api.types"
 import { maxNameLength } from "common/constants"
+import Rating from "@mui/material/Rating"
+import { useAppSelector } from "common/hooks"
+import { selectIsUserPack } from "features/cards/cards.selector"
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined"
+import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined"
+import IconButton from "@mui/material/IconButton"
+import styled from "styled-components"
 
 type TableBodyContentProps = {
   cards: Card[]
 }
 export const TableBodyCards = ({ cards }: TableBodyContentProps) => {
-  // const { deleteCard, updateCard } = useActions(cardsThunks)
-
-  // const userId = useAppSelector(selectorUserId)
-
-  // const deleteHandler = (_id: string) => {
-  //   deleteCard({ _id })
-  // }
-  // const updateHandler = (card: Card) => {
-  //   updateCard({ ...card, question: "UPDATEd_Card" })
-  // }
-
+  const isUserPack = useAppSelector(selectIsUserPack)
   return (
     <TableBody>
       {cards.map((card) => (
@@ -37,8 +34,25 @@ export const TableBodyCards = ({ cards }: TableBodyContentProps) => {
             {formatDate(card.updated)}
           </TableCell>
           <TableCell sx={textTableStyle} align="left">
-            {card.grade}
+            <GradeContainer>
+              <Rating name="read-only" value={card.grade} readOnly />
+              {isUserPack && (
+                <div>
+                  <IconButton aria-label="update" onClick={() => alert("Update Action")}>
+                    <CreateOutlinedIcon />
+                  </IconButton>
+                  <IconButton aria-label="delete" onClick={() => alert("DELETE")}>
+                    <DeleteOutlinedIcon />
+                  </IconButton>
+                </div>
+              )}
+            </GradeContainer>
           </TableCell>
+          {/* {isUserPack && (
+            <TableCell sx={textTableStyle} align="left">
+              {formatDate(card.updated)}
+            </TableCell>
+          )} */}
         </TableRow>
       ))}
     </TableBody>
@@ -60,3 +74,8 @@ const textTableStyle = {
   lineHeight: "16px",
   color: "#000000",
 }
+
+const GradeContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`

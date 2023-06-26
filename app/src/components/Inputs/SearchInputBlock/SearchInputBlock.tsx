@@ -30,12 +30,12 @@ export const SearchInputBlock = ({ changeFilterParams, fetch, searchQuery, width
     // return () => {}
   }, [debouncedSearchTerm])
 
-  useEffect(() => {
-    return () => {
-      // changeFilterParams({ packName: null })
-      changeFilterParams(null)
-    }
-  }, [])
+  // useEffect(() => {
+  //   return () => {
+  //     // changeFilterParams({ packName: null })
+  //     changeFilterParams(null)
+  //   }
+  // }, [])
   return (
     <>
       <P.ParamsName>Search</P.ParamsName>

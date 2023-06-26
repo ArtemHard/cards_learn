@@ -9,6 +9,8 @@ import { useAppDispatch, useAppSelector } from "common/hooks"
 import "react-toastify/dist/ReactToastify.css"
 import Example from "./example"
 import { selectIsAppInitialized, selectIsAuth, selectorIsLoading, selectUnHandleActions } from "./app.selectors"
+import { AddModal } from "components/Modal/AddModal"
+import { DeleteModal } from "components/Modal/DeleteModal"
 
 function App() {
   // const isLoading = useAppSelector((state) => state.app.isLoading)
@@ -31,6 +33,9 @@ function App() {
       {/* <Example /> */}
       <Header />
       {/* <Example /> */}
+      <AddModal />
+      <hr />
+      <DeleteModal />
       <button onClick={() => navigate("/sign-in")}>sign-in</button>
       <button onClick={() => navigate("/sign-up")}>sign-up</button>
       <button onClick={() => navigate("/check-email")}>check-email</button>

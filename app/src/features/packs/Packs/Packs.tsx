@@ -111,42 +111,9 @@ export const Packs = () => {
           <P.Span>Cards per Page</P.Span>
         </P.SpanPageContainer>
       </P.Container>
-      {/* <PacksTable packs={cardPacks} /> */}
       {searchPackName && cardPacks.length === 0 && (
         <>"Колоды с введенным название не найдены. Измените параметры запроса"</>
       )}
-      <div>
-        <h1>Packs</h1>
-        <button onClick={addPackHandler}>add pack</button>
-        <div>
-          {cardPacks.map((p) => {
-            return (
-              <PacksContainer key={p._id}>
-                <p>
-                  <b>pack name</b>: {p.name}
-                </p>
-                <p>
-                  <b>cardsCount</b>: {p.cardsCount}
-                </p>
-                <p>
-                  <b>user name</b>: {p.user_name}
-                </p>
-                <p>
-                  <b>user id</b>: {p._id}
-                </p>
-                <button onClick={() => removePackHandler(p._id)}>remove</button>
-                <button onClick={() => updatePackHandler(p)}>update</button>
-              </PacksContainer>
-            )
-          })}
-        </div>
-      </div>
     </P.Wrapper>
   )
 }
-
-const PacksContainer = styled.div`
-  display: flex;
-  gap: 10px;
-  align-items: center;
-`

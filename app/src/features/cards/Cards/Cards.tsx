@@ -14,7 +14,7 @@ import {
   selectPackName,
 } from "../cards.selector"
 import { TextLinkBlock } from "components/Form/Form.styled"
-import { emptyPackAlertText } from "common/constants"
+import { emptyFriendPackAlertText, emptyUserPackAlertText } from "common/constants"
 import { BasicButton } from "components/Button/BasicButton"
 import { useNavigate, useParams } from "react-router-dom"
 import { cardsActions, cardsThunks } from "../cards.slice"
@@ -43,7 +43,7 @@ export const Cards = () => {
   const isUserPack = useAppSelector(selectIsUserPack)
   const searchParamsQuestion = useAppSelector(selectCardsSearhQuestion)
   const { fetchCards, createCard } = useActions(cardsThunks)
-  const { changeFilterParams } = useActions(cardsActions)
+  const { changeFilterParams, clearFilter } = useActions(cardsActions)
 
   //for paginator
   // pageCount: number
@@ -95,7 +95,13 @@ export const Cards = () => {
       changeFilterParams({ cardsPack_id: cardId })
       fetchCards()
     }
+    return () => {
+      clearFilter()
+    }
   }, [])
+
+  console.log(!!searchParamsQuestion && cardsLength === 0)
+
   return (
     <P.Wrapper>
       <P.Container key={"navigation"} justifyContent="flex-start">
@@ -116,6 +122,7 @@ export const Cards = () => {
           />
         )}
       </P.Container>
+
       <P.Container key={"params"}>
         <ParamContainer>
           <SearchInputBlock
@@ -126,41 +133,44 @@ export const Cards = () => {
           />
         </ParamContainer>
       </P.Container>
-      <P.Container>
-        <TableCards headerParams={headerTableParams} data={cards} />
-      </P.Container>
-      {!cardsLength && isUserPack && searchParamsQuestion === "" && searchParamsQuestion === null && (
+
+      <P.Container>{!!cardsLength && <TableCards headerParams={headerTableParams} data={cards} />}</P.Container>
+      {!cardsLength && searchParamsQuestion === null && (
         <P.Container>
           <EmptyPack />
         </P.Container>
       )}
-      <P.Container key={"paginator"} justifyContent={"flex-start"}>
-        <PaginationCommon
-          page={page}
-          pageCount={pageCount}
-          cardPacksTotalCount={cardsTotalCount}
-          changeFilterParams={changePageCallback}
-        />
-        <P.SpanPageContainer>
-          <P.Span>Show</P.Span>
-          <SelectButtonCommon
+      {!!searchParamsQuestion && cardsLength === 0 && <h1> В данной колоде нету карточек удовлетворяющих поиску</h1>}
+      {!!cardsLength && (
+        <P.Container key={"paginator"} justifyContent={"flex-start"}>
+          <PaginationCommon
+            page={page}
             pageCount={pageCount}
-            changePageCount={changePageCount}
-            cardsCount={[10, 20, 30, 40, 50]}
+            cardPacksTotalCount={cardsTotalCount}
+            changeFilterParams={changePageCallback}
           />
-          <P.Span>Cards per Page</P.Span>
-        </P.SpanPageContainer>
-      </P.Container>
+          <P.SpanPageContainer>
+            <P.Span>Show</P.Span>
+            <SelectButtonCommon
+              pageCount={pageCount}
+              changePageCount={changePageCount}
+              cardsCount={[10, 20, 30, 40, 50]}
+            />
+            <P.Span>Cards per Page</P.Span>
+          </P.SpanPageContainer>
+        </P.Container>
+      )}
     </P.Wrapper>
   )
 }
 
 const EmptyPack = () => {
   const isUserPack = useAppSelector(selectIsUserPack)
+
   return (
     <EmptyPackWrapper>
-      <TextLinkBlock innerText={emptyPackAlertText}></TextLinkBlock>
-      {isUserPack && <BasicButton buttonText="Add new card" width="171px" />}
+      <TextLinkBlock innerText={isUserPack ? emptyUserPackAlertText : emptyFriendPackAlertText}></TextLinkBlock>
+      {isUserPack && <BasicButton buttonText="Add new card" width="171px" onClick={() => alert(" card ACTION")} />}
     </EmptyPackWrapper>
   )
 }
