@@ -28,6 +28,6 @@ export const cardsApi = {
     return instance.put(cards, { card: updateData })
   },
   updateGradeCard(updateGradeData: UpdateCardGrade) {
-    return instance.put<UpdateCardResponse>("cards/grade", { updatedGrade: updateGradeData })
+    return instance.put<UpdateCardResponse>("cards/grade", updateGradeData)
   },
 }

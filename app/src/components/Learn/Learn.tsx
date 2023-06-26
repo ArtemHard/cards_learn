@@ -4,6 +4,7 @@ import { Card } from "features/cards/cards.api.types"
 import { useActions, useAppSelector } from "common/hooks"
 import { BasicButton } from "components/Button/BasicButton"
 import { cardsActions, cardsThunks } from "features/cards/cards.slice"
+import { SetRating } from "./SetRating/SetRating"
 
 const grades = ["не знал", "забыл", "долго думал", "перепутал", "знал"]
 
@@ -32,21 +33,16 @@ export const Learn = () => {
   const [card, setCard] = useState<Card>({
     _id: "fake",
     cardsPack_id: "",
-
     answer: "answer fake",
     question: "question fake",
     grade: 0,
     shots: 0,
-
-    // type: '',
-    // rating: 0,
     user_id: "",
-
     created: "",
     updated: "",
   })
 
-  const { fetchCards } = useActions(cardsThunks)
+  const { fetchCards, updateGradeCard } = useActions(cardsThunks)
   const { changeFilterParams } = useActions(cardsActions)
 
   useEffect(() => {
@@ -75,6 +71,10 @@ export const Learn = () => {
     }
   }
 
+  const changeGradeClickHandler = (newGrade: number) => {
+    if (cardId) updateGradeCard({ grade: newGrade, card_id: card._id })
+  }
+
   return (
     <div>
       LearnPage
@@ -93,7 +93,7 @@ export const Learn = () => {
               {g}
             </BasicButton>
           ))}
-
+          <SetRating callback={changeGradeClickHandler} answer={card.answer} />
           <div>
             <BasicButton buttonText="next" onClick={onNext}>
               next
