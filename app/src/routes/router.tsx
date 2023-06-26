@@ -7,8 +7,8 @@ import { Auth } from "features/auth/Auth/Auth"
 import { ForgotPassword } from "features/auth/ForgotPassword/ForgotPassword"
 import { SetNewPassword } from "features/auth/SetNewPassword/SetNewPassword"
 import { Packs } from "features/packs/Packs/Packs"
-import { Learn } from "components/Learn/Learn"
 import { Cards } from "features/cards/Cards/Cards"
+import { Learn } from "components/Learn/Learn"
 
 export const router = createBrowserRouter([
   {
