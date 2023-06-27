@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { Card } from "features/cards/cards.api.types"
 import { useActions, useAppSelector } from "common/hooks"
 import { BasicButton } from "components/Button/BasicButton"
@@ -8,6 +8,8 @@ import { SetRating } from "./SetRating/SetRating"
 import styled from "styled-components"
 import { selectorPackName } from "../../features/cards/cards.selector"
 import { TitleForForm } from "components/Form/Form.styled"
+import KeyboardBackspaceOutlinedIcon from "@mui/icons-material/KeyboardBackspaceOutlined"
+import { P } from "../../features/packs/Packs/Packs.styled"
 
 const grades = ["не знал", "забыл", "долго думал", "перепутал", "знал"]
 
@@ -75,41 +77,59 @@ export const Learn = () => {
     }
   }
 
-  const changeGradeClickHandler = (newGrade: number) => {
-    if (cardId) updateGradeCard({ grade: newGrade, card_id: card._id })
+  const changeGradeClickHandlerNext = (newGrade: number) => {
+    setIsChecked(false)
+    if (cardId) {
+      updateGradeCard({ grade: newGrade, card_id: card._id })
+      setCard(getCard(cards))
+    }
+    if (cards.length > 0) {
+      setCard(getCard(cards))
+    } else {
+    }
   }
 
+  const navigate = useNavigate()
+
   return (
-    <Container>
-      <TitleForForm>Learn "{packName}"</TitleForForm>
-      <Wrapper>
-        <SpanText>
-          <b>Question: </b>
-          {card.question}
-        </SpanText>
-        <GrayText>
-          Количество попыток ответов на вопрос: <b>{card.shots}</b>
-        </GrayText>
+    <P.Wrapper>
+      <P.Container>
+        <BackNavigateContainer onClick={() => navigate("/packs" + cardId)}>
+          <KeyboardBackspaceOutlinedIcon sx={{ marginRight: "8px" }} />
+          <Span>Back to Packs List</Span>
+        </BackNavigateContainer>
+      </P.Container>
+      <Container>
+        <TitleForForm>Learn "{packName}"</TitleForForm>
+        <Wrapper>
+          <SpanText>
+            <b>Question: </b>
+            {card.question}
+          </SpanText>
+          <GrayText>
+            Количество попыток ответов на вопрос: <b>{card.shots}</b>
+          </GrayText>
 
-        {!isChecked && <BasicButton buttonText="Show answer" onClick={() => setIsChecked(true)} />}
-        {isChecked && (
-          <>
-            <SpanText>
-              <b>Answer: </b>
-              {card.answer}
-            </SpanText>
-            <SetRating callback={onNext} />
+          {!isChecked && <BasicButton buttonText="Show answer" onClick={() => setIsChecked(true)} />}
+          {isChecked && (
+            <>
+              <SpanText>
+                <b>Answer: </b>
+                {card.answer}
+              </SpanText>
+              <SetRating callback={onNext} />
 
-            {/* {grades.map((g, i) => (
+              {/* {grades.map((g, i) => (
               <BasicButton buttonText={g} key={"grade-" + i} onClick={() => {}}>
                 {g}
               </BasicButton>
             ))}
             <SetRating callback={changeGradeClickHandler} answer={card.answer} /> */}
-          </>
-        )}
-      </Wrapper>
-    </Container>
+            </>
+          )}
+        </Wrapper>
+      </Container>
+    </P.Wrapper>
   )
 }
 
@@ -118,6 +138,7 @@ const Container = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  margin-top: 27px;
   /* height: 100vh; */
 `
 const Wrapper = styled.div`
@@ -153,4 +174,25 @@ const GrayText = styled.span`
   opacity: 50%;
   margin-bottom: 35px;
   margin-top: 13px;
+`
+const BackNavigateContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  :hover {
+    border-bottom: 2px solid black;
+  }
+`
+
+const Span = styled.span`
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  /* identical to box height */
+
+  color: #000000;
 `
