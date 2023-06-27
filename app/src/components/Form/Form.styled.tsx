@@ -268,11 +268,3 @@ export const SVGEmail = () => {
     </div>
   )
 }
-
-// export const S = {
-//   FormWrapper,
-//   FormModule,
-//   TextLinkBlock,
-//   TextBlock,
-//   SVGEmail,
-// }

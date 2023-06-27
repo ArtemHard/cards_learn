@@ -6,6 +6,7 @@ import FormLabel from "@mui/material/FormLabel"
 import { useForm, Controller, SubmitHandler } from "react-hook-form"
 import { Card } from "features/cards/cards.api.types"
 import styled from "styled-components"
+import { BasicButton } from "components/Button/BasicButton"
 
 const grades = ["не знал", "забыл", "долго думал", "перепутал", "знал"]
 // type NumericString =
@@ -13,10 +14,10 @@ type ratingFromType = Pick<Card, "grade">
 
 type SetRatingProps = {
   callback: (newGrade: number) => void
-  answer: string
+  //   answer: string
 }
 
-export const SetRating = ({ answer, callback }: SetRatingProps) => {
+export const SetRating = ({ callback }: SetRatingProps) => {
   const { register, handleSubmit, control } = useForm<ratingFromType>({
     defaultValues: {
       grade: 1,
@@ -47,7 +48,9 @@ export const SetRating = ({ answer, callback }: SetRatingProps) => {
           </FormControl>
         )}
       />
-      <input type="submit" />
+      <ButtonContainer>
+        <BasicButton type="submit" buttonText="Next" width="100%" />
+      </ButtonContainer>
     </FormWrapper>
   )
 }
@@ -63,4 +66,10 @@ const textStyle = {
 const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
+  width: 100%;
+  margin-top: 24px;
+`
+const ButtonContainer = styled.div`
+  margin: 42px;
+  padding: 0;
 `

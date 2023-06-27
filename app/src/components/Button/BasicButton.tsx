@@ -18,6 +18,7 @@ export const BasicButton = ({ buttonText, type, width, marginBottom, onClick, is
         height: "36px",
         borderRadius: "50px",
         textTransform: "none",
+        margin: "0px",
         marginBottom: marginBottom ? marginBottom : "31px",
         background: "#366EFF",
         boxShadow: "0px 4px 18px rgba(54, 110, 255, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3)",

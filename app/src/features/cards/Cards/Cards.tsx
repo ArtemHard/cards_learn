@@ -4,14 +4,14 @@ import KeyboardBackspaceOutlinedIcon from "@mui/icons-material/KeyboardBackspace
 import styled from "styled-components"
 import { useActions, useAppSelector } from "common/hooks"
 import {
-  selectCards,
-  selectCardsPage,
-  selectCardsPageCount,
-  selectCardsSearhQuestion,
-  selectCardsTotalCount,
+  selectorCardsPage,
+  selectorCardsPageCount,
+  selectorCardsSearhQuestion,
+  selectorCardsTotalCount,
   selectIsUserPack,
-  selectPackLength,
-  selectPackName,
+  selectorPackLength,
+  selectorPackName,
+  selectorCards,
 } from "../cards.selector"
 import { TextLinkBlock } from "components/Form/Form.styled"
 import { emptyFriendPackAlertText, emptyUserPackAlertText } from "common/constants"
@@ -37,11 +37,11 @@ const headerTableParams: headerTableParamsType[] = [
 
 export const Cards = () => {
   const { cardId } = useParams()
-  const packName = useAppSelector(selectPackName)
-  const cardsLength = useAppSelector(selectPackLength)
-  const cards = useAppSelector(selectCards)
+  const packName = useAppSelector(selectorPackName)
+  const cardsLength = useAppSelector(selectorPackLength)
+  const cards = useAppSelector(selectorCards)
   const isUserPack = useAppSelector(selectIsUserPack)
-  const searchParamsQuestion = useAppSelector(selectCardsSearhQuestion)
+  const searchParamsQuestion = useAppSelector(selectorCardsSearhQuestion)
   const { fetchCards, createCard } = useActions(cardsThunks)
   const { changeFilterParams, clearFilter } = useActions(cardsActions)
 
@@ -51,9 +51,9 @@ export const Cards = () => {
   // cardPacksTotalCount: number
   // fetch: () => void
   // changeFilterParams: (page: number) => void
-  const pageCount = useAppSelector(selectCardsPageCount)
-  const page = useAppSelector(selectCardsPage)
-  const cardsTotalCount = useAppSelector(selectCardsTotalCount)
+  const pageCount = useAppSelector(selectorCardsPageCount)
+  const page = useAppSelector(selectorCardsPage)
+  const cardsTotalCount = useAppSelector(selectorCardsTotalCount)
 
   const onClickHandler = () => {
     if (isUserPack && cardId) {

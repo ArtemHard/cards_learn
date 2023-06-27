@@ -5,6 +5,9 @@ import { useActions, useAppSelector } from "common/hooks"
 import { BasicButton } from "components/Button/BasicButton"
 import { cardsActions, cardsThunks } from "features/cards/cards.slice"
 import { SetRating } from "./SetRating/SetRating"
+import styled from "styled-components"
+import { selectorPackName } from "../../features/cards/cards.selector"
+import { TitleForForm } from "components/Form/Form.styled"
 
 const grades = ["не знал", "забыл", "долго думал", "перепутал", "знал"]
 
@@ -28,6 +31,7 @@ export const Learn = () => {
   const [first, setFirst] = useState<boolean>(true)
   // const [first, setFirst] = useState<boolean>(0);
   const { cards } = useAppSelector((store) => store.cards)
+  const packName = useAppSelector(selectorPackName)
   const { cardId } = useParams()
 
   const [card, setCard] = useState<Card>({
@@ -76,31 +80,77 @@ export const Learn = () => {
   }
 
   return (
-    <div>
-      LearnPage
-      <div>{card.question}</div>
-      <div>
-        <BasicButton buttonText="check" onClick={() => setIsChecked(true)}>
-          check
-        </BasicButton>
-      </div>
-      {isChecked && (
-        <>
-          <div>{card.answer}</div>
+    <Container>
+      <TitleForForm>Learn "{packName}"</TitleForForm>
+      <Wrapper>
+        <SpanText>
+          <b>Question: </b>
+          {card.question}
+        </SpanText>
+        <GrayText>
+          Количество попыток ответов на вопрос: <b>{card.shots}</b>
+        </GrayText>
 
-          {grades.map((g, i) => (
-            <BasicButton buttonText={g} key={"grade-" + i} onClick={() => {}}>
-              {g}
-            </BasicButton>
-          ))}
-          <SetRating callback={changeGradeClickHandler} answer={card.answer} />
-          <div>
-            <BasicButton buttonText="next" onClick={onNext}>
-              next
-            </BasicButton>
-          </div>
-        </>
-      )}
-    </div>
+        {!isChecked && <BasicButton buttonText="Show answer" onClick={() => setIsChecked(true)} />}
+        {isChecked && (
+          <>
+            <SpanText>
+              <b>Answer: </b>
+              {card.answer}
+            </SpanText>
+            <SetRating callback={onNext} />
+
+            {/* {grades.map((g, i) => (
+              <BasicButton buttonText={g} key={"grade-" + i} onClick={() => {}}>
+                {g}
+              </BasicButton>
+            ))}
+            <SetRating callback={changeGradeClickHandler} answer={card.answer} /> */}
+          </>
+        )}
+      </Wrapper>
+    </Container>
   )
 }
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  /* height: 100vh; */
+`
+const Wrapper = styled.div`
+  padding: 35px 33px 38px 33px;
+  /* margin: 60px 433px 72px 434px; */
+  height: 100%;
+  width: 413px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  align-items: flex-start;
+
+  background: #ffffff;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1), -1px -1px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+`
+const SpanText = styled.span`
+  font-family: Montserrat, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  /* letter-spacing: 0em; */
+  /* text-align: left; */
+`
+const GrayText = styled.span`
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  opacity: 50%;
+  margin-bottom: 35px;
+  margin-top: 13px;
+`
