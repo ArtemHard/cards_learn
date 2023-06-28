@@ -6,7 +6,7 @@ import { BasicButton } from "components/Button/BasicButton"
 import { cardsActions, cardsThunks } from "features/cards/cards.slice"
 import { SetRating } from "./SetRating/SetRating"
 import styled from "styled-components"
-import { selectorPackName } from "../../features/cards/cards.selector"
+import { selectorCards, selectorPackName } from "../../features/cards/cards.selector"
 import { TitleForForm } from "components/Form/Form.styled"
 import KeyboardBackspaceOutlinedIcon from "@mui/icons-material/KeyboardBackspaceOutlined"
 import { P } from "../../features/packs/Packs/Packs.styled"
@@ -32,7 +32,7 @@ export const Learn = () => {
   const [isChecked, setIsChecked] = useState<boolean>(false)
   const [first, setFirst] = useState<boolean>(true)
   // const [first, setFirst] = useState<boolean>(0);
-  const { cards } = useAppSelector((store) => store.cards)
+  const cards = useAppSelector(selectorCards)
   const packName = useAppSelector(selectorPackName)
   const { cardId } = useParams()
 
@@ -68,14 +68,14 @@ export const Learn = () => {
     }
   }, [cardId, cards, first])
 
-  const onNext = () => {
-    setIsChecked(false)
+  // const onNext = () => {
+  //   setIsChecked(false)
 
-    if (cards.length > 0) {
-      setCard(getCard(cards))
-    } else {
-    }
-  }
+  //   if (cards.length > 0) {
+  //     setCard(getCard(cards))
+  //   } else {
+  //   }
+  // }
 
   const changeGradeClickHandlerNext = (newGrade: number) => {
     setIsChecked(false)
@@ -117,7 +117,7 @@ export const Learn = () => {
                 <b>Answer: </b>
                 {card.answer}
               </SpanText>
-              <SetRating callback={onNext} />
+              <SetRating callback={changeGradeClickHandlerNext} />
 
               {/* {grades.map((g, i) => (
               <BasicButton buttonText={g} key={"grade-" + i} onClick={() => {}}>

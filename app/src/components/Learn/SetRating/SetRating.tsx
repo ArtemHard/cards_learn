@@ -36,7 +36,7 @@ export const SetRating = ({ callback }: SetRatingProps) => {
         control={control}
         rules={{ required: true }}
         render={({ field }) => (
-          <FormControl {...field}>
+          <FormControl {...field} sx={{ marginBottom: "42px" }}>
             <FormLabel id="demo-radio-buttons-group-label" sx={textStyle}>
               Rate yourself:
             </FormLabel>
@@ -48,9 +48,7 @@ export const SetRating = ({ callback }: SetRatingProps) => {
           </FormControl>
         )}
       />
-      <ButtonContainer>
-        <BasicButton type="submit" buttonText="Next" width="100%" />
-      </ButtonContainer>
+      <BasicButton type="submit" buttonText="Next" width="100%" />
     </FormWrapper>
   )
 }
@@ -68,8 +66,4 @@ const FormWrapper = styled.form`
   flex-direction: column;
   width: 100%;
   margin-top: 24px;
-`
-const ButtonContainer = styled.div`
-  margin: 42px;
-  padding: 0;
 `

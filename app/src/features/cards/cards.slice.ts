@@ -52,12 +52,12 @@ const updateCard = createAppAsyncThunk<void, UpdateCard>("cards/updateCard", asy
   })
 })
 
-const updateGradeCard = createAppAsyncThunk<{ card: UpdateCardResponse }, UpdateCardGrade>(
+const updateGradeCard = createAppAsyncThunk<{ card: UpdateCardResponse["updatedGrade"] }, UpdateCardGrade>(
   "cards/updateGradeCard",
   async (arg, thunkAPI) => {
     return thunkTryCatch(thunkAPI, async () => {
       const res = await cardsApi.updateGradeCard(arg)
-      return { card: res.data }
+      return { card: res.data.updatedGrade }
     })
   }
 )
@@ -120,9 +120,11 @@ const slice = createSlice({
         state.minGrade = newState.minGrade
         state.maxGrade = newState.maxGrade
       })
+      //  From back come in different key card_id that equal _id in state
       .addCase(updateGradeCard.fulfilled, (state, action) => {
-        const index = state.cards.findIndex((card) => card._id === action.payload.card._id)
-        if (index !== -1) state.cards[index] = { ...state.cards[index], ...action.payload.card }
+        const { grade, shots, card_id } = action.payload.card
+        const index = state.cards.findIndex((card) => card._id === card_id)
+        if (index !== -1) state.cards[index] = { ...state.cards[index], grade: grade, shots: shots }
       })
   },
 })
