@@ -52,7 +52,7 @@ const updatePack = createAppAsyncThunk<{ pack: PackType }, UpdatedPackArg>(
   async (arg, thunkAPI) => {
     return thunkTryCatch(thunkAPI, async () => {
       const res = await packsApi.updatePack(arg)
-      // меняет значение другого слайса, packName
+      // change value in cards.slice, value packName (used in Cards.tsx)
       thunkAPI.dispatch(cardsActions.updateCard(res.data.updatedCardsPack))
       return { pack: res.data.updatedCardsPack }
     })

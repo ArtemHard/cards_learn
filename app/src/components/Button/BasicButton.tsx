@@ -26,7 +26,7 @@ export const BasicButton = ({ buttonText, type, width, marginBottom, onClick, is
       onClick={onClick}
       type={type ? type : "submit"}
       variant="contained"
-      disabled={isLoading ? isLoading : undefined}
+      disabled={isLoading}
     >
       {buttonText}
     </Button>

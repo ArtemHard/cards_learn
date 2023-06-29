@@ -54,7 +54,7 @@ export const Learn = () => {
     console.log("LearnContainer useEffect")
 
     if (first) {
-      changeFilterParams({ cardsPack_id: cardId })
+      changeFilterParams({ cardsPack_id: cardId, pageCount: 100 })
       fetchCards()
       setFirst(false)
     }

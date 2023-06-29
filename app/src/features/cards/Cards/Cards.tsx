@@ -22,9 +22,8 @@ import { SearchInputBlock } from "components/Inputs/SearchInputBlock/SearchInput
 import { TableCards } from "features/cards/Cards/TableCards/TableCards"
 import { PaginationCommon } from "components/Pagination/PaginationCommon"
 import SelectButtonCommon from "components/Selector/SelectButtonCommon"
-import MoreIcon from "@mui/icons-material/MoreVert"
-import IconButton from "@mui/material/IconButton"
 import { MoreTools } from "components/MoreTools/MoreTools"
+import { selectorIsLoading } from "app/app.selectors"
 
 export type headerTableParamsType = {
   dataParams: string
@@ -45,6 +44,8 @@ export const Cards = () => {
   const cards = useAppSelector(selectorCards)
   const isUserPack = useAppSelector(selectIsUserPack)
   const searchParamsQuestion = useAppSelector(selectorCardsSearhQuestion)
+  const isLoading = useAppSelector(selectorIsLoading)
+
   const { fetchCards, createCard } = useActions(cardsThunks)
   const { changeFilterParams, clearFilter } = useActions(cardsActions)
 
@@ -57,14 +58,14 @@ export const Cards = () => {
       const temproraryData = {
         cardsPack_id: packId,
         question: "how long you need to create app?",
-        answer: "more than 1 month",
-        grade: 3,
+        answer: "more than 2 month",
+        grade: 2,
       }
       createCard(temproraryData)
         .unwrap()
         .then(() => fetchCards())
     } else {
-      alert("Learn friends pack")
+      navigate("/learn/" + packId)
     }
   }
 
@@ -111,15 +112,6 @@ export const Cards = () => {
       <P.Container key={"header"} justifyContent="space-between">
         <P.Title>
           {packName} <MoreTools packId={packId} />
-          {/* <IconButton
-            onClick={() => alert("action")}
-            size="large"
-            aria-label="display more actions"
-            edge="end"
-            color="inherit"
-          >
-            <MoreIcon />
-          </IconButton> */}
         </P.Title>
         {(!!cardsLength || isUserPack) && (
           <BasicButton
@@ -127,6 +119,7 @@ export const Cards = () => {
             width="184px"
             onClick={onClickHandler}
             marginBottom="0px"
+            isLoading={isLoading}
           />
         )}
       </P.Container>
