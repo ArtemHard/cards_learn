@@ -1,7 +1,8 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { createAppAsyncThunk, thunkTryCatch } from "common/utils"
-import { ArgCreatePackType, FetchPacksResponseType, PackType } from "features/packs/packs.api.types"
+import { ArgCreatePackType, FetchPacksResponseType, PackType, UpdatedPackArg } from "features/packs/packs.api.types"
 import { GetParamsType, packsApi } from "./packs.api"
+import { cardsActions } from "features/cards/cards.slice"
 
 const fetchPacks = createAppAsyncThunk<{ packsPage: FetchPacksResponseType }, void>(
   "packs/fetchPacks",
@@ -46,13 +47,17 @@ const removePack = createAppAsyncThunk<{ packId: string }, string>("packs/remove
   })
 })
 
-const updatePack = createAppAsyncThunk<{ pack: PackType }, PackType>("packs/updatePack", async (arg, thunkAPI) => {
-  return thunkTryCatch(thunkAPI, async () => {
-    const res = await packsApi.updatePack(arg)
-
-    return { pack: res.data.updatedCardsPack }
-  })
-})
+const updatePack = createAppAsyncThunk<{ pack: PackType }, UpdatedPackArg>(
+  "packs/updatePack",
+  async (arg, thunkAPI) => {
+    return thunkTryCatch(thunkAPI, async () => {
+      const res = await packsApi.updatePack(arg)
+      // меняет значение другого слайса, packName
+      thunkAPI.dispatch(cardsActions.updateCard(res.data.updatedCardsPack))
+      return { pack: res.data.updatedCardsPack }
+    })
+  }
+)
 
 type FilterParams = Partial<typeof initialState.filterParams>
 
@@ -114,7 +119,9 @@ const slice = createSlice({
       })
       .addCase(updatePack.fulfilled, (state, action) => {
         const index = state.cardPacks.findIndex((pack) => pack._id === action.payload.pack._id)
-        if (index !== -1) state.cardPacks[index] = action.payload.pack
+        if (index !== -1) {
+          state.cardPacks[index] = action.payload.pack
+        }
       })
   },
 })

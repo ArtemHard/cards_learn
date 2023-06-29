@@ -22,6 +22,9 @@ import { SearchInputBlock } from "components/Inputs/SearchInputBlock/SearchInput
 import { TableCards } from "features/cards/Cards/TableCards/TableCards"
 import { PaginationCommon } from "components/Pagination/PaginationCommon"
 import SelectButtonCommon from "components/Selector/SelectButtonCommon"
+import MoreIcon from "@mui/icons-material/MoreVert"
+import IconButton from "@mui/material/IconButton"
+import { MoreTools } from "components/MoreTools/MoreTools"
 
 export type headerTableParamsType = {
   dataParams: string
@@ -36,7 +39,7 @@ const headerTableParams: headerTableParamsType[] = [
 ]
 
 export const Cards = () => {
-  const { cardId } = useParams()
+  const { cardId: packId } = useParams()
   const packName = useAppSelector(selectorPackName)
   const cardsLength = useAppSelector(selectorPackLength)
   const cards = useAppSelector(selectorCards)
@@ -45,20 +48,14 @@ export const Cards = () => {
   const { fetchCards, createCard } = useActions(cardsThunks)
   const { changeFilterParams, clearFilter } = useActions(cardsActions)
 
-  //for paginator
-  // pageCount: number
-  // page: number
-  // cardPacksTotalCount: number
-  // fetch: () => void
-  // changeFilterParams: (page: number) => void
   const pageCount = useAppSelector(selectorCardsPageCount)
   const page = useAppSelector(selectorCardsPage)
   const cardsTotalCount = useAppSelector(selectorCardsTotalCount)
 
   const onClickHandler = () => {
-    if (isUserPack && cardId) {
+    if (isUserPack && packId) {
       const temproraryData = {
-        cardsPack_id: cardId,
+        cardsPack_id: packId,
         question: "how long you need to create app?",
         answer: "more than 1 month",
         grade: 3,
@@ -91,8 +88,8 @@ export const Cards = () => {
 
   const navigate = useNavigate()
   useEffect(() => {
-    if (cardId) {
-      changeFilterParams({ cardsPack_id: cardId })
+    if (packId) {
+      changeFilterParams({ cardsPack_id: packId })
       fetchCards()
     }
     return () => {
@@ -100,7 +97,7 @@ export const Cards = () => {
     }
   }, [])
 
-  console.log(!!searchParamsQuestion && cardsLength === 0)
+  console.log(packName)
 
   return (
     <P.Wrapper>
@@ -112,7 +109,18 @@ export const Cards = () => {
       </P.Container>
 
       <P.Container key={"header"} justifyContent="space-between">
-        <P.Title>{packName}</P.Title>
+        <P.Title>
+          {packName} <MoreTools packId={packId} />
+          {/* <IconButton
+            onClick={() => alert("action")}
+            size="large"
+            aria-label="display more actions"
+            edge="end"
+            color="inherit"
+          >
+            <MoreIcon />
+          </IconButton> */}
+        </P.Title>
         {(!!cardsLength || isUserPack) && (
           <BasicButton
             buttonText={isUserPack ? "Add new card" : "Learn to pack"}

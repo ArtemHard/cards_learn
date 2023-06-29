@@ -6,6 +6,7 @@ import {
   PackType,
   RemovePackResponseType,
   UpdatePackResponseType,
+  UpdatedPackArg,
 } from "./packs.api.types"
 
 export const packsApi = {
@@ -22,7 +23,7 @@ export const packsApi = {
   removePack: (id: string) => {
     return instance.delete<RemovePackResponseType>(`cards/pack?id=${id}`)
   },
-  updatePack: (cardsPack: PackType) => {
+  updatePack: (cardsPack: UpdatedPackArg) => {
     return instance.put<UpdatePackResponseType>("cards/pack", { cardsPack })
   },
 }

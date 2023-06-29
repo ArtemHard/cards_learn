@@ -31,7 +31,6 @@ const getCard = (cards: Card[]) => {
 export const Learn = () => {
   const [isChecked, setIsChecked] = useState<boolean>(false)
   const [first, setFirst] = useState<boolean>(true)
-  // const [first, setFirst] = useState<boolean>(0);
   const cards = useAppSelector(selectorCards)
   const packName = useAppSelector(selectorPackName)
   const { cardId } = useParams()
@@ -60,22 +59,12 @@ export const Learn = () => {
       setFirst(false)
     }
 
-    console.log("cards", cards)
     if (cards.length > 0) setCard(getCard(cards))
 
     return () => {
       console.log("LearnContainer useEffect off")
     }
   }, [cardId, cards, first])
-
-  // const onNext = () => {
-  //   setIsChecked(false)
-
-  //   if (cards.length > 0) {
-  //     setCard(getCard(cards))
-  //   } else {
-  //   }
-  // }
 
   const changeGradeClickHandlerNext = (newGrade: number) => {
     setIsChecked(false)
@@ -94,7 +83,7 @@ export const Learn = () => {
   return (
     <P.Wrapper>
       <P.Container>
-        <BackNavigateContainer onClick={() => navigate("/packs" + cardId)}>
+        <BackNavigateContainer onClick={() => navigate("/cards/" + cardId)}>
           <KeyboardBackspaceOutlinedIcon sx={{ marginRight: "8px" }} />
           <Span>Back to Packs List</Span>
         </BackNavigateContainer>
@@ -118,13 +107,6 @@ export const Learn = () => {
                 {card.answer}
               </SpanText>
               <SetRating callback={changeGradeClickHandlerNext} />
-
-              {/* {grades.map((g, i) => (
-              <BasicButton buttonText={g} key={"grade-" + i} onClick={() => {}}>
-                {g}
-              </BasicButton>
-            ))}
-            <SetRating callback={changeGradeClickHandler} answer={card.answer} /> */}
             </>
           )}
         </Wrapper>

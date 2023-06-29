@@ -51,3 +51,5 @@ export type ArgCreatePackType = {
   deckCover?: string
   private?: boolean
 }
+
+export type UpdatedPackArg = Partial<PackType> & Pick<PackType, "_id">

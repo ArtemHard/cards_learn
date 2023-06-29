@@ -12,6 +12,7 @@ import {
 } from "./cards.api.types"
 import { createAppAsyncThunk, thunkTryCatch } from "common/utils"
 import { cardsApi } from "./cards.api"
+import { PackType } from "features/packs/packs.api.types"
 
 const fetchCards = createAppAsyncThunk<{ cardsPage: Cards }, void>("cards/fetchCards", async (params, thunkAPI) => {
   return thunkTryCatch(thunkAPI, async () => {
@@ -101,6 +102,11 @@ const slice = createSlice({
       state.filterParams = {
         ...initialState.filterParams,
       }
+    },
+    updateCard: (state, action: PayloadAction<PackType>) => {
+      state.packName = action.payload.name
+      state.packUpdated = action.payload.updated
+      state.packPrivate = action.payload.private
     },
   },
   extraReducers: (builder) => {
