@@ -6,6 +6,7 @@ const initialState = {
   name: "",
   question: "",
   answer: "",
+  type: "Pack" as "Pack" | "Card",
   modalShow: {
     isDelete: false,
     isCreateNew: false,
@@ -20,7 +21,10 @@ const slice = createSlice({
     toggleModal: (state, action: PayloadAction<ModalShowBoolean>) => {
       state.modalShow = { ...state.modalShow, ...action.payload }
     },
-    setDataModal: (state, action: PayloadAction<Omit<typeof initialState, "modalShow">>) => {
+    setDataModal: (
+      state,
+      action: PayloadAction<Omit<typeof initialState, "modalShow"> & { type: "Pack" | "Card" }>
+    ) => {
       const data = action.payload
       state.id = data.id
       state.name = data.name

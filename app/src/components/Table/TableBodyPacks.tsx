@@ -31,12 +31,14 @@ export const TableBodyPacks = ({ packs }: TableBodyPacksProps) => {
   const { removePack, updatePack } = useActions(packsThunks)
   const updateHandler = (pack: PackType) => {
     toggleModal({ isEdit: true })
-    setDataModal({ id: pack._id, answer: "", question: "", name: pack.name })
+    setDataModal({ id: pack._id, answer: "", question: "", name: pack.name, type: "Pack" })
     // updatePack({ ...pack, name: "UPDATE_PACK" })
   }
 
-  const deleteHandler = (packId: string) => {
-    removePack(packId)
+  const deleteHandler = (pack: PackType) => {
+    setDataModal({ type: "Pack", id: pack._id, answer: "", question: "", name: pack.name })
+    toggleModal({ isDelete: true })
+    // removePack(packId)
   }
 
   const learnPackHandler = (id: string) => {
@@ -75,7 +77,7 @@ export const TableBodyPacks = ({ packs }: TableBodyPacksProps) => {
                 <IconButton aria-label="update" onClick={() => updateHandler(pack)}>
                   <CreateOutlinedIcon />
                 </IconButton>
-                <IconButton aria-label="delete" onClick={() => deleteHandler(pack._id)}>
+                <IconButton aria-label="delete" onClick={() => deleteHandler(pack)}>
                   <DeleteOutlinedIcon />
                 </IconButton>
               </>

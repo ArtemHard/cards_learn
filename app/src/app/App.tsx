@@ -11,6 +11,7 @@ import Example from "./example"
 import { selectIsAppInitialized, selectIsAuth, selectorIsLoading, selectUnHandleActions } from "./app.selectors"
 import { AddModal } from "components/Modal/AddModal"
 import { DeleteModal } from "components/Modal/DeleteModal"
+import { Modal } from "features/modals/Modal/Modal"
 
 function App() {
   // const isLoading = useAppSelector((state) => state.app.isLoading)
@@ -33,9 +34,7 @@ function App() {
       {/* <Example /> */}
       <Header />
       {/* <Example /> */}
-      <AddModal />
-      <hr />
-      <DeleteModal />
+      <Modal />
       <button onClick={() => navigate("/sign-in")}>sign-in</button>
       <button onClick={() => navigate("/sign-up")}>sign-up</button>
       <button onClick={() => navigate("/check-email")}>check-email</button>

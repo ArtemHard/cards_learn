@@ -7,11 +7,13 @@ import IconButton from "@mui/material/IconButton"
 import Menu from "@mui/material/Menu"
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined"
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined"
-import { useActions } from "common/hooks"
+import { useActions, useAppSelector } from "common/hooks"
 import { packsThunks } from "features/packs/packs.slice"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined"
 import { ItemMenu } from "./ItemMenu/ItemMenu"
+import { modalActions } from "features/modals/modal.slice"
+import { selectorCards, selectorPackName } from "features/cards/cards.selector"
 
 type MoreToolsProps = {
   packId: string | undefined
@@ -20,6 +22,8 @@ type MoreToolsProps = {
 export const MoreTools = ({ packId }: MoreToolsProps) => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
   const { removePack, updatePack } = useActions(packsThunks)
+  const { setDataModal, toggleModal } = useActions(modalActions)
+  const packName = useAppSelector(selectorPackName)
   const navigate = useNavigate()
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
@@ -30,8 +34,12 @@ export const MoreTools = ({ packId }: MoreToolsProps) => {
   }
 
   const removePackOpenModal = () => {
-    alert("Open DELETE PACK Modal")
-    if (packId) removePack(packId).then(() => handleCloseUserMenu())
+    if (packId && packName) {
+      setDataModal({ type: "Pack", id: packId, answer: "", question: "", name: packName })
+      toggleModal({ isDelete: true })
+      handleCloseUserMenu()
+    }
+    // if (packId) removePack(packId).then(() => handleCloseUserMenu())
   }
 
   const updatePackOpenModal = () => {
