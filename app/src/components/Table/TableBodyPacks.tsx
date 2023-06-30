@@ -5,13 +5,14 @@ import IconButton from "@mui/material/IconButton"
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined"
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined"
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined"
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import { formatDate } from "common/utils"
 import { maxNameLength } from "common/constants"
 import { useActions, useAppSelector } from "common/hooks"
 import { packsThunks } from "features/packs/packs.slice"
 import { PackType } from "features/packs/packs.api.types"
 import { selectorUserId } from "features/packs/pack.selector"
+import { modalActions } from "features/modals/modal.slice"
 
 const longNameCut = (userName: string): string => {
   if (userName.length > maxNameLength) {
@@ -25,14 +26,21 @@ type TableBodyPacksProps = {
 }
 export const TableBodyPacks = ({ packs }: TableBodyPacksProps) => {
   const userId = useAppSelector(selectorUserId)
-
+  const { toggleModal, setDataModal } = useActions(modalActions)
+  const navigate = useNavigate()
   const { removePack, updatePack } = useActions(packsThunks)
   const updateHandler = (pack: PackType) => {
-    updatePack({ ...pack, name: "UPDATE_PACK" })
+    toggleModal({ isEdit: true })
+    setDataModal({ id: pack._id, answer: "", question: "", name: pack.name })
+    // updatePack({ ...pack, name: "UPDATE_PACK" })
   }
 
   const deleteHandler = (packId: string) => {
     removePack(packId)
+  }
+
+  const learnPackHandler = (id: string) => {
+    navigate("/learn/" + id)
   }
 
   return (
@@ -54,7 +62,12 @@ export const TableBodyPacks = ({ packs }: TableBodyPacksProps) => {
             {longNameCut(pack.user_name)}
           </TableCell>
           <TableCell sx={textTableStyle} align="right">
-            <IconButton aria-label="read" onClick={() => {}}>
+            <IconButton
+              aria-label="read"
+              onClick={() => {
+                learnPackHandler(pack._id)
+              }}
+            >
               <SchoolOutlinedIcon />
             </IconButton>
             {userId === pack.user_id ? (
