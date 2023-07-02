@@ -31,7 +31,7 @@ export function TextInput<T extends FieldValues>({
         rules={rules}
         render={({ field }) => (
           <TextField
-            type={type ? type : "text"}
+            type={type ?? "text"}
             defaultValue={inputProps?.defaultValue}
             id="standard-basic"
             label={label}

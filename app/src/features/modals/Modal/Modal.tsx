@@ -6,7 +6,7 @@ export const Modal = () => {
   return (
     <>
       <DeleteModal />
-      {/* <CreateNewItemModal /> */}
+      <CreateNewItemModal />
     </>
   )
 }

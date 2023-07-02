@@ -1,3 +1,4 @@
+import { createSelector } from "@reduxjs/toolkit"
 import { RootState } from "app/store"
 
 export const selectorIsDeleteModal = (state: RootState) => state.modal.modalShow.isDelete
@@ -9,8 +10,13 @@ export const selectorIdInModal = (state: RootState) => state.modal._id
 export const selectorQuestionModal = (state: RootState) => state.modal.question
 export const selectorAnswerModal = (state: RootState) => state.modal.answer
 export const selectorIsOpenModal = (state: RootState) => {
-  return Object.values(state.modal.modalShow).some((value) => value === true)
+  return Object.values(state.modal.modalShow).some((value) => {
+    console.log(value)
+
+    return value === true
+  })
 }
+// export const selectorWhatModalOpen = createSelector()
 
 export const selectorModalTypeAction = (state: RootState): ModalTypeAction => {
   const modalshow = state.modal.modalShow
