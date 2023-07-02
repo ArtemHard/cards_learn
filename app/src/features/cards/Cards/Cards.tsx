@@ -24,6 +24,7 @@ import { PaginationCommon } from "components/Pagination/PaginationCommon"
 import SelectButtonCommon from "components/Selector/SelectButtonCommon"
 import { MoreTools } from "components/MoreTools/MoreTools"
 import { selectorIsLoading } from "app/app.selectors"
+import { useGetCardsQuery } from "../services/cards.api"
 
 export type headerTableParamsType = {
   dataParams: string
@@ -97,8 +98,6 @@ export const Cards = () => {
       clearFilter()
     }
   }, [])
-
-  console.log(packName)
 
   return (
     <P.Wrapper>

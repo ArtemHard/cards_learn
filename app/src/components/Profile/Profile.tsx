@@ -14,6 +14,8 @@ import { staticSrcForEmptyAva } from "common/constants"
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined"
 import { TextInput } from "components/Inputs/TextInput/TextInput"
 import Button from "@mui/material/Button"
+import { useGetCardsQuery } from "features/cards/services/cards.api"
+import { useGetUsersQuery } from "features/users/service/users.api"
 
 type PrfileInputType = {
   name: string
@@ -68,6 +70,7 @@ export const Profile = () => {
       name: profile?.name,
     },
   })
+
   return (
     <S.FormWrapper>
       <S.FormModule onClick={closeEditModeClickHandler}>

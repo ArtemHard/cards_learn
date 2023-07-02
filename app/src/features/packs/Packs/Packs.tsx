@@ -20,6 +20,8 @@ import { TablePacks } from "./PacksTable/TablePacks"
 import { selectorIsLoading } from "app/app.selectors"
 import SelectButtonCommon from "components/Selector/SelectButtonCommon"
 import { PaginationCommon } from "components/Pagination/PaginationCommon"
+import { User } from "features/users/User"
+import { useGetCardsQuery } from "features/cards/services/cards.api"
 
 export const Packs = () => {
   // DANGER FAKE SELECTOR
@@ -69,6 +71,7 @@ export const Packs = () => {
     changeFilterParams({ pageCount })
     fetchPacks()
   }
+
   return (
     <P.Wrapper>
       <P.Container key={"header"}>

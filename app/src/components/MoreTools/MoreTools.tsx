@@ -35,21 +35,25 @@ export const MoreTools = ({ packId }: MoreToolsProps) => {
 
   const removePackOpenModal = () => {
     if (packId && packName) {
-      setDataModal({ type: "Pack", id: packId, answer: "", question: "", name: packName })
+      setDataModal({ type: "Pack", _id: packId, answer: "", question: "", name: packName })
       toggleModal({ isDelete: true })
       handleCloseUserMenu()
     }
-    // if (packId) removePack(packId).then(() => handleCloseUserMenu())
   }
 
   const updatePackOpenModal = () => {
-    // alert("Open Update Modal")
-    if (packId) updatePack({ _id: packId, name: "Updated_3", grade: 2 }).then(() => handleCloseUserMenu())
+    if (packId && packName) {
+      setDataModal({ type: "Pack", _id: packId, answer: "", question: "", name: packName })
+      toggleModal({ isEdit: true })
+      handleCloseUserMenu()
+    }
   }
 
   const learnPackNavigate = () => {
     navigate("/learn/" + packId)
   }
+
+  React.useEffect(() => {}, [])
 
   return (
     <>

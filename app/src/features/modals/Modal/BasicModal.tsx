@@ -24,10 +24,6 @@ export type BasicModalProps = {
 }
 
 export const BasicModal: React.FC<BasicModalProps> = ({ children, open }) => {
-  //   const [open, setOpen] = React.useState(false)
-  //   const handleOpen = () => setOpen(true)
-  //   const handleClose = () => setOpen(false)
-  // const isOpen
   const { closeModals } = useActions(modalActions)
   return (
     <div>

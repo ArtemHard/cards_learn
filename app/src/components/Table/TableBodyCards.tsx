@@ -6,18 +6,34 @@ import { formatDate } from "common/utils"
 import { Card } from "features/cards/cards.api.types"
 import { maxNameLength } from "common/constants"
 import Rating from "@mui/material/Rating"
-import { useAppSelector } from "common/hooks"
+import { useActions, useAppSelector } from "common/hooks"
 import { selectIsUserPack } from "features/cards/cards.selector"
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined"
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined"
 import IconButton from "@mui/material/IconButton"
 import styled from "styled-components"
+import { modalActions } from "features/modals/modal.slice"
+import { useEffect } from "react"
 
 type TableBodyContentProps = {
   cards: Card[]
 }
 export const TableBodyCards = ({ cards }: TableBodyContentProps) => {
   const isUserPack = useAppSelector(selectIsUserPack)
+  const { setDataModal, toggleModal } = useActions(modalActions)
+
+  const deleteClickHandler = (card: Card) => {
+    const { _id, answer, question } = card
+    setDataModal({ type: "Card", _id, answer, question, name: "Card" })
+    toggleModal({ isDelete: true })
+  }
+
+  const updateClickHandler = (card: Card) => {
+    const { _id, answer, question } = card
+    setDataModal({ type: "Card", _id, answer, question, name: "Card" })
+    toggleModal({ isEdit: true })
+  }
+
   return (
     <TableBody>
       {cards.map((card) => (
@@ -38,10 +54,10 @@ export const TableBodyCards = ({ cards }: TableBodyContentProps) => {
               <Rating name="read-only" value={card.grade} readOnly />
               {isUserPack && (
                 <div>
-                  <IconButton aria-label="update" onClick={() => alert("Update Action")}>
+                  <IconButton aria-label="update" onClick={() => updateClickHandler(card)}>
                     <CreateOutlinedIcon />
                   </IconButton>
-                  <IconButton aria-label="delete" onClick={() => alert("DELETE")}>
+                  <IconButton aria-label="delete" onClick={() => deleteClickHandler(card)}>
                     <DeleteOutlinedIcon />
                   </IconButton>
                 </div>

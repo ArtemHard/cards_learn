@@ -31,12 +31,12 @@ export const TableBodyPacks = ({ packs }: TableBodyPacksProps) => {
   const { removePack, updatePack } = useActions(packsThunks)
   const updateHandler = (pack: PackType) => {
     toggleModal({ isEdit: true })
-    setDataModal({ id: pack._id, answer: "", question: "", name: pack.name, type: "Pack" })
+    setDataModal({ _id: pack._id, answer: "", question: "", name: pack.name, type: "Pack" })
     // updatePack({ ...pack, name: "UPDATE_PACK" })
   }
 
   const deleteHandler = (pack: PackType) => {
-    setDataModal({ type: "Pack", id: pack._id, answer: "", question: "", name: pack.name })
+    setDataModal({ type: "Pack", _id: pack._id, answer: "", question: "", name: pack.name })
     toggleModal({ isDelete: true })
     // removePack(packId)
   }

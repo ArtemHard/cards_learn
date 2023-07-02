@@ -1,16 +1,12 @@
 import { useEffect, useState } from "react"
 import { appActions } from "app/app.slice"
-import { Counter } from "features/counter/Counter"
 import { Outlet, useNavigate } from "react-router-dom"
 import { Header } from "features/appBar/Header/Header"
 import { GlobalError } from "common/components/GlobalError/GlobalError"
 import LinearProgress from "@mui/material/LinearProgress"
 import { useAppDispatch, useAppSelector } from "common/hooks"
 import "react-toastify/dist/ReactToastify.css"
-import Example from "./example"
 import { selectIsAppInitialized, selectIsAuth, selectorIsLoading, selectUnHandleActions } from "./app.selectors"
-import { AddModal } from "components/Modal/AddModal"
-import { DeleteModal } from "components/Modal/DeleteModal"
 import { Modal } from "features/modals/Modal/Modal"
 
 function App() {

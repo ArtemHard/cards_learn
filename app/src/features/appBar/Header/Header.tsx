@@ -69,6 +69,7 @@ export const Header = () => {
                   mr: 1,
                   fontFamily: "Montserrat, sans-serif",
                   fontWeight: 500,
+                  borderBottom: "2px dashed",
                   // letterSpacing: ".3rem",
                   fontSize: "16px",
                   lineHeight: "24px",
