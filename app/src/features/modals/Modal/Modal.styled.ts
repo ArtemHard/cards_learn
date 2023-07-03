@@ -41,10 +41,14 @@ const BoldText = styled.strong`
   letter-spacing: 0em;
   text-align: left;
 `
-const ButtonWrapper = styled.div`
+
+type ButtonWrapperProps = {
+  justifyContent?: "space-around" | "space-between"
+}
+const ButtonWrapper = styled.div<ButtonWrapperProps>`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: ${(props) => props.justifyContent ?? "space-around"};
 `
 type ButtonTextProps = {
   color: string
@@ -60,10 +64,23 @@ const ButtonText = styled.span<ButtonTextProps>`
 `
 
 const FormModal = styled.form`
+  box-sizing: border-box;
   padding: 23px 21px;
   display: flex;
   flex-direction: column;
+  width: 395px;
+  margin: 0;
 `
+
+const CheckBoxText = styled.span`
+  font-family: Montserrat, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.01em;
+  text-align: center;
+`
+
 export const MS = {
   Title,
   TitleContainer,
@@ -72,4 +89,5 @@ export const MS = {
   ButtonWrapper,
   ButtonText,
   FormModal,
+  CheckBoxText,
 }

@@ -25,6 +25,7 @@ import SelectButtonCommon from "components/Selector/SelectButtonCommon"
 import { MoreTools } from "components/MoreTools/MoreTools"
 import { selectorIsLoading } from "app/app.selectors"
 import { useGetCardsQuery } from "../services/cards.api"
+import { modalActions } from "features/modals/modal.slice"
 
 export type headerTableParamsType = {
   dataParams: string
@@ -49,10 +50,17 @@ export const Cards = () => {
 
   const { fetchCards, createCard } = useActions(cardsThunks)
   const { changeFilterParams, clearFilter } = useActions(cardsActions)
-
+  const { setDataModal, toggleModal } = useActions(modalActions)
   const pageCount = useAppSelector(selectorCardsPageCount)
   const page = useAppSelector(selectorCardsPage)
   const cardsTotalCount = useAppSelector(selectorCardsTotalCount)
+
+  const openAddNewModal = () => {
+    if (isUserPack && packId) {
+      setDataModal({ _id: packId, type: "Card", answer: "", name: "", question: "" })
+      toggleModal({ isCreateNew: true })
+    }
+  }
 
   const onClickHandler = () => {
     if (isUserPack && packId) {
@@ -62,9 +70,11 @@ export const Cards = () => {
         answer: "more than 2 month",
         grade: 2,
       }
-      createCard(temproraryData)
-        .unwrap()
-        .then(() => fetchCards())
+      openAddNewModal()
+
+      // createCard(temproraryData)
+      //   .unwrap()
+      //   .then(() => fetchCards())
     } else {
       navigate("/learn/" + packId)
     }
@@ -137,7 +147,7 @@ export const Cards = () => {
       <P.Container>{!!cardsLength && <TableCards headerParams={headerTableParams} data={cards} />}</P.Container>
       {!cardsLength && searchParamsQuestion === null && (
         <P.Container>
-          <EmptyPack />
+          <EmptyPack onClickHandler={openAddNewModal} />
         </P.Container>
       )}
       {!!searchParamsQuestion && cardsLength === 0 && <h1> В данной колоде нету карточек удовлетворяющих поиску</h1>}
@@ -164,13 +174,16 @@ export const Cards = () => {
   )
 }
 
-const EmptyPack = () => {
+type EmptyPackProps = {
+  onClickHandler?: () => void
+}
+const EmptyPack = ({ onClickHandler }: EmptyPackProps) => {
   const isUserPack = useAppSelector(selectIsUserPack)
 
   return (
     <EmptyPackWrapper>
       <TextLinkBlock innerText={isUserPack ? emptyUserPackAlertText : emptyFriendPackAlertText}></TextLinkBlock>
-      {isUserPack && <BasicButton buttonText="Add new card" width="171px" onClick={() => alert(" card ACTION")} />}
+      {isUserPack && <BasicButton buttonText="Add new card" width="171px" onClick={onClickHandler} />}
     </EmptyPackWrapper>
   )
 }

@@ -8,6 +8,7 @@ import { PasswordInput } from "components/Inputs/PasswordInput/PasswordInput"
 import { TextInput } from "components/Inputs/TextInput/TextInput"
 import { AuthComponentType } from "features/auth/Auth/Auth"
 import { checkEmailInstructions, createNewPassInstructions, forgotPassInstructions } from "common/constants"
+import { CheckboxControl } from "components/Checkbox/Checkbox"
 
 export type FormPropsType = AuthComponentType & {
   callback: (data: FormInputsType) => void
@@ -107,25 +108,7 @@ export const Form = ({ type, callback, email }: FormPropsType) => {
             }}
           />
         )}
-        {type === "Sign In" && (
-          <Controller
-            name="rememberMe"
-            control={control}
-            render={({ field }) => (
-              <FormControlLabel
-                sx={{
-                  m: 1,
-                  margin: 0,
-                  marginBottom: "29px",
-                  width: "100%",
-                }}
-                control={<Checkbox defaultChecked={false} {...field} />}
-                // WARNING How to stylised this label
-                label={"Remember me"}
-              />
-            )}
-          />
-        )}
+        {type === "Sign In" && <CheckboxControl control={control} label="Remember me" name="rememberMe" />}
         {type === "Sign In" && <S.TextLinkBlock innerText={"Forgot password?"} />}
         <BasicButton buttonText={generaeTextForHtmlElement(type, "button")} />
         {type !== "Check Email" && type !== "Create new password" && (

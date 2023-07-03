@@ -22,6 +22,7 @@ import SelectButtonCommon from "components/Selector/SelectButtonCommon"
 import { PaginationCommon } from "components/Pagination/PaginationCommon"
 import { User } from "features/users/User"
 import { useGetCardsQuery } from "features/cards/services/cards.api"
+import { modalActions } from "features/modals/modal.slice"
 
 export const Packs = () => {
   // DANGER FAKE SELECTOR
@@ -32,6 +33,7 @@ export const Packs = () => {
   const pageCount = useAppSelector(selectorPageCount)
   const page = useAppSelector(selectorPage)
   const { fetchPacks, createPack, removePack, updatePack } = useActions(packsThunks)
+  const { setDataModal, toggleModal } = useActions(modalActions)
 
   useLayoutEffect(() => {
     fetchPacks()
@@ -41,7 +43,9 @@ export const Packs = () => {
     const newPack = {
       name: "🦁" + Math.random() + "Rassel",
     }
-    createPack(newPack)
+    setDataModal({ _id: "", type: "Pack", answer: "", name: "", question: "" })
+    toggleModal({ isCreateNew: true })
+    // createPack(newPack)
   }
 
   const removePackHandler = (id: string) => {

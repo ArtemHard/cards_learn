@@ -11,6 +11,7 @@ export type BaseInputProps<T extends FieldValues> = {
   rules?: Record<string, any>
   inputProps?: MuiInputProps
   textFieldProps?: MuiTextFieldProps
+  margin?: string
 }
 
 export type TextInputProps<T extends FieldValues> = BaseInputProps<T>
@@ -22,9 +23,10 @@ export function TextInput<T extends FieldValues>({
   label,
   rules = {},
   inputProps,
+  margin,
 }: TextInputProps<T>) {
   return (
-    <FormControl sx={{ m: 1, width: "100%", marginBottom: "24px" }} variant="standard">
+    <FormControl sx={{ m: 1, width: "100%", marginBottom: "24px", margin: margin }} variant="standard">
       <Controller
         name={name}
         control={control}

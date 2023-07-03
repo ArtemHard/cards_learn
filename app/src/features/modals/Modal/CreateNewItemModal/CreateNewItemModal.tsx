@@ -9,10 +9,10 @@ import { NewItemFormModal } from "./NewItemFormModal.tsx/NewItemFormModal"
 
 export const CreateNewItemModal = () => {
   const { actions, selectors } = useModals()
-  console.log(selectors.open)
+  console.log(selectors.openCreateNew)
 
   return (
-    <BasicModal open={selectors.open}>
+    <BasicModal open={selectors.openCreateNew}>
       <HeaderModal
         closeModals={actions.closeModals}
         modalType={selectors.modalType}

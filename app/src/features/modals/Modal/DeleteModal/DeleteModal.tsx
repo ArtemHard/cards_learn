@@ -6,6 +6,7 @@ import { packsThunks } from "features/packs/packs.slice"
 import { MS } from "../Modal.styled"
 import { useModals } from "common/hooks/useModals"
 import { HeaderModal } from "../HeaderModal/HeaderModal"
+import { ButtonGroupModal } from "../HeaderModal/ButtonGroupModal/ButtonGroupModal"
 
 export const DeleteModal = () => {
   const { actions, selectors } = useModals()
@@ -41,7 +42,7 @@ export const DeleteModal = () => {
         </span>
         {selectors.modalType === "Pack" && <span>All cards will be deleted.</span>}
       </MS.QuestionWrapper>
-      <MS.ButtonWrapper>
+      {/* <MS.ButtonWrapper>
         <BasicButton
           onClick={actions.closeModals}
           buttonText={<MS.ButtonText color="black">Cancel</MS.ButtonText>}
@@ -55,7 +56,8 @@ export const DeleteModal = () => {
           width="113px"
           color="error"
         />
-      </MS.ButtonWrapper>
+      </MS.ButtonWrapper> */}
+      <ButtonGroupModal closeModals={actions.closeModals} buttonTextRight="Delete" clickHandler={deleteClickHandler} />
     </BasicModal>
   )
 }

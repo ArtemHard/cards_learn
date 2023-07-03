@@ -5,7 +5,9 @@ import { useAppSelector } from "./useAppSelector"
 import {
   selectorAnswerModal,
   selectorIdInModal,
+  selectorIsCreateNew,
   selectorIsDeleteModal,
+  selectorIsEditModal,
   selectorModalTypeAction,
   selectorNameInModal,
   selectorQuestionModal,
@@ -15,7 +17,9 @@ import {
 export const useModals = () => {
   const { closeModals, toggleModal } = useActions(modalActions)
   const modalTypeAction = useAppSelector(selectorModalTypeAction)
-  const open = useAppSelector(selectorIsDeleteModal)
+  const openDelete = useAppSelector(selectorIsDeleteModal)
+  const openEdit = useAppSelector(selectorIsEditModal)
+  const openCreateNew = useAppSelector(selectorIsCreateNew)
   const modalType = useAppSelector(selectorTypeModal)
   const name = useAppSelector(selectorNameInModal)
   const _id = useAppSelector(selectorIdInModal)
@@ -29,7 +33,7 @@ export const useModals = () => {
       toggleModal,
     },
     selectors: {
-      open,
+      open: openDelete,
       modalType,
       name,
       _id,
@@ -37,6 +41,8 @@ export const useModals = () => {
       answer,
       question,
       nameInModal,
+      openEdit,
+      openCreateNew,
     },
   }
 }
