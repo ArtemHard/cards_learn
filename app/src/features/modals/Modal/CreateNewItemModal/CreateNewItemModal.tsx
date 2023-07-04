@@ -1,7 +1,7 @@
 import { BasicModal } from "../BasicModal"
 import { useModals } from "common/hooks/useModals"
 import { HeaderModal } from "../HeaderModal/HeaderModal"
-import { NewItemFormModal } from "./NewItemFormModal.tsx/NewItemFormModal"
+import { NewItemCommonModal, NewItemCommonInputs } from "./NewItemCommonModal/NewItemCommonModal"
 import { useActions } from "common/hooks"
 import { packsThunks } from "features/packs/packs.slice"
 import { cardsThunks } from "features/cards/cards.slice"
@@ -16,7 +16,7 @@ export const CreateNewItemModal = () => {
   const { createPack, fetchPacks } = useActions(packsThunks)
   const { createCard, fetchCards } = useActions(cardsThunks)
 
-  const submitHandler = (data: NewItemFormModal) => {
+  const submitHandler = (data: NewItemCommonInputs) => {
     const { answer, namePack, privatePack, question } = data
     if (selectors.modalType === "Pack") {
       createPack({ name: namePack, private: privatePack })
@@ -38,7 +38,7 @@ export const CreateNewItemModal = () => {
         modalType={selectors.modalType}
         modalTypeAction={selectors.modalTypeAction}
       />
-      <NewItemFormModal submitHandler={submitHandler} />
+      <NewItemCommonModal submitHandler={submitHandler} />
     </BasicModal>
   )
 }
