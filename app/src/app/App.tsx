@@ -27,9 +27,7 @@ function App() {
   }, [isAuth])
   return (
     <div className="App">
-      {/* <Example /> */}
       <Header />
-      {/* <Example /> */}
       <Modal />
       <button onClick={() => navigate("/sign-in")}>sign-in</button>
       <button onClick={() => navigate("/sign-up")}>sign-up</button>

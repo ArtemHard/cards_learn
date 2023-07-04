@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { baseURL } from "common/api/common.api"
-import { Cards, getCardRequest } from "../cards.api.types"
+import { Cards, NewCardRequestType, NewCardResponse, getCardRequest } from "../cards.api.types"
 
 export const cardsSliceApi = createApi({
   reducerPath: "cardsSliceApi",
@@ -13,6 +13,17 @@ export const cardsSliceApi = createApi({
             method: "GET",
             url: "cards/card",
             params: query,
+          }
+        },
+      }),
+      addCard: build.mutation<NewCardResponse, NewCardRequestType>({
+        query: (card) => {
+          return {
+            method: "POST",
+            url: "cards/card",
+            body: {
+              card,
+            },
           }
         },
       }),

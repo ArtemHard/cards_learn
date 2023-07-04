@@ -7,6 +7,8 @@ import { MS } from "../Modal.styled"
 import { useModals } from "common/hooks/useModals"
 import { HeaderModal } from "../HeaderModal/HeaderModal"
 import { ButtonGroupModal } from "../HeaderModal/ButtonGroupModal/ButtonGroupModal"
+import { toast } from "react-toastify"
+import { errorToastHandler } from "common/utils"
 
 export const DeleteModal = () => {
   const { actions, selectors } = useModals()
@@ -18,6 +20,7 @@ export const DeleteModal = () => {
         .unwrap()
         .then(() => {
           actions.toggleModal({ isDelete: false })
+          toast.success(selectors.name + " was deleted success")
         })
     }
     if (selectors.modalType === "Card") {
@@ -25,6 +28,7 @@ export const DeleteModal = () => {
         .unwrap()
         .then(() => {
           actions.toggleModal({ isDelete: false })
+          toast.success("Card was deleted sucess")
         })
     }
   }
@@ -42,22 +46,13 @@ export const DeleteModal = () => {
         </span>
         {selectors.modalType === "Pack" && <span>All cards will be deleted.</span>}
       </MS.QuestionWrapper>
-      {/* <MS.ButtonWrapper>
-        <BasicButton
-          onClick={actions.closeModals}
-          buttonText={<MS.ButtonText color="black">Cancel</MS.ButtonText>}
-          width="113px"
-          background="#FCFCFC"
-          variant="text"
+      <MS.ButtonGroupWrapper>
+        <ButtonGroupModal
+          closeModals={actions.closeModals}
+          buttonTextRight="Delete"
+          clickHandler={deleteClickHandler}
         />
-        <BasicButton
-          onClick={deleteClickHandler}
-          buttonText={<MS.ButtonText color="white">Delete</MS.ButtonText>}
-          width="113px"
-          color="error"
-        />
-      </MS.ButtonWrapper> */}
-      <ButtonGroupModal closeModals={actions.closeModals} buttonTextRight="Delete" clickHandler={deleteClickHandler} />
+      </MS.ButtonGroupWrapper>
     </BasicModal>
   )
 }

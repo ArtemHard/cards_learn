@@ -42,14 +42,17 @@ const BoldText = styled.strong`
   text-align: left;
 `
 
-type ButtonWrapperProps = {
-  justifyContent?: "space-around" | "space-between"
-}
-const ButtonWrapper = styled.div<ButtonWrapperProps>`
+const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: ${(props) => props.justifyContent ?? "space-around"};
+  justify-content: space-between;
 `
+const ButtonGroupWrapper = styled.div`
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-bottom: 42px;
+`
+
 type ButtonTextProps = {
   color: string
 }
@@ -63,7 +66,9 @@ const ButtonText = styled.span<ButtonTextProps>`
   color: ${(props) => (props.color ? props.color : "white")};
 `
 
-const FormModal = styled.form`
+const FormModal = styled.form.attrs({
+  type: "submit",
+})`
   box-sizing: border-box;
   padding: 23px 21px;
   display: flex;
@@ -90,4 +95,5 @@ export const MS = {
   ButtonText,
   FormModal,
   CheckBoxText,
+  ButtonGroupWrapper,
 }

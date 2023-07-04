@@ -24,7 +24,7 @@ export function CheckboxControl<T extends FieldValues>({ control, name, label }:
             marginBottom: "29px",
             width: "100%",
           }}
-          control={<Checkbox defaultChecked={false} {...field} />}
+          control={<Checkbox sx={{ marginLeft: "-10px" }} defaultChecked={false} {...field} />}
           // WARNING How to stylised this label
           label={label}
         />

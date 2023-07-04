@@ -1,9 +1,6 @@
 import { BasicButton } from "components/Button/BasicButton"
-import React from "react"
 import { MS } from "../../Modal.styled"
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit"
-import { SubmitHandler } from "react-hook-form"
-import { NewItemFormModal } from "../../CreateNewItemModal/NewItemFormModal.tsx/NewItemFormModal"
 
 type ButtonGroupModal = {
   closeModals: ActionCreatorWithPayload<any, "modals/closeModals">
@@ -15,7 +12,7 @@ type ButtonGroupModal = {
 
 export const ButtonGroupModal = ({ closeModals, buttonTextRight, clickHandler, color, type }: ButtonGroupModal) => {
   return (
-    <MS.ButtonWrapper justifyContent="space-between">
+    <MS.ButtonWrapper>
       <BasicButton
         onClick={closeModals}
         buttonText={<MS.ButtonText color="black">Cancel</MS.ButtonText>}
