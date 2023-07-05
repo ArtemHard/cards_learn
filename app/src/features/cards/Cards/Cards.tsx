@@ -21,7 +21,7 @@ import { cardsActions, cardsThunks } from "../cards.slice"
 import { SearchInputBlock } from "components/Inputs/SearchInputBlock/SearchInputBlock"
 import { TableCards } from "features/cards/Cards/TableCards/TableCards"
 import { PaginationCommon } from "components/Pagination/PaginationCommon"
-import SelectButtonCommon from "components/Selector/SelectButtonCommon"
+import SelectButtonPaginator from "components/Selector/SelectButtonPaginator"
 import { MoreTools } from "components/MoreTools/MoreTools"
 import { selectorIsLoading } from "app/app.selectors"
 import { useGetCardsQuery } from "../services/cards.api"
@@ -161,7 +161,7 @@ export const Cards = () => {
           />
           <P.SpanPageContainer>
             <P.Span>Show</P.Span>
-            <SelectButtonCommon
+            <SelectButtonPaginator
               pageCount={pageCount}
               changePageCount={changePageCount}
               cardsCount={[10, 20, 30, 40, 50]}

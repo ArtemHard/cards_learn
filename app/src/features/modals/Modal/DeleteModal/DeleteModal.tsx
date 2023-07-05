@@ -51,6 +51,7 @@ export const DeleteModal = () => {
           closeModals={actions.closeModals}
           buttonTextRight="Delete"
           clickHandler={deleteClickHandler}
+          color="error"
         />
       </MS.ButtonGroupWrapper>
     </BasicModal>

@@ -3,9 +3,11 @@ import { MS } from "../../Modal.styled"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { useModals } from "common/hooks/useModals"
 import { NewPackForm } from "./NewPackForm"
+import SelectButton from "components/Selector/SelectButton"
+import { NewCardForm } from "./newCardForm"
 
 export type NewItemCommonInputs = {
-  questionFormat: "Text"
+  questionFormat: "Text" | "Picture"
   question: string
   answer: string
   namePack: string
@@ -16,6 +18,7 @@ type NewItemFormModalProps = {
 }
 export const NewItemCommonModal = ({ submitHandler }: NewItemFormModalProps) => {
   const { selectors, actions } = useModals()
+  const isPack = selectors.modalType === "Pack"
   const {
     register,
     handleSubmit,
@@ -33,12 +36,18 @@ export const NewItemCommonModal = ({ submitHandler }: NewItemFormModalProps) => 
   })
 
   const onSubmit: SubmitHandler<NewItemCommonInputs> = (data) => {
+    console.log(data)
+
     submitHandler(data)
   }
 
   return (
     <MS.FormModal onSubmit={handleSubmit(onSubmit)}>
-      <NewPackForm control={control} closeModals={actions.closeModals} />
+      {isPack && <NewPackForm control={control} closeModals={actions.closeModals} />}
+      <NewCardForm
+        control={control}
+        selectProps={{ selects: ["Text", "Picture"], name: "questionFormat", label: "Choose format" }}
+      />
     </MS.FormModal>
   )
 }

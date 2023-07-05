@@ -4,8 +4,6 @@ import MenuItem from "@mui/material/MenuItem"
 import FormControl from "@mui/material/FormControl"
 import Select from "@mui/material/Select"
 import InputBase from "@mui/material/InputBase"
-import { useActions } from "common/hooks"
-import { packsActions, packsThunks } from "features/packs/packs.slice"
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   "label + &": {
@@ -46,7 +44,7 @@ type SelectButtonCommonProps = {
   pageCount: number
 }
 
-export default function SelectButtonCommon({ cardsCount, changePageCount, pageCount }: SelectButtonCommonProps) {
+export default function SelectButtonPaginator({ cardsCount, changePageCount, pageCount }: SelectButtonCommonProps) {
   const initialParam = cardsCount[0].toString()
   const [age, setAge] = useState<string>(initialParam)
   const handleChange = (event: { target: { value: string } }) => {
@@ -64,9 +62,6 @@ export default function SelectButtonCommon({ cardsCount, changePageCount, pageCo
           {cardsCount.map((el) => {
             return el !== +initialParam ? <MenuItem value={el}>{el}</MenuItem> : null
           })}
-          {/* <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem> */}
         </Select>
       </FormControl>
     </div>

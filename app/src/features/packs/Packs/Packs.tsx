@@ -18,7 +18,7 @@ import SliderBlock from "components/Slider/SliderBlock/SliderBlock"
 import { ClearFilterButton } from "components/Button/ClearFilterButton/ClearFilterButton"
 import { TablePacks } from "./PacksTable/TablePacks"
 import { selectorIsLoading } from "app/app.selectors"
-import SelectButtonCommon from "components/Selector/SelectButtonCommon"
+import SelectButtonPaginator from "components/Selector/SelectButtonPaginator"
 import { PaginationCommon } from "components/Pagination/PaginationCommon"
 import { User } from "features/users/User"
 import { useGetCardsQuery } from "features/cards/services/cards.api"
@@ -110,7 +110,7 @@ export const Packs = () => {
         />
         <P.SpanPageContainer>
           <P.Span>Show</P.Span>
-          <SelectButtonCommon
+          <SelectButtonPaginator
             pageCount={pageCount}
             changePageCount={changePageCount}
             cardsCount={[10, 20, 30, 40, 50]}
