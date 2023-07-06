@@ -40,14 +40,18 @@ export const NewItemCommonModal = ({ submitHandler }: NewItemFormModalProps) => 
 
     submitHandler(data)
   }
+  console.log(selectors.modalType)
 
   return (
     <MS.FormModal onSubmit={handleSubmit(onSubmit)}>
       {isPack && <NewPackForm control={control} closeModals={actions.closeModals} />}
-      <NewCardForm
-        control={control}
-        selectProps={{ selects: ["Text", "Picture"], name: "questionFormat", label: "Choose format" }}
-      />
+      {!isPack && (
+        <NewCardForm
+          control={control}
+          selectProps={{ selects: ["Text", "Picture"], name: "questionFormat", label: "Choose format" }}
+          closeModals={actions.closeModals}
+        />
+      )}
     </MS.FormModal>
   )
 }

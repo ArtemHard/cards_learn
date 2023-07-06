@@ -40,6 +40,9 @@ const BoldText = styled.strong`
   line-height: 24px;
   letter-spacing: 0em;
   text-align: left;
+  /* word-wrap: break-word; */
+  overflow-wrap: anywhere;
+  /* word-break: break-all; */
 `
 
 const ButtonWrapper = styled.div`

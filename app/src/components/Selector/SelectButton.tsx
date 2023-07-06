@@ -4,6 +4,7 @@ import Select from "@mui/material/Select"
 import { Control, Controller } from "react-hook-form"
 import { NewItemCommonInputs } from "features/modals/Modal/CreateNewItemModal/NewItemCommonModal/NewItemCommonModal"
 import InputLabel from "@mui/material/InputLabel"
+import styled from "styled-components"
 export type SelectButtonProps = {
   name: keyof NewItemCommonInputs
   selects: number[] | string[]
@@ -14,7 +15,7 @@ export type SelectButtonProps = {
 export default function SelectButton({ name, selects, control, label }: SelectButtonProps) {
   const initialParam = selects[0].toString()
   return (
-    <div>
+    <Wrapper>
       <InputLabel sx={{ marginBottom: "8px" }}>{label}</InputLabel>
       <Controller
         name={name}
@@ -39,6 +40,11 @@ export default function SelectButton({ name, selects, control, label }: SelectBu
           )
         }}
       />
-    </div>
+    </Wrapper>
   )
 }
+
+const Wrapper = styled.div`
+  width: 100%;
+  margin-bottom: 24px;
+`
