@@ -1,17 +1,15 @@
 import SelectButton, { SelectButtonProps } from "components/Selector/SelectButton"
-import React from "react"
-import InputLabel from "@mui/material/InputLabel"
 import { TextInput } from "components/Inputs/TextInput/TextInput"
-import styled from "styled-components"
 import { ButtonGroupModal } from "../../HeaderModal/ButtonGroupModal/ButtonGroupModal"
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit"
 
 type NewCardFormProps = {
   selectProps: Omit<SelectButtonProps, "control">
   closeModals: ActionCreatorWithPayload<any, "modals/closeModals">
+  questionFormat: "Text" | "Picture"
 } & Pick<SelectButtonProps, "control">
 
-export const NewCardForm = ({ control, selectProps, closeModals }: NewCardFormProps) => {
+export const NewCardForm = ({ control, selectProps, closeModals, questionFormat }: NewCardFormProps) => {
   return (
     <>
       <SelectButton selects={selectProps.selects} control={control} name={selectProps.name} label={selectProps.label} />
@@ -31,7 +29,7 @@ export const NewCardForm = ({ control, selectProps, closeModals }: NewCardFormPr
         key={"answer"}
         rules={{ required: true, minLength: 5 }}
       />
-      <ButtonGroupModal buttonTextRight="Save" closeModals={closeModals} />
+      <ButtonGroupModal buttonTextRight="Save" closeModals={closeModals} type="submit" />
     </>
   )
 }

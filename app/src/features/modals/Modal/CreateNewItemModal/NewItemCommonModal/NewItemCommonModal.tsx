@@ -1,6 +1,6 @@
 import React from "react"
 import { MS } from "../../Modal.styled"
-import { SubmitHandler, useForm } from "react-hook-form"
+import { SubmitHandler, useForm, useWatch } from "react-hook-form"
 import { useModals } from "common/hooks/useModals"
 import { NewPackForm } from "./NewPackForm"
 import SelectButton from "components/Selector/SelectButton"
@@ -40,13 +40,18 @@ export const NewItemCommonModal = ({ submitHandler }: NewItemFormModalProps) => 
 
     submitHandler(data)
   }
-  console.log(selectors.modalType)
+
+  // const watchedFields = useWatch({
+  //   name: ["questionFormat"],
+  // })
+  const questionFormat = watch().questionFormat
 
   return (
     <MS.FormModal onSubmit={handleSubmit(onSubmit)}>
       {isPack && <NewPackForm control={control} closeModals={actions.closeModals} />}
       {!isPack && (
         <NewCardForm
+          questionFormat={questionFormat}
           control={control}
           selectProps={{ selects: ["Text", "Picture"], name: "questionFormat", label: "Choose format" }}
           closeModals={actions.closeModals}

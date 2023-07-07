@@ -1,6 +1,5 @@
 import { BasicModal } from "../BasicModal"
 import { useActions } from "common/hooks"
-import { BasicButton } from "components/Button/BasicButton"
 import { cardsThunks } from "features/cards/cards.slice"
 import { packsThunks } from "features/packs/packs.slice"
 import { MS } from "../Modal.styled"
@@ -8,12 +7,11 @@ import { useModals } from "common/hooks/useModals"
 import { HeaderModal } from "../HeaderModal/HeaderModal"
 import { ButtonGroupModal } from "../HeaderModal/ButtonGroupModal/ButtonGroupModal"
 import { toast } from "react-toastify"
-import { errorToastHandler } from "common/utils"
 
 export const DeleteModal = () => {
   const { actions, selectors } = useModals()
   const { removePack } = useActions(packsThunks)
-  const { deleteCard } = useActions(cardsThunks)
+  const { deleteCard, fetchCards } = useActions(cardsThunks)
   const deleteClickHandler = () => {
     if (selectors.modalType === "Pack") {
       removePack(selectors._id)
@@ -24,9 +22,10 @@ export const DeleteModal = () => {
         })
     }
     if (selectors.modalType === "Card") {
-      deleteCard({ _id: selectors._id })
+      deleteCard({ id: selectors._id })
         .unwrap()
         .then(() => {
+          fetchCards()
           actions.toggleModal({ isDelete: false })
           toast.success("Card was deleted sucess")
         })

@@ -24,13 +24,13 @@ export const TableBodyCards = ({ cards }: TableBodyContentProps) => {
 
   const deleteClickHandler = (card: Card) => {
     const { _id, answer, question } = card
-    setDataModal({ type: "Card", _id, answer, question, name: "Card" })
+    setDataModal({ type: "Card", _id, answer, question, name: card.question })
     toggleModal({ isDelete: true })
   }
 
   const updateClickHandler = (card: Card) => {
     const { _id, answer, question } = card
-    setDataModal({ type: "Card", _id, answer, question, name: "Card" })
+    setDataModal({ type: "Card", _id, answer, question, name: question })
     toggleModal({ isEdit: true })
   }
 
