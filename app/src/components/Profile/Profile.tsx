@@ -6,19 +6,18 @@ import { selectProfileData } from "common/utils/selectors/authSelectors"
 import { authThunk } from "features/auth/auth.slice"
 import styled from "styled-components"
 import Avatar from "@mui/material/Avatar"
-import { SubmitHandler, useForm } from "react-hook-form"
+import { Controller, SubmitHandler, useController, useForm } from "react-hook-form"
 import * as S from "../Form/Form.styled"
 import { BasicButton } from "components/Button/BasicButton"
-import FolderIcon from "@mui/icons-material/Folder"
 import { staticSrcForEmptyAva } from "common/constants"
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined"
 import { TextInput } from "components/Inputs/TextInput/TextInput"
 import Button from "@mui/material/Button"
-import { useGetCardsQuery } from "features/cards/services/cards.api"
-import { useGetUsersQuery } from "features/users/service/users.api"
+import { InputTypeFile } from "components/Inputs/InputTypeSile"
 
-type PrfileInputType = {
+export type PrfileInputType = {
   name: string
+  file: File
 }
 export const Profile = () => {
   const { logOut, updateUser } = useActions(authThunk)
@@ -65,12 +64,15 @@ export const Profile = () => {
     }
   }
 
+  const addFileHandler = () => {
+    alert("SEND FILE")
+  }
+
   const { control, handleSubmit, reset } = useForm<PrfileInputType>({
     defaultValues: {
       name: profile?.name,
     },
   })
-
   return (
     <S.FormWrapper>
       <S.FormModule onClick={closeEditModeClickHandler}>
@@ -81,8 +83,10 @@ export const Profile = () => {
             src={staticSrcForEmptyAva}
             sx={{ width: 96, height: 96, borderRadius: "50%" }}
           ></Avatar>
-          <FolderIcon sx={{ zIndex: 1, position: "relative", top: "-24px", left: "66px", cursor: "pointer" }} />
-          <UnderFolderCircle />
+          <InputTypeFile
+            sx={{ zIndex: 1, position: "relative", top: "-30px", left: "56px", cursor: "pointer" }}
+            callback={addFileHandler}
+          />
         </div>
         <NameWrapper>
           {!edit ? (
