@@ -108,6 +108,12 @@ const updateUser = createAppAsyncThunk<{ profile: ProfileType }, updateUserData>
           profile: res.data.updatedUser,
         }
       }
+      if (arg.avatar) {
+        const res = await authApi.updateUser({ avatar: arg.avatar })
+        return {
+          profile: res.data.updatedUser,
+        }
+      }
     })
   }
 )

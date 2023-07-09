@@ -98,6 +98,7 @@ export interface ProfileType {
   __v: number
   token: string
   tokenDeathTime: number
+  avatar: null | string
 }
 
 export interface ForgotPassDataForServer {

@@ -26,6 +26,7 @@ describe("auth slice Reducer test", () => {
     __v: 0,
     token: "023f67e0-eb0f-11ed-b359-fbf835b5a380",
     tokenDeathTime: 1683279321310,
+    avatar: null,
   }
   it("should login work correctly and return profile", () => {
     // 1. Если мы проверяем успешный кейс, тогда пишем fulfilled (authThunks.login.fulfilled)

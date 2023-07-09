@@ -64,8 +64,8 @@ export const Profile = () => {
     }
   }
 
-  const addFileHandler = () => {
-    alert("SEND FILE")
+  const addFileHandler = (fileBase64: string) => {
+    updateUser({ avatar: fileBase64 })
   }
 
   const { control, handleSubmit, reset } = useForm<PrfileInputType>({
@@ -80,7 +80,7 @@ export const Profile = () => {
         <div style={{ height: "100px" }}>
           <Avatar
             alt="Remy Sharp"
-            src={staticSrcForEmptyAva}
+            src={profile?.avatar ?? staticSrcForEmptyAva}
             sx={{ width: 96, height: 96, borderRadius: "50%" }}
           ></Avatar>
           <InputTypeFile
