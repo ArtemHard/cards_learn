@@ -24,7 +24,6 @@ export const CreateNewItemModal = () => {
         .then(() => actions.toggleModal({ isCreateNew: false }))
     }
     if (selectors.modalType === "Card") {
-      debugger
       createCard({
         cardsPack_id: selectors._id,
         [questionFormat === "Text" ? "question" : "questionImg"]: question,

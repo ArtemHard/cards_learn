@@ -24,6 +24,8 @@ export const NewItemCommonModal = ({ submitHandler }: NewItemFormModalProps) => 
     handleSubmit,
     watch,
     control,
+    setValue,
+
     // formState: { errors },
   } = useForm<NewItemCommonInputs>({
     defaultValues: {
@@ -34,11 +36,8 @@ export const NewItemCommonModal = ({ submitHandler }: NewItemFormModalProps) => 
       privatePack: false,
     },
   })
-  console.log(selectors.question)
 
   const onSubmit: SubmitHandler<NewItemCommonInputs> = (data) => {
-    console.log(data)
-
     submitHandler(data)
   }
 
@@ -52,6 +51,7 @@ export const NewItemCommonModal = ({ submitHandler }: NewItemFormModalProps) => 
       {isPack && <NewPackForm control={control} closeModals={actions.closeModals} />}
       {!isPack && (
         <NewCardForm
+          setValue={setValue}
           questionFormat={questionFormat}
           control={control}
           selectProps={{ selects: ["Text", "Picture"], name: "questionFormat", label: "Choose format" }}

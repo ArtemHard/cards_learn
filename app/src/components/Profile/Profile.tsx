@@ -85,6 +85,7 @@ export const Profile = () => {
             sx={{ width: 96, height: 96, borderRadius: "50%" }}
           ></Avatar>
           <InputTypeFile
+            type="icon"
             sx={{ zIndex: 1, position: "relative", top: "-30px", left: "56px", cursor: "pointer" }}
             callback={addFileHandler}
           />

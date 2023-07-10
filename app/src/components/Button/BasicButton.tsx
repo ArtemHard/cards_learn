@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react"
 import Button from "@mui/material/Button"
 
-type BasicButtonPropsType = {
+export type BasicButtonPropsType = {
   background?: string
   buttonText: ReactNode
   isLoading?: boolean
