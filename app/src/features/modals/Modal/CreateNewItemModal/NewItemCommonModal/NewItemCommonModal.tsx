@@ -34,6 +34,7 @@ export const NewItemCommonModal = ({ submitHandler }: NewItemFormModalProps) => 
       privatePack: false,
     },
   })
+  console.log(selectors.question)
 
   const onSubmit: SubmitHandler<NewItemCommonInputs> = (data) => {
     console.log(data)

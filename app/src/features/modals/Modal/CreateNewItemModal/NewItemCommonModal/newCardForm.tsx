@@ -19,7 +19,7 @@ export const NewCardForm = ({ control, selectProps, closeModals, questionFormat 
         name="question"
         type="text"
         key={"question"}
-        rules={{ required: true, minLength: 5 }}
+        rules={{ required: true, minLength: 1 }}
       />
       <TextInput
         control={control}

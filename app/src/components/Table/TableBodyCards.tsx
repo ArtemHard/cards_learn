@@ -75,7 +75,7 @@ export const TableBodyCards = ({ cards }: TableBodyContentProps) => {
   )
 }
 
-const longNameCut = (userName: string): string => {
+export const longNameCut = (userName: string): string => {
   if (userName.length > maxNameLength) {
     return `${userName.slice(0, maxNameLength - 3)}...`
   }

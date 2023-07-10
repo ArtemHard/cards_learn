@@ -7,6 +7,7 @@ import { useModals } from "common/hooks/useModals"
 import { HeaderModal } from "../HeaderModal/HeaderModal"
 import { ButtonGroupModal } from "../HeaderModal/ButtonGroupModal/ButtonGroupModal"
 import { toast } from "react-toastify"
+import { longNameCut } from "components/Table/TableBodyCards"
 
 export const DeleteModal = () => {
   const { actions, selectors } = useModals()
@@ -41,7 +42,7 @@ export const DeleteModal = () => {
       />
       <MS.QuestionWrapper>
         <span>
-          Do you really want to remove <MS.BoldText>{selectors.name}</MS.BoldText>
+          Do you really want to remove <MS.BoldText>{longNameCut(selectors.name)}</MS.BoldText>
         </span>
         {selectors.modalType === "Pack" && <span>All cards will be deleted.</span>}
       </MS.QuestionWrapper>

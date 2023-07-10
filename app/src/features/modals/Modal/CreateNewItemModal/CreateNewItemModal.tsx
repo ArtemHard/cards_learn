@@ -12,12 +12,11 @@ import { cardsThunks } from "features/cards/cards.slice"
 
 export const CreateNewItemModal = () => {
   const { actions, selectors } = useModals()
-  console.log(selectors.openCreateNew)
   const { createPack, fetchPacks } = useActions(packsThunks)
   const { createCard, fetchCards } = useActions(cardsThunks)
 
   const submitHandler = (data: NewItemCommonInputs) => {
-    const { answer, namePack, privatePack, question } = data
+    const { answer, namePack, privatePack, question, questionFormat } = data
     if (selectors.modalType === "Pack") {
       createPack({ name: namePack, private: privatePack })
         .unwrap()
@@ -25,7 +24,12 @@ export const CreateNewItemModal = () => {
         .then(() => actions.toggleModal({ isCreateNew: false }))
     }
     if (selectors.modalType === "Card") {
-      createCard({ cardsPack_id: selectors._id, question: question, answer })
+      debugger
+      createCard({
+        cardsPack_id: selectors._id,
+        [questionFormat === "Text" ? "question" : "questionImg"]: question,
+        answer,
+      })
         .unwrap()
         .then(() => fetchCards())
         .then(() => actions.toggleModal({ isCreateNew: false }))

@@ -12,8 +12,9 @@ import { BasicButton } from "components/Button/BasicButton"
 import { staticSrcForEmptyAva } from "common/constants"
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined"
 import { TextInput } from "components/Inputs/TextInput/TextInput"
-import Button from "@mui/material/Button"
-import { InputTypeFile } from "components/Inputs/InputTypeSile"
+import { InputTypeFile } from "components/Inputs/InputTypeFile"
+import axios from "axios"
+import { Button } from "@mui/material"
 
 export type PrfileInputType = {
   name: string
