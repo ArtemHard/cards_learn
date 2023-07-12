@@ -17,6 +17,7 @@ export const CreateNewItemModal = () => {
 
   const submitHandler = (data: NewItemCommonInputs) => {
     const { answer, namePack, privatePack, question, questionFormat } = data
+    const regex = /^data:/
     if (selectors.modalType === "Pack") {
       createPack({ name: namePack, private: privatePack })
         .unwrap()
@@ -27,7 +28,7 @@ export const CreateNewItemModal = () => {
       createCard({
         cardsPack_id: selectors._id,
         [questionFormat === "Text" ? "question" : "questionImg"]: question,
-        answer,
+        [questionFormat === "Text" ? "answer" : "answerImg"]: question,
       })
         .unwrap()
         .then(() => fetchCards())

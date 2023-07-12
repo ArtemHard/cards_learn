@@ -16,7 +16,7 @@ export type Cards = {
 }
 
 export interface Card {
-  answer: string
+  answer: string | "no answer"
   question: string | "no question"
   cardsPack_id: string
   grade: number

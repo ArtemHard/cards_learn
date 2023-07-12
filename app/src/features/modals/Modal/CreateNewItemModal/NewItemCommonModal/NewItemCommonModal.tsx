@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { MS } from "../../Modal.styled"
 import { SubmitHandler, useForm, useWatch } from "react-hook-form"
 import { useModals } from "common/hooks/useModals"
@@ -45,7 +45,24 @@ export const NewItemCommonModal = ({ submitHandler }: NewItemFormModalProps) => 
   //   name: ["questionFormat"],
   // })
   const questionFormat = watch().questionFormat
+  const question = watch().question
+  const answer = watch().answer
 
+  useEffect(() => {
+    const regex = /^data:/
+    if (questionFormat === "Text") {
+      const isDataUrlQuestion = regex.test(question)
+      const isDataUrlAnswer = regex.test(answer)
+      if (isDataUrlQuestion) setValue("question", "")
+      if (isDataUrlAnswer) setValue("answer", "")
+    }
+    if (questionFormat === "Picture") {
+      const isDataUrlQuestion = regex.test(question)
+      const isDataUrlAnswer = regex.test(answer)
+      if (!isDataUrlQuestion) setValue("question", "")
+      if (!isDataUrlAnswer) setValue("answer", "")
+    }
+  }, [questionFormat])
   return (
     <MS.FormModal onSubmit={handleSubmit(onSubmit)}>
       {isPack && <NewPackForm control={control} closeModals={actions.closeModals} />}
@@ -53,6 +70,8 @@ export const NewItemCommonModal = ({ submitHandler }: NewItemFormModalProps) => 
         <NewCardForm
           setValue={setValue}
           questionFormat={questionFormat}
+          question={question}
+          answer={answer}
           control={control}
           selectProps={{ selects: ["Text", "Picture"], name: "questionFormat", label: "Choose format" }}
           closeModals={actions.closeModals}
