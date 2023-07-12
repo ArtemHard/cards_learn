@@ -64,17 +64,7 @@ export const Cards = () => {
 
   const onClickHandler = () => {
     if (isUserPack && packId) {
-      const temproraryData = {
-        cardsPack_id: packId,
-        question: "how long you need to create app?",
-        answer: "more than 2 month",
-        grade: 2,
-      }
       openAddNewModal()
-
-      // createCard(temproraryData)
-      //   .unwrap()
-      //   .then(() => fetchCards())
     } else {
       navigate("/learn/" + packId)
     }
@@ -100,6 +90,8 @@ export const Cards = () => {
 
   const navigate = useNavigate()
   useEffect(() => {
+    console.log(123)
+
     if (packId) {
       changeFilterParams({ cardsPack_id: packId })
       fetchCards()

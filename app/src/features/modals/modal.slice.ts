@@ -32,7 +32,7 @@ const slice = createSlice({
       state.answer = data.answer
       state.type = data.type
     },
-    closeModals: (state, action) => {
+    closeModals: (state, action: PayloadAction) => {
       state.modalShow = initialState.modalShow
     },
   },

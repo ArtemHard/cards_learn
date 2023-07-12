@@ -1,13 +1,13 @@
 import { CheckboxControl } from "components/Checkbox/Checkbox"
 import { MS } from "../../Modal.styled"
 import { ButtonGroupModal } from "../../HeaderModal/ButtonGroupModal/ButtonGroupModal"
-import { ActionCreatorWithPayload } from "@reduxjs/toolkit"
+import { ActionCreatorWithoutPayload } from "@reduxjs/toolkit"
 import { Control, FieldValues, Path } from "react-hook-form"
 import { TextInput } from "components/Inputs/TextInput/TextInput"
 
 type NewPackFormType<T extends FieldValues> = {
   control: Control<T>
-  closeModals: ActionCreatorWithPayload<any, "modals/closeModals">
+  closeModals: ActionCreatorWithoutPayload<"modals/closeModals">
 }
 export type NewPackFormProps<T extends FieldValues> = NewPackFormType<T>
 

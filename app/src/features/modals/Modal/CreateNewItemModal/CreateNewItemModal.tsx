@@ -6,10 +6,6 @@ import { useActions } from "common/hooks"
 import { packsThunks } from "features/packs/packs.slice"
 import { cardsThunks } from "features/cards/cards.slice"
 
-// type CreateNewItemModalProps = {
-//    newItemFormChild: ReactNode
-// }
-
 export const CreateNewItemModal = () => {
   const { actions, selectors } = useModals()
   const { createPack, fetchPacks } = useActions(packsThunks)
@@ -17,7 +13,6 @@ export const CreateNewItemModal = () => {
 
   const submitHandler = (data: NewItemCommonInputs) => {
     const { answer, namePack, privatePack, question, questionFormat } = data
-    const regex = /^data:/
     if (selectors.modalType === "Pack") {
       createPack({ name: namePack, private: privatePack })
         .unwrap()
@@ -28,7 +23,7 @@ export const CreateNewItemModal = () => {
       createCard({
         cardsPack_id: selectors._id,
         [questionFormat === "Text" ? "question" : "questionImg"]: question,
-        [questionFormat === "Text" ? "answer" : "answerImg"]: question,
+        [questionFormat === "Text" ? "answer" : "answerImg"]: answer,
       })
         .unwrap()
         .then(() => fetchCards())

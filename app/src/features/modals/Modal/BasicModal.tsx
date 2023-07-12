@@ -29,7 +29,7 @@ export const BasicModal: React.FC<BasicModalProps> = ({ children, open }) => {
     <div>
       <Modal
         open={open}
-        onClose={closeModals}
+        onClose={() => closeModals()}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >

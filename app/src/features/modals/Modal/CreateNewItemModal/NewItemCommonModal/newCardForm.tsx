@@ -62,8 +62,15 @@ export const NewCardForm = ({
             childrenTitleLeft={"Question:"}
             callback={uploadPhotoQuestionHandler}
             marginBottom="22px"
+            key={"uploadPhotoQuestionHandler"}
           />
-          <AddImg src={answer} childrenTitleLeft={"Answer:"} callback={uploadPhotoAnswerHandler} marginBottom="37px" />
+          <AddImg
+            src={answer}
+            childrenTitleLeft={"Answer:"}
+            callback={uploadPhotoAnswerHandler}
+            marginBottom="37px"
+            key={"uploadPhotoAnswerHandler"}
+          />
         </>
       )}
       <ButtonGroupModal buttonTextRight="Save" closeModals={closeModals} type="submit" />

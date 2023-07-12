@@ -1,11 +1,11 @@
-import { ActionCreatorWithPayload } from "@reduxjs/toolkit"
+import { ActionCreatorWithPayload, ActionCreatorWithoutPayload } from "@reduxjs/toolkit"
 import { MS } from "../Modal.styled"
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined"
 import { ModalTypeAction } from "features/modals/modal.selector"
 
 type HeaderModal = {
   modalType: "Pack" | "Card"
-  closeModals: ActionCreatorWithPayload<any, "modals/closeModals">
+  closeModals: ActionCreatorWithoutPayload<"modals/closeModals">
   modalTypeAction: ModalTypeAction
 }
 
@@ -13,7 +13,7 @@ export const HeaderModal = ({ modalType, closeModals, modalTypeAction }: HeaderM
   return (
     <MS.TitleContainer>
       <MS.Title>{generateTitleText(modalTypeAction, modalType)}</MS.Title>
-      <CloseOutlinedIcon onClick={closeModals} sx={{ cursor: "pointer" }} />
+      <CloseOutlinedIcon onClick={() => closeModals()} sx={{ cursor: "pointer" }} />
     </MS.TitleContainer>
   )
 }

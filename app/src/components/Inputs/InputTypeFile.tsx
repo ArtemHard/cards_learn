@@ -10,9 +10,9 @@ import styled from "styled-components"
 
 export const InputTypeFile: React.FC<InputTypeFileProps> = ({ sx, callback, type, width, marginBottom, children }) => {
   const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
     if (e.target.files && e.target.files.length) {
       const file = e.target.files[0]
-      console.log("file: ", file)
 
       if (file.size < 4000000) {
         fileToBase64(file, callback)
@@ -60,7 +60,9 @@ export const InputTypeFile: React.FC<InputTypeFileProps> = ({ sx, callback, type
   } else
     return (
       <div>
-        <ChangeCoverBtn onClick={selectFileHandler}>{children}</ChangeCoverBtn>
+        <ChangeCoverBtn type={"button"} onClick={selectFileHandler}>
+          {children}
+        </ChangeCoverBtn>
         <input style={{ display: "none" }} ref={inputRef} type="file" onChange={uploadHandler} />
       </div>
     )

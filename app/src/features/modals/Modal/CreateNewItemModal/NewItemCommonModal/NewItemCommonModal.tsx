@@ -41,9 +41,6 @@ export const NewItemCommonModal = ({ submitHandler }: NewItemFormModalProps) => 
     submitHandler(data)
   }
 
-  // const watchedFields = useWatch({
-  //   name: ["questionFormat"],
-  // })
   const questionFormat = watch().questionFormat
   const question = watch().question
   const answer = watch().answer

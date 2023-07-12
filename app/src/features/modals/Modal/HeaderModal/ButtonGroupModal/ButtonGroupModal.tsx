@@ -1,9 +1,9 @@
 import { BasicButton } from "components/Button/BasicButton"
 import { MS } from "../../Modal.styled"
-import { ActionCreatorWithPayload } from "@reduxjs/toolkit"
+import { ActionCreatorWithoutPayload } from "@reduxjs/toolkit"
 
 type ButtonGroupModal = {
-  closeModals: ActionCreatorWithPayload<any, "modals/closeModals">
+  closeModals: ActionCreatorWithoutPayload<"modals/closeModals">
   buttonTextRight: string
   clickHandler?: () => void
   color?: "error"
@@ -14,7 +14,7 @@ export const ButtonGroupModal = ({ closeModals, buttonTextRight, clickHandler, c
   return (
     <MS.ButtonWrapper>
       <BasicButton
-        onClick={closeModals}
+        onClick={() => closeModals()}
         buttonText={<MS.ButtonText color="black">Cancel</MS.ButtonText>}
         width="113px"
         background="#FCFCFC"
