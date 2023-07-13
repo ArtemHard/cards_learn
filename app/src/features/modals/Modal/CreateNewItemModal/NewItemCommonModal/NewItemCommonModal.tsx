@@ -1,9 +1,8 @@
 import React, { useEffect } from "react"
 import { MS } from "../../Modal.styled"
-import { SubmitHandler, useForm, useWatch } from "react-hook-form"
+import { SubmitHandler, useForm } from "react-hook-form"
 import { useModals } from "common/hooks/useModals"
 import { NewPackForm } from "./NewPackForm"
-import SelectButton from "components/Selector/SelectButton"
 import { NewCardForm } from "./newCardForm"
 
 export type NewItemCommonInputs = {
@@ -12,6 +11,7 @@ export type NewItemCommonInputs = {
   answer: string
   namePack: string
   privatePack: boolean
+  deckCover: string
 }
 type NewItemFormModalProps = {
   submitHandler: (data: NewItemCommonInputs) => void
@@ -20,7 +20,6 @@ export const NewItemCommonModal = ({ submitHandler }: NewItemFormModalProps) => 
   const { selectors, actions } = useModals()
   const isPack = selectors.modalType === "Pack"
   const {
-    register,
     handleSubmit,
     watch,
     control,
@@ -34,6 +33,7 @@ export const NewItemCommonModal = ({ submitHandler }: NewItemFormModalProps) => 
       answer: selectors.answer,
       namePack: selectors.nameInModal,
       privatePack: false,
+      deckCover: "",
     },
   })
 
@@ -44,7 +44,8 @@ export const NewItemCommonModal = ({ submitHandler }: NewItemFormModalProps) => 
   const questionFormat = watch().questionFormat
   const question = watch().question
   const answer = watch().answer
-
+  const deckCover = watch().deckCover
+  // для обработки newCardModal зачищать на инпутах данные о картинке
   useEffect(() => {
     const regex = /^data:/
     if (questionFormat === "Text") {
@@ -62,7 +63,9 @@ export const NewItemCommonModal = ({ submitHandler }: NewItemFormModalProps) => 
   }, [questionFormat])
   return (
     <MS.FormModal onSubmit={handleSubmit(onSubmit)}>
-      {isPack && <NewPackForm control={control} closeModals={actions.closeModals} />}
+      {isPack && (
+        <NewPackForm control={control} closeModals={actions.closeModals} deckCover={deckCover} setValue={setValue} />
+      )}
       {!isPack && (
         <NewCardForm
           setValue={setValue}

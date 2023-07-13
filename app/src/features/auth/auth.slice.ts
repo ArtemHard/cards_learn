@@ -75,7 +75,8 @@ const authMe = createAppAsyncThunk<{ profile: ProfileType }, void>("auth/me", as
 
 const logOut = createAppAsyncThunk("auth/logOut", async (arg, thunkAPI) => {
   return await thunkTryCatch(thunkAPI, async () => {
-    return await authApi.logOut()
+    const res = await authApi.logOut()
+    return res.status
   })
 })
 
@@ -135,7 +136,7 @@ const slice = createSlice({
         state.profile = action.payload.profile
       })
       .addCase(logOut.fulfilled, (state, action) => {
-        if (action.payload.status === 200) {
+        if (action.payload === 200) {
           state.profile = null
         }
       })

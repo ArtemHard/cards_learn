@@ -90,8 +90,6 @@ export const Cards = () => {
 
   const navigate = useNavigate()
   useEffect(() => {
-    console.log(123)
-
     if (packId) {
       changeFilterParams({ cardsPack_id: packId })
       fetchCards()

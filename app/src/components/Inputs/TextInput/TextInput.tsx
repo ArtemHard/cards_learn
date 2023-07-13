@@ -28,11 +28,13 @@ export function TextInput<T extends FieldValues>({
   return (
     <FormControl sx={{ m: 1, width: "100%", marginBottom: "24px", margin: margin }} variant="standard">
       <Controller
+        key={name}
         name={name}
         control={control}
         rules={rules}
         render={({ field }) => (
           <TextField
+            key={name + label}
             type={type ?? "text"}
             defaultValue={inputProps?.defaultValue}
             id="standard-basic"

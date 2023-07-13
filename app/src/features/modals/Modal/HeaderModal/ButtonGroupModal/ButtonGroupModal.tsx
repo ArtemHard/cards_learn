@@ -1,6 +1,8 @@
 import { BasicButton } from "components/Button/BasicButton"
 import { MS } from "../../Modal.styled"
 import { ActionCreatorWithoutPayload } from "@reduxjs/toolkit"
+import { useAppSelector } from "common/hooks"
+import { selectorIsLoading } from "app/app.selectors"
 
 type ButtonGroupModal = {
   closeModals: ActionCreatorWithoutPayload<"modals/closeModals">
@@ -11,6 +13,7 @@ type ButtonGroupModal = {
 }
 
 export const ButtonGroupModal = ({ closeModals, buttonTextRight, clickHandler, color, type }: ButtonGroupModal) => {
+  const isLoading = useAppSelector(selectorIsLoading)
   return (
     <MS.ButtonWrapper>
       <BasicButton
@@ -20,6 +23,7 @@ export const ButtonGroupModal = ({ closeModals, buttonTextRight, clickHandler, c
         background="#FCFCFC"
         variant="text"
         marginBottom="0"
+        isLoading={isLoading}
       />
       <BasicButton
         onClick={clickHandler}
@@ -28,6 +32,7 @@ export const ButtonGroupModal = ({ closeModals, buttonTextRight, clickHandler, c
         marginBottom="0"
         color={color}
         type={type ?? undefined}
+        isLoading={isLoading}
       />
     </MS.ButtonWrapper>
   )

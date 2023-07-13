@@ -12,9 +12,9 @@ export const CreateNewItemModal = () => {
   const { createCard, fetchCards } = useActions(cardsThunks)
 
   const submitHandler = (data: NewItemCommonInputs) => {
-    const { answer, namePack, privatePack, question, questionFormat } = data
+    const { answer, namePack, privatePack, question, questionFormat, deckCover } = data
     if (selectors.modalType === "Pack") {
-      createPack({ name: namePack, private: privatePack })
+      createPack({ name: namePack, private: privatePack, deckCover })
         .unwrap()
         .then(() => fetchPacks())
         .then(() => actions.toggleModal({ isCreateNew: false }))

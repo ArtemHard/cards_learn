@@ -6,7 +6,7 @@ export type AddImgProps = {
   childrenTitleLeft: string
   callback: (file: string) => void
   marginBottom?: string
-  src: string
+  src?: string
 }
 
 export const AddImg = ({ childrenTitleLeft, marginBottom, callback, src }: AddImgProps) => {

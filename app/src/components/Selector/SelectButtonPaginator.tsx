@@ -60,7 +60,11 @@ export default function SelectButtonPaginator({ cardsCount, changePageCount, pag
         <Select id="demo-customized-select" value={age} onChange={handleChange} input={<BootstrapInput />}>
           <MenuItem value={initialParam}>{initialParam}</MenuItem>
           {cardsCount.map((el) => {
-            return el !== +initialParam ? <MenuItem value={el}>{el}</MenuItem> : null
+            return el !== +initialParam ? (
+              <MenuItem value={el} key={el}>
+                {el}
+              </MenuItem>
+            ) : null
           })}
         </Select>
       </FormControl>
