@@ -1,6 +1,8 @@
+import React from "react"
 import { InputTypeFile } from "components/Inputs/InputTypeFile"
 import { ImgHTMLAttributes, HTMLAttributes } from "react"
 import styled from "styled-components"
+import brokenImg from "../../common/assets/icons/brokenImg.jpg"
 
 export type AddImgProps = {
   childrenTitleLeft: string
@@ -18,7 +20,7 @@ export const AddImg = ({ childrenTitleLeft, marginBottom, callback, src }: AddIm
           Change cover
         </InputTypeFile>
       </TitlesWrapper>
-      <Image src={src ? src : undefined} />
+      <ImageCard src={src ? src : undefined} />
     </AddImgWrapper>
   )
 }
@@ -35,17 +37,32 @@ const TitlesWrapper = styled.div`
   margin-bottom: 7px;
 `
 
-const Image = styled.img.attrs<ImgHTMLAttributes<HTMLImageElement>>((props) => ({
+export const Image = styled.img.attrs<ImageCardProps>((props) => ({
   src: props.src,
   alt: props.alt,
 }))`
   max-width: 400px;
-  height: 119px;
+  width: ${(props) => props.width ?? "100%"};
+  height: ${(props) => props.height ?? "119px"};
   background-color: #a5f1e9;
   display: flex;
   align-items: center;
   object-fit: contain;
 `
+
+type ImageCardProps = {
+  width?: string
+  height?: string
+} & ImgHTMLAttributes<HTMLImageElement>
+
+export const ImageCard: React.FC<ImageCardProps> = (props) => {
+  const [isAvaBroken, setIsAvaBroken] = React.useState(false)
+  const errorHandler = () => {
+    setIsAvaBroken(true)
+  }
+
+  return <Image {...props} src={isAvaBroken ? brokenImg : props.src} onError={errorHandler} />
+}
 
 const Text = styled.span`
   font-family: Montserrat, sans-serif;

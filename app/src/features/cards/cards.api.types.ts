@@ -25,6 +25,8 @@ export interface Card {
   created: string
   updated: string
   _id: string
+  questionImg?: string
+  answerImg?: string
 }
 
 export type getCardRequest = {
@@ -45,8 +47,6 @@ export type NewCardResponse = {
 }
 
 interface NewCardRes extends Card {
-  questionImg?: string
-  answerImg?: string
   answerVideo?: string
   questionVideo?: string
   comments: string

@@ -40,9 +40,6 @@ export const Packs = () => {
   }, [])
 
   const addPackHandler = () => {
-    const newPack = {
-      name: "🦁" + Math.random() + "Rassel",
-    }
     setDataModal({ _id: "", type: "Pack", answer: "", name: "", question: "" })
     toggleModal({ isCreateNew: true })
     // createPack(newPack)

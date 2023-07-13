@@ -13,7 +13,7 @@ import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined"
 import IconButton from "@mui/material/IconButton"
 import styled from "styled-components"
 import { modalActions } from "features/modals/modal.slice"
-import { useEffect } from "react"
+import { ImageCard } from "components/AddImg/AddImg"
 
 type TableBodyContentProps = {
   cards: Card[]
@@ -40,11 +40,19 @@ export const TableBodyCards = ({ cards }: TableBodyContentProps) => {
         <TableRow key={card._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
           <TableCell sx={textTableStyle} component="th" scope="row">
             <NavLink to={"/cards/" + card._id} style={{ textDecoration: "none", color: "inherit" }}>
-              {longNameCut(card.question)}
+              {card.question !== "no question" ? (
+                longNameCut(card.question)
+              ) : (
+                <ImageCard key={"questionImg" + card._id} src={card.questionImg} width="auto" height="36px" />
+              )}
             </NavLink>
           </TableCell>
           <TableCell sx={textTableStyle} align="left">
-            {card.answer}
+            {card.answer !== "no answer" ? (
+              longNameCut(card.answer)
+            ) : (
+              <ImageCard key={"answerImg" + card._id} src={card.answerImg} width="auto" height="36px" />
+            )}
           </TableCell>
           <TableCell sx={textTableStyle} align="left">
             {formatDate(card.updated)}
