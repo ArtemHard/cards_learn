@@ -14,7 +14,7 @@ export const InputTypeFile: React.FC<InputTypeFileProps> = ({ sx, callback, type
     if (e.target.files && e.target.files.length) {
       const file = e.target.files[0]
 
-      if (file.size < 4000000) {
+      if (file.size < 100000) {
         fileToBase64(file, callback)
       } else {
         console.error("Error: ", "Файл слишком большого размера")
