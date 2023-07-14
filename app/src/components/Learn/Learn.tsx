@@ -54,7 +54,6 @@ export const Learn = () => {
       fetchCards()
       setFirst(false)
     }
-    console.log("work")
 
     if (cards.length > 0) setCard(getCard(cards))
 

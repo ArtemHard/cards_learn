@@ -1,11 +1,11 @@
-import { BasicModal } from "../BasicModal"
+import { BasicModal } from "../../../../components/BasicModal/BasicModal"
 import { useActions } from "common/hooks"
 import { cardsThunks } from "features/cards/cards.slice"
 import { packsThunks } from "features/packs/packs.slice"
 import { MS } from "../Modal.styled"
 import { useModals } from "common/hooks/useModals"
 import { HeaderModal } from "../HeaderModal/HeaderModal"
-import { ButtonGroupModal } from "../HeaderModal/ButtonGroupModal/ButtonGroupModal"
+import { ButtonGroupModal } from "../ButtonGroupModal/ButtonGroupModal"
 import { toast } from "react-toastify"
 import { longNameCut } from "components/Table/TableBodyCards"
 

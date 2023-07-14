@@ -2,7 +2,7 @@ import * as React from "react"
 import Box from "@mui/material/Box"
 import Modal from "@mui/material/Modal"
 import { useActions } from "common/hooks"
-import { modalActions } from "../modal.slice"
+import { modalActions } from "../../features/modals/modal.slice"
 
 const style = {
   position: "absolute" as "absolute",

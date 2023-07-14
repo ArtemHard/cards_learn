@@ -29,8 +29,14 @@ export const TableBodyCards = ({ cards }: TableBodyContentProps) => {
   }
 
   const updateClickHandler = (card: Card) => {
-    const { _id, answer, question } = card
-    setDataModal({ type: "Card", _id, answer, question, name: question })
+    const { _id, answer, question, answerImg, questionImg } = card
+    setDataModal({
+      type: "Card",
+      _id,
+      answer: answer === "no answer" && answerImg ? answerImg : answer,
+      question: question === "no question" && questionImg ? questionImg : question,
+      name: question,
+    })
     toggleModal({ isEdit: true })
   }
 

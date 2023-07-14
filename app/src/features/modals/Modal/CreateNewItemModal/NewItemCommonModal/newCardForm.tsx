@@ -1,6 +1,6 @@
 import SelectButton, { SelectButtonProps } from "components/Selector/SelectButton"
 import { TextInput } from "components/Inputs/TextInput/TextInput"
-import { ButtonGroupModal } from "../../HeaderModal/ButtonGroupModal/ButtonGroupModal"
+import { ButtonGroupModal } from "../../ButtonGroupModal/ButtonGroupModal"
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit"
 import { InputTypeFile } from "components/Inputs/InputTypeFile"
 import { UseFormSetValue } from "react-hook-form"

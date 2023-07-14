@@ -9,6 +9,7 @@ export const selectorNameInModal = (state: RootState) => state.modal.name
 export const selectorIdInModal = (state: RootState) => state.modal._id
 export const selectorQuestionModal = (state: RootState) => state.modal.question
 export const selectorAnswerModal = (state: RootState) => state.modal.answer
+export const selectorDeckCoverModal = (state: RootState) => state.modal.deckCover
 // export const selectorIsOpenModal = (state: RootState) => {
 //   return Object.values(state.modal.modalShow).some((value) => {
 //     console.log(value)

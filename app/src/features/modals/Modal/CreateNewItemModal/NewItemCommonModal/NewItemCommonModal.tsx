@@ -33,7 +33,7 @@ export const NewItemCommonModal = ({ submitHandler }: NewItemFormModalProps) => 
       answer: selectors.answer,
       namePack: selectors.nameInModal,
       privatePack: false,
-      deckCover: "",
+      deckCover: selectors.deckCover ?? "",
     },
   })
 
@@ -47,19 +47,19 @@ export const NewItemCommonModal = ({ submitHandler }: NewItemFormModalProps) => 
   const deckCover = watch().deckCover
   // для обработки newCardModal зачищать на инпутах данные о картинке
   useEffect(() => {
-    const regex = /^data:/
-    if (questionFormat === "Text") {
-      const isDataUrlQuestion = regex.test(question)
-      const isDataUrlAnswer = regex.test(answer)
-      if (isDataUrlQuestion) setValue("question", "")
-      if (isDataUrlAnswer) setValue("answer", "")
-    }
-    if (questionFormat === "Picture") {
-      const isDataUrlQuestion = regex.test(question)
-      const isDataUrlAnswer = regex.test(answer)
-      if (!isDataUrlQuestion) setValue("question", "")
-      if (!isDataUrlAnswer) setValue("answer", "")
-    }
+    // const regex = /^data:/
+    // if (questionFormat === "Text") {
+    //   const isDataUrlQuestion = regex.test(question)
+    //   const isDataUrlAnswer = regex.test(answer)
+    //   if (isDataUrlQuestion) setValue("question", "")
+    //   if (isDataUrlAnswer) setValue("answer", "")
+    // }
+    // if (questionFormat === "Picture") {
+    //   const isDataUrlQuestion = regex.test(question)
+    //   const isDataUrlAnswer = regex.test(answer)
+    //   if (!isDataUrlQuestion) setValue("question", "")
+    //   if (!isDataUrlAnswer) setValue("answer", "")
+    // }
   }, [questionFormat])
   return (
     <MS.FormModal onSubmit={handleSubmit(onSubmit)}>

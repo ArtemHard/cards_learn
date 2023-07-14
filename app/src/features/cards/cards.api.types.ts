@@ -68,7 +68,9 @@ export type NewCardRequestType = Partial<Pick<Card, "question" | "answer" | "gra
 
 export type QueryCardId = { id: string }
 
-export type UpdateCard = Partial<Omit<NewCardRequestType, "cardsPack_id" | "grade">> & Pick<Card, "_id" | "question">
+export type UpdateCard = Partial<Omit<NewCardRequestType, "cardsPack_id" | "grade">> &
+  Pick<Card, "_id"> &
+  Partial<Pick<Card, "question">>
 
 export type UpdateCardGrade = Pick<Card, "grade"> & { card_id: string }
 export type UpdateCardResponse = {

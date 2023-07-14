@@ -4,6 +4,7 @@ import { modalActions } from "features/modals/modal.slice"
 import { useAppSelector } from "./useAppSelector"
 import {
   selectorAnswerModal,
+  selectorDeckCoverModal,
   selectorIdInModal,
   selectorIsCreateNew,
   selectorIsDeleteModal,
@@ -26,6 +27,7 @@ export const useModals = () => {
   const answer = useAppSelector(selectorAnswerModal)
   const question = useAppSelector(selectorQuestionModal)
   const nameInModal = useAppSelector(selectorNameInModal)
+  const deckCover = useAppSelector(selectorDeckCoverModal)
 
   return {
     actions: {
@@ -43,6 +45,7 @@ export const useModals = () => {
       nameInModal,
       openEdit,
       openCreateNew,
+      deckCover,
     },
   }
 }

@@ -1,5 +1,5 @@
 import { BasicButton } from "components/Button/BasicButton"
-import { MS } from "../../Modal.styled"
+import { MS } from "../Modal.styled"
 import { ActionCreatorWithoutPayload } from "@reduxjs/toolkit"
 import { useAppSelector } from "common/hooks"
 import { selectorIsLoading } from "app/app.selectors"

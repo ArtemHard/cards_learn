@@ -1,6 +1,6 @@
 import { CheckboxControl } from "components/Checkbox/Checkbox"
 import { MS } from "../../Modal.styled"
-import { ButtonGroupModal } from "../../HeaderModal/ButtonGroupModal/ButtonGroupModal"
+import { ButtonGroupModal } from "../../ButtonGroupModal/ButtonGroupModal"
 import { ActionCreatorWithoutPayload } from "@reduxjs/toolkit"
 import { Control, FieldValues, Path, UseFormSetValue } from "react-hook-form"
 import { TextInput } from "components/Inputs/TextInput/TextInput"

@@ -1,7 +1,22 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 
 type ModalShowBoolean = Partial<typeof initialState.modalShow>
-const initialState = {
+
+type ModalState = {
+  _id: string
+  name: string
+  question: string
+  answer: string
+  type: "Pack" | "Card"
+  deckCover?: string | null
+  modalShow: {
+    isDelete: boolean
+    isCreateNew: boolean
+    isEdit: boolean
+  }
+}
+
+const initialState: ModalState = {
   _id: "",
   name: "",
   question: "",
@@ -31,6 +46,7 @@ const slice = createSlice({
       state.question = data.question
       state.answer = data.answer
       state.type = data.type
+      state.deckCover = data.deckCover
     },
     closeModals: (state, action: PayloadAction) => {
       state.modalShow = initialState.modalShow

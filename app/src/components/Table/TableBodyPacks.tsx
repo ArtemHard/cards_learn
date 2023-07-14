@@ -28,10 +28,10 @@ export const TableBodyPacks = ({ packs }: TableBodyPacksProps) => {
   const userId = useAppSelector(selectorUserId)
   const { toggleModal, setDataModal } = useActions(modalActions)
   const navigate = useNavigate()
-  const { removePack, updatePack } = useActions(packsThunks)
+  // const { removePack, updatePack } = useActions(packsThunks)
   const updateHandler = (pack: PackType) => {
     toggleModal({ isEdit: true })
-    setDataModal({ _id: pack._id, answer: "", question: "", name: pack.name, type: "Pack" })
+    setDataModal({ _id: pack._id, answer: "", question: "", name: pack.name, type: "Pack", deckCover: pack.deckCover })
     // updatePack({ ...pack, name: "UPDATE_PACK" })
   }
 
