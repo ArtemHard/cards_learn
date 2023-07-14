@@ -37,7 +37,7 @@ const TitlesWrapper = styled.div`
   margin-bottom: 7px;
 `
 
-export const Image = styled.img.attrs<ImageCardProps>((props) => ({
+const Image = styled.img.attrs<ImageCardProps>((props) => ({
   src: props.src,
   alt: props.alt,
 }))`

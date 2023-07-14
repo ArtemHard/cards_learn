@@ -40,8 +40,7 @@ export const CreateNewItemModal = () => {
         private: privatePack,
       })
         .unwrap()
-        // убрал, если сервер не загруженный верну
-
+        //disabled, change only state through Thunk updatePack
         // .then(() => fetchPacks())
         .then(() => actions.toggleModal({ isEdit: false }))
       return
@@ -53,9 +52,8 @@ export const CreateNewItemModal = () => {
         [questionFormat === "Text" ? "answer" : "answerImg"]: answer,
       })
         .unwrap()
-        // убрал, если сервер не загруженный верну
-        // .then(() => fetchCards())
-        .then(() => actions.toggleModal({ isCreateNew: false }))
+        .then(() => fetchCards())
+        .then(() => actions.toggleModal({ isEdit: false }))
       return
     }
   }

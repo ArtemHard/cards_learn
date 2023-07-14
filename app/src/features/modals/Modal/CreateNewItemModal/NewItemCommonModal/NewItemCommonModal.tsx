@@ -17,6 +17,8 @@ type NewItemFormModalProps = {
   submitHandler: (data: NewItemCommonInputs) => void
 }
 export const NewItemCommonModal = ({ submitHandler }: NewItemFormModalProps) => {
+  const regex = /^data:/
+
   const { selectors, actions } = useModals()
   const isPack = selectors.modalType === "Pack"
   const {
@@ -24,11 +26,10 @@ export const NewItemCommonModal = ({ submitHandler }: NewItemFormModalProps) => 
     watch,
     control,
     setValue,
-
-    // formState: { errors },
+    formState: { errors },
   } = useForm<NewItemCommonInputs>({
     defaultValues: {
-      questionFormat: "Text",
+      questionFormat: regex.test(selectors.question) ? "Picture" : "Text",
       question: selectors.question,
       answer: selectors.answer,
       namePack: selectors.nameInModal,
@@ -36,7 +37,6 @@ export const NewItemCommonModal = ({ submitHandler }: NewItemFormModalProps) => 
       deckCover: selectors.deckCover ?? "",
     },
   })
-
   const onSubmit: SubmitHandler<NewItemCommonInputs> = (data) => {
     submitHandler(data)
   }
@@ -47,20 +47,21 @@ export const NewItemCommonModal = ({ submitHandler }: NewItemFormModalProps) => 
   const deckCover = watch().deckCover
   // для обработки newCardModal зачищать на инпутах данные о картинке
   useEffect(() => {
-    // const regex = /^data:/
-    // if (questionFormat === "Text") {
-    //   const isDataUrlQuestion = regex.test(question)
-    //   const isDataUrlAnswer = regex.test(answer)
-    //   if (isDataUrlQuestion) setValue("question", "")
-    //   if (isDataUrlAnswer) setValue("answer", "")
-    // }
-    // if (questionFormat === "Picture") {
-    //   const isDataUrlQuestion = regex.test(question)
-    //   const isDataUrlAnswer = regex.test(answer)
-    //   if (!isDataUrlQuestion) setValue("question", "")
-    //   if (!isDataUrlAnswer) setValue("answer", "")
-    // }
-  }, [questionFormat])
+    if (questionFormat === "Text") {
+      const isDataUrlQuestion = regex.test(question)
+      const isDataUrlAnswer = regex.test(answer)
+      if (isDataUrlQuestion) setValue("question", "")
+      if (isDataUrlAnswer) setValue("answer", "")
+      return
+    }
+    if (questionFormat === "Picture") {
+      const isDataUrlQuestion = regex.test(question)
+      const isDataUrlAnswer = regex.test(answer)
+      if (!isDataUrlQuestion) setValue("question", "")
+      if (!isDataUrlAnswer) setValue("answer", "")
+      return
+    }
+  }, [questionFormat, selectors.openEdit])
   return (
     <MS.FormModal onSubmit={handleSubmit(onSubmit)}>
       {isPack && (
@@ -73,7 +74,13 @@ export const NewItemCommonModal = ({ submitHandler }: NewItemFormModalProps) => 
           question={question}
           answer={answer}
           control={control}
-          selectProps={{ selects: ["Text", "Picture"], name: "questionFormat", label: "Choose format" }}
+          errors={errors}
+          selectProps={{
+            // selects: selectors.openEdit ? [questionFormat] : ["Text", "Picture"],
+            selects: ["Text", "Picture"],
+            name: "questionFormat",
+            label: "Choose format",
+          }}
           closeModals={actions.closeModals}
         />
       )}

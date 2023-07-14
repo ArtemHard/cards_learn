@@ -1,7 +1,9 @@
 import FormControl from "@mui/material/FormControl"
 import TextField from "@mui/material/TextField"
-import { Control, Controller, FieldValues, Path } from "react-hook-form"
+import { Control, Controller, FieldError, FieldErrors, FieldValues, LiteralUnion, Path } from "react-hook-form"
 import { InputProps as MuiInputProps, TextFieldProps as MuiTextFieldProps } from "@mui/material"
+import { NewItemCommonInputs } from "features/modals/Modal/CreateNewItemModal/NewItemCommonModal/NewItemCommonModal"
+import { error } from "console"
 
 export type BaseInputProps<T extends FieldValues> = {
   name: Path<T>
@@ -12,21 +14,48 @@ export type BaseInputProps<T extends FieldValues> = {
   inputProps?: MuiInputProps
   textFieldProps?: MuiTextFieldProps
   margin?: string
+  errors?: FieldError | undefined
 }
 
 export type TextInputProps<T extends FieldValues> = BaseInputProps<T>
+
+const TextInputHelperTextGeneration = (
+  errors?: FieldError | undefined,
+  rules?: Record<string, any>
+): string | undefined => {
+  switch (errors?.type) {
+    case "required":
+      return "This field is required"
+    case "minLength":
+      return "min length " + rules?.minLength
+    default:
+      return undefined
+  }
+}
 
 export function TextInput<T extends FieldValues>({
   name,
   control,
   type,
   label,
-  rules = {},
+  rules,
   inputProps,
   margin,
+  errors,
 }: TextInputProps<T>) {
+  // console.log(errors)
+  console.log(!!errors)
+
   return (
-    <FormControl sx={{ m: 1, width: "100%", marginBottom: "24px", margin: margin }} variant="standard">
+    <FormControl
+      sx={{
+        m: 1,
+        width: "100%",
+        marginBottom: "24px",
+        // margin: margin,
+      }}
+      variant="standard"
+    >
       <Controller
         key={name}
         name={name}
@@ -37,13 +66,25 @@ export function TextInput<T extends FieldValues>({
             key={name + label}
             type={type ?? "text"}
             defaultValue={inputProps?.defaultValue}
-            id="standard-basic"
+            // id="standard-basic"
+            id="standard-error-helper-text"
             label={label}
             variant="standard"
+            sx={{
+              height: "64px",
+              "& .MuiInputBase-input": {
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              },
+            }}
             {...field}
             // onBlur={inputProps?.onBlur || field.onBlur}
             //@ts-ignore
             onKeyDown={inputProps?.onKeyDown}
+            error={!!errors}
+            helperText={TextInputHelperTextGeneration(errors, rules)}
+            InputLabelProps={{ shrink: true }}
+            // sx={{ height: "64px" }}
           />
         )}
       />

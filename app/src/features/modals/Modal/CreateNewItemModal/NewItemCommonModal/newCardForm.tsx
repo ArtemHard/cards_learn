@@ -3,9 +3,11 @@ import { TextInput } from "components/Inputs/TextInput/TextInput"
 import { ButtonGroupModal } from "../../ButtonGroupModal/ButtonGroupModal"
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit"
 import { InputTypeFile } from "components/Inputs/InputTypeFile"
-import { UseFormSetValue } from "react-hook-form"
+import { FieldErrors, UseFormSetValue } from "react-hook-form"
 import { NewItemCommonInputs } from "./NewItemCommonModal"
 import { AddImg } from "components/AddImg/AddImg"
+import { useAppSelector } from "common/hooks"
+import { selectorIsEditModal } from "features/modals/modal.selector"
 
 type NewCardFormProps = {
   selectProps: Omit<SelectButtonProps, "control">
@@ -14,6 +16,7 @@ type NewCardFormProps = {
   setValue: UseFormSetValue<NewItemCommonInputs>
   question: string
   answer: string
+  errors: FieldErrors<NewItemCommonInputs>
 } & Pick<SelectButtonProps, "control">
 
 export const NewCardForm = ({
@@ -24,16 +27,27 @@ export const NewCardForm = ({
   question,
   answer,
   setValue,
+  errors,
 }: NewCardFormProps) => {
+  const isEdit = useAppSelector(selectorIsEditModal)
+
   const uploadPhotoQuestionHandler = (file: string) => {
     setValue("question", file)
   }
   const uploadPhotoAnswerHandler = (file: string) => {
     setValue("answer", file)
   }
+
   return (
     <>
-      <SelectButton selects={selectProps.selects} control={control} name={selectProps.name} label={selectProps.label} />
+      {!isEdit && (
+        <SelectButton
+          selects={selectProps.selects}
+          control={control}
+          name={selectProps.name}
+          label={selectProps.label}
+        />
+      )}
       {questionFormat === "Text" && (
         <>
           <TextInput
@@ -42,16 +56,17 @@ export const NewCardForm = ({
             name="question"
             type="text"
             key={"question"}
-            rules={{ required: true, minLength: 1 }}
+            rules={{ required: true, minLength: 3 }}
+            errors={errors.question}
           />
-
           <TextInput
             control={control}
             label="Answer"
             name="answer"
             type="text"
             key={"answer"}
-            rules={{ required: true, minLength: 5 }}
+            rules={{ required: true, minLength: 1 }}
+            errors={errors.answer}
           />
         </>
       )}
