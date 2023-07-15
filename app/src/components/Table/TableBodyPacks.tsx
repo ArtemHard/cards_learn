@@ -13,6 +13,7 @@ import { packsThunks } from "features/packs/packs.slice"
 import { PackType } from "features/packs/packs.api.types"
 import { selectorUserId } from "features/packs/pack.selector"
 import { modalActions } from "features/modals/modal.slice"
+import { ImageCard } from "components/AddImg/AddImg"
 
 const longNameCut = (userName: string): string => {
   if (userName.length > maxNameLength) {
@@ -50,7 +51,8 @@ export const TableBodyPacks = ({ packs }: TableBodyPacksProps) => {
       {packs.map((pack) => (
         <TableRow key={pack._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
           <TableCell sx={textTableStyle} component="th" scope="row">
-            <NavLink to={"/cards/" + pack._id} style={{ textDecoration: "none", color: "inherit" }}>
+            <NavLink to={"/cards/" + pack._id} style={NavLinkStyleTableBodyPacks}>
+              {pack.deckCover && <ImageCard src={pack.deckCover} width="auto" height="36px" />}
               {longNameCut(pack.name)}
             </NavLink>
           </TableCell>
@@ -98,4 +100,12 @@ const textTableStyle = {
   fontSize: "13px",
   lineHeight: "16px",
   color: "#000000",
+}
+
+const NavLinkStyleTableBodyPacks = {
+  textDecoration: "none",
+  color: "inherit",
+  display: "flex",
+  alignItems: "flex-end",
+  gap: "10px",
 }

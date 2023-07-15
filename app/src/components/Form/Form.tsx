@@ -78,6 +78,18 @@ export const Form = ({ type, callback, email }: FormPropsType) => {
             }}
             control={control}
           />
+          // <PasswordInput
+          // name="email"
+          //   label="Email"
+          //   type="email"
+          //   key={"email"}
+          //   control={control}
+          //   marginBottom="24px"
+          //   rules={{
+          //     required: true,
+          //     minLength: 8,
+          //   }}
+          // />
         )}
         {type !== "Forgot your password?" && type !== "Check Email" && (
           <PasswordInput
