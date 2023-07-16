@@ -3,24 +3,14 @@ import { instance } from "common/api"
 
 export const authApi = {
   baseUrl: "/auth",
-  login(data?: AuthLoginType) {
-    const tempData = {
-      email: "nya-admin@nya.nya",
-      password: "1qazxcvBG",
-      rememberMe: false,
-    }
-
+  login(data: AuthLoginType) {
     // false - куки умрут если пользователь будет
     // 3 часа бездействовать,
     // true - разрешено 7 дней бездействовать
-    return instance.post<ProfileType>(this.baseUrl + "/login", data ? data : tempData)
+    return instance.post<ProfileType>(this.baseUrl + "/login", data)
   },
-  register(data?: AuthRegisterType) {
-    const tempData = {
-      email: "nya-admin@nya.nya",
-      password: "1qazxcvBG",
-    }
-    return instance.post<RegisterResponseType>(this.baseUrl + "/register", data ? data : tempData)
+  register(data: AuthRegisterType) {
+    return instance.post<RegisterResponseType>(this.baseUrl + "/register", data)
   },
   checkAuth() {
     return instance.post<ProfileType>(this.baseUrl + "/me", {})

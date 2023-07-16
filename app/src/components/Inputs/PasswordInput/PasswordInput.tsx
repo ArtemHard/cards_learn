@@ -8,6 +8,9 @@ import { Visibility, VisibilityOff } from "@mui/icons-material"
 import { Control, Controller, FieldValues, Path } from "react-hook-form"
 import { InputProps as MuiInputProps, TextFieldProps as MuiTextFieldProps } from "@mui/material"
 import { BaseInputProps } from "../TextInput/TextInput"
+import FormHelperText from "@mui/material/FormHelperText"
+import { errorHelperText } from "common/utils"
+import { error } from "console"
 
 export type PasswordInputProps<T extends FieldValues> = Omit<
   BaseInputProps<T> & {
@@ -23,6 +26,7 @@ export function PasswordInput<T extends FieldValues>({
   rules = {},
   inputProps,
   marginBottom,
+  errors,
 }: PasswordInputProps<T>) {
   const [showPassword, setShowPassword] = useState(false)
 
@@ -33,33 +37,41 @@ export function PasswordInput<T extends FieldValues>({
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
   }
+  console.log(errors)
 
   return (
-    <FormControl sx={{ width: "100%", marginBottom: marginBottom }} variant="standard">
-      <InputLabel htmlFor="standard-adornment-password">{label}</InputLabel>
+    <FormControl sx={{ width: "100%", marginBottom: marginBottom }} variant="standard" error={!!errors}>
+      <InputLabel htmlFor="component-error">{label}</InputLabel>
+
       <Controller
         name={name}
         control={control}
         rules={rules}
         render={({ field }) => (
-          <Input
-            id={name as string}
-            type={showPassword ? "text" : "password"}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            {...field}
-            {...inputProps}
-            required={!!rules.required} // pass the required attribute to the Input component if it exists in rules
-          />
+          <>
+            <Input
+              key={name}
+              id="component-error"
+              aria-describedby="component-error-text"
+              type={showPassword ? "text" : "password"}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              {...field}
+              {...inputProps}
+              required={!!errors}
+              // pass the required attribute to the Input component if it exists in rules
+            />
+            <FormHelperText id="component-error-text">{errorHelperText(errors, rules)}</FormHelperText>
+          </>
         )}
       />
     </FormControl>

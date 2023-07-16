@@ -1,11 +1,11 @@
 import { CheckboxControl } from "components/Checkbox/Checkbox"
-import { MS } from "../../Modal.styled"
-import { ButtonGroupModal } from "../../ButtonGroupModal/ButtonGroupModal"
+import { MS } from "../../../Modal.styled"
+import { ButtonGroupModal } from "../../../ButtonGroupModal/ButtonGroupModal"
 import { ActionCreatorWithoutPayload } from "@reduxjs/toolkit"
 import { Control, FieldValues, Path, UseFormSetValue } from "react-hook-form"
 import { TextInput } from "components/Inputs/TextInput/TextInput"
 import { AddImg } from "components/AddImg/AddImg"
-import { NewItemCommonInputs } from "./NewItemCommonModal"
+import { NewItemCommonInputs } from "../CreateUpdateFormModal"
 
 type NewPackFormType<T extends FieldValues> = {
   control: Control<T>

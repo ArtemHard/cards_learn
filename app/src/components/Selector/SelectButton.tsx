@@ -2,7 +2,7 @@ import MenuItem from "@mui/material/MenuItem"
 import FormControl from "@mui/material/FormControl"
 import Select from "@mui/material/Select"
 import { Control, Controller } from "react-hook-form"
-import { NewItemCommonInputs } from "features/modals/Modal/CreateNewItemModal/NewItemCommonModal/NewItemCommonModal"
+import { NewItemCommonInputs } from "features/modals/Modal/CreateUpdateItemModal/CreateUpdateFormModal/CreateUpdateFormModal"
 import InputLabel from "@mui/material/InputLabel"
 import styled from "styled-components"
 export type SelectButtonProps = {

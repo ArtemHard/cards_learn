@@ -1,10 +1,8 @@
 import FormControl from "@mui/material/FormControl"
 import TextField from "@mui/material/TextField"
-import { Control, Controller, FieldError, FieldErrors, FieldValues, LiteralUnion, Path } from "react-hook-form"
+import { Control, Controller, FieldError, FieldValues, Path } from "react-hook-form"
 import { InputProps as MuiInputProps, TextFieldProps as MuiTextFieldProps } from "@mui/material"
-import { NewItemCommonInputs } from "features/modals/Modal/CreateNewItemModal/NewItemCommonModal/NewItemCommonModal"
-import { error } from "console"
-import InputLabel from "@mui/material/InputLabel"
+import { errorHelperText } from "common/utils"
 
 export type BaseInputProps<T extends FieldValues> = {
   name: Path<T>
@@ -19,20 +17,6 @@ export type BaseInputProps<T extends FieldValues> = {
 }
 
 export type TextInputProps<T extends FieldValues> = BaseInputProps<T>
-
-const TextInputHelperTextGeneration = (
-  errors?: FieldError | undefined,
-  rules?: Record<string, any>
-): string | undefined => {
-  switch (errors?.type) {
-    case "required":
-      return "This field is required"
-    case "minLength":
-      return "Minimum length is " + rules?.minLength
-    default:
-      return undefined
-  }
-}
 
 export function TextInput<T extends FieldValues>({
   name,
@@ -80,7 +64,7 @@ export function TextInput<T extends FieldValues>({
             //@ts-ignore
             onKeyDown={inputProps?.onKeyDown}
             error={!!errors}
-            helperText={TextInputHelperTextGeneration(errors, rules)}
+            helperText={errorHelperText(errors, rules)}
             // InputLabelProps={{ shrink: true }}
             // sx={{ height: "64px" }}
           />

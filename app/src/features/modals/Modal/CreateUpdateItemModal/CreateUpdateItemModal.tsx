@@ -1,12 +1,12 @@
 import { BasicModal } from "../../../../components/BasicModal/BasicModal"
 import { useModals } from "common/hooks/useModals"
 import { HeaderModal } from "../HeaderModal/HeaderModal"
-import { NewItemCommonModal, NewItemCommonInputs } from "./NewItemCommonModal/NewItemCommonModal"
+import { CreateUpdateFormModal, NewItemCommonInputs } from "./CreateUpdateFormModal/CreateUpdateFormModal"
 import { useActions } from "common/hooks"
 import { packsThunks } from "features/packs/packs.slice"
 import { cardsThunks } from "features/cards/cards.slice"
 
-export const CreateNewItemModal = () => {
+export const CreateUpdateItemModal = () => {
   const { actions, selectors } = useModals()
   const { createPack, updatePack, fetchPacks } = useActions(packsThunks)
   const { createCard, updateCard, fetchCards } = useActions(cardsThunks)
@@ -64,7 +64,7 @@ export const CreateNewItemModal = () => {
         modalType={selectors.modalType}
         modalTypeAction={selectors.modalTypeAction}
       />
-      <NewItemCommonModal submitHandler={submitHandler} />
+      <CreateUpdateFormModal submitHandler={submitHandler} />
     </BasicModal>
   )
 }

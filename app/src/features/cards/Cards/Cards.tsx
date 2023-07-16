@@ -1,7 +1,6 @@
 import { useEffect } from "react"
 import { P } from "../../packs/Packs/Packs.styled"
 import KeyboardBackspaceOutlinedIcon from "@mui/icons-material/KeyboardBackspaceOutlined"
-import styled from "styled-components"
 import { useActions, useAppSelector } from "common/hooks"
 import {
   selectorCardsPage,
@@ -13,8 +12,6 @@ import {
   selectorPackName,
   selectorCards,
 } from "../cards.selector"
-import { TextLinkBlock } from "components/Form/Form.styled"
-import { emptyFriendPackAlertText, emptyUserPackAlertText } from "common/constants"
 import { BasicButton } from "components/Button/BasicButton"
 import { useNavigate, useParams } from "react-router-dom"
 import { cardsActions, cardsThunks } from "../cards.slice"
@@ -24,8 +21,9 @@ import { PaginationCommon } from "components/Pagination/PaginationCommon"
 import SelectButtonPaginator from "components/Selector/SelectButtonPaginator"
 import { MoreTools } from "components/MoreTools/MoreTools"
 import { selectorIsLoading } from "app/app.selectors"
-import { useGetCardsQuery } from "../services/cards.api"
 import { modalActions } from "features/modals/modal.slice"
+import { EmptyPack } from "components/EmptyPack/EmptyPack"
+import { CardStyle as S } from "./Cards.styled"
 
 export type headerTableParamsType = {
   dataParams: string
@@ -33,10 +31,10 @@ export type headerTableParamsType = {
   align: "left" | "center" | "right"
 }
 const headerTableParams: headerTableParamsType[] = [
-  { dataParams: "name", text: "Question", align: "left" },
-  { dataParams: "cardsCount", text: "Answer", align: "center" },
+  { dataParams: "question", text: "Question", align: "left" },
+  { dataParams: "answer", text: "Answer", align: "center" },
   { dataParams: "updated", text: "Last Updated", align: "center" },
-  { dataParams: "user_name", text: "Grade", align: "right" },
+  { dataParams: "grade", text: "Grade", align: "right" },
 ]
 
 export const Cards = () => {
@@ -48,7 +46,7 @@ export const Cards = () => {
   const searchParamsQuestion = useAppSelector(selectorCardsSearhQuestion)
   const isLoading = useAppSelector(selectorIsLoading)
 
-  const { fetchCards, createCard } = useActions(cardsThunks)
+  const { fetchCards } = useActions(cardsThunks)
   const { changeFilterParams, clearFilter } = useActions(cardsActions)
   const { setDataModal, toggleModal } = useActions(modalActions)
   const pageCount = useAppSelector(selectorCardsPageCount)
@@ -102,10 +100,10 @@ export const Cards = () => {
   return (
     <P.Wrapper>
       <P.Container key={"navigation"} justifyContent="flex-start">
-        <BackNavigateContainer onClick={() => navigate("/packs")}>
+        <S.BackNavigateContainer onClick={() => navigate("/packs")}>
           <KeyboardBackspaceOutlinedIcon sx={{ marginRight: "8px" }} />
-          <Span>Back to Packs List</Span>
-        </BackNavigateContainer>
+          <S.Span>Back to Packs List</S.Span>
+        </S.BackNavigateContainer>
       </P.Container>
 
       <P.Container key={"header"} justifyContent="space-between">
@@ -124,14 +122,14 @@ export const Cards = () => {
       </P.Container>
 
       <P.Container key={"params"}>
-        <ParamContainer>
+        <S.ParamContainer>
           <SearchInputBlock
             fetch={fetchCards}
             changeFilterParams={changeFilterParamsCallback}
             searchQuery={searchParamsQuestion}
             width="100%"
           />
-        </ParamContainer>
+        </S.ParamContainer>
       </P.Container>
 
       <P.Container>{!!cardsLength && <TableCards headerParams={headerTableParams} data={cards} />}</P.Container>
@@ -163,55 +161,3 @@ export const Cards = () => {
     </P.Wrapper>
   )
 }
-
-type EmptyPackProps = {
-  onClickHandler?: () => void
-}
-const EmptyPack = ({ onClickHandler }: EmptyPackProps) => {
-  const isUserPack = useAppSelector(selectIsUserPack)
-
-  return (
-    <EmptyPackWrapper>
-      <TextLinkBlock innerText={isUserPack ? emptyUserPackAlertText : emptyFriendPackAlertText}></TextLinkBlock>
-      {isUserPack && <BasicButton buttonText="Add new card" width="171px" onClick={onClickHandler} />}
-    </EmptyPackWrapper>
-  )
-}
-
-const EmptyPackWrapper = styled.div`
-  width: 100%;
-  margin-top: 86px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`
-
-const Span = styled.span`
-  font-family: "Montserrat", sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 24px;
-  /* identical to box height */
-
-  color: #000000;
-`
-const BackNavigateContainer = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  border-bottom: 2px solid transparent;
-  cursor: pointer;
-  :hover {
-    border-bottom: 2px solid black;
-  }
-`
-
-const ParamContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  /* width: 100%; */
-  justify-content: space-between;
-  width: 100%;
-`

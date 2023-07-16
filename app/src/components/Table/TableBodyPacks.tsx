@@ -14,6 +14,7 @@ import { PackType } from "features/packs/packs.api.types"
 import { selectorUserId } from "features/packs/pack.selector"
 import { modalActions } from "features/modals/modal.slice"
 import { ImageCard } from "components/AddImg/AddImg"
+import stubPicture from "../../common/assets/icons/reactJS.png"
 
 const longNameCut = (userName: string): string => {
   if (userName.length > maxNameLength) {
@@ -52,7 +53,7 @@ export const TableBodyPacks = ({ packs }: TableBodyPacksProps) => {
         <TableRow key={pack._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
           <TableCell sx={textTableStyle} component="th" scope="row">
             <NavLink to={"/cards/" + pack._id} style={NavLinkStyleTableBodyPacks}>
-              {pack.deckCover && <ImageCard src={pack.deckCover} width="auto" height="36px" />}
+              {<ImageCard src={!!pack.deckCover ? pack.deckCover : stubPicture} width="auto" height="36px" />}
               {longNameCut(pack.name)}
             </NavLink>
           </TableCell>

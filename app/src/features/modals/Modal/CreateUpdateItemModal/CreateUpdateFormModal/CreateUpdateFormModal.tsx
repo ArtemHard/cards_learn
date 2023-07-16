@@ -2,8 +2,8 @@ import React, { useEffect } from "react"
 import { MS } from "../../Modal.styled"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { useModals } from "common/hooks/useModals"
-import { NewPackForm } from "./NewPackForm"
-import { NewCardForm } from "./newCardForm"
+import { NewPackForm } from "./NewPackForm/NewPackForm"
+import { NewCardForm } from "./NewCardForm/NewCardForm"
 
 export type NewItemCommonInputs = {
   questionFormat: "Text" | "Picture"
@@ -13,10 +13,10 @@ export type NewItemCommonInputs = {
   privatePack: boolean
   deckCover: string
 }
-type NewItemFormModalProps = {
+type CreateUpdateFormModalProps = {
   submitHandler: (data: NewItemCommonInputs) => void
 }
-export const NewItemCommonModal = ({ submitHandler }: NewItemFormModalProps) => {
+export const CreateUpdateFormModal = ({ submitHandler }: CreateUpdateFormModalProps) => {
   const regex = /^data:/
 
   const { selectors, actions } = useModals()

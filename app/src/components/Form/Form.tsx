@@ -22,7 +22,12 @@ export type FormInputsType = AuthLoginType & {
 }
 
 export const Form = ({ type, callback, email }: FormPropsType) => {
-  const { control, handleSubmit } = useForm<FormInputsType>({
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormInputsType>({
     defaultValues: {
       email: "",
       password: "",
@@ -62,6 +67,9 @@ export const Form = ({ type, callback, email }: FormPropsType) => {
     }
   }
 
+  const password = watch("password")
+  const confirmPassword = watch("passwordConfirm")
+
   return (
     <S.FormWrapper>
       <S.FormModule onSubmit={handleSubmit(onSubmit)}>
@@ -77,6 +85,7 @@ export const Form = ({ type, callback, email }: FormPropsType) => {
               required: true,
             }}
             control={control}
+            errors={errors.email}
           />
           // <PasswordInput
           // name="email"
@@ -102,6 +111,7 @@ export const Form = ({ type, callback, email }: FormPropsType) => {
               required: true,
               minLength: 8,
             }}
+            errors={errors.password}
           />
         )}
         {type === "Forgot your password?" && <S.TextBlock text={forgotPassInstructions} />}
@@ -117,7 +127,9 @@ export const Form = ({ type, callback, email }: FormPropsType) => {
             rules={{
               required: true,
               minLength: 8,
+              validate: (value: string) => value === password || "Passwords do not match",
             }}
+            errors={errors.passwordConfirm}
           />
         )}
         {type === "Sign In" && <CheckboxControl control={control} label="Remember me" name="rememberMe" />}

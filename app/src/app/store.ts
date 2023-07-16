@@ -1,5 +1,4 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit"
-import counterReducer from "../features/counter/counterSlice"
 import { appReducer } from "./app.slice"
 import { authReducer } from "features/auth/auth.slice"
 import { packsReducer } from "features/packs/packs.slice"
@@ -12,7 +11,6 @@ import { cardsSliceApi } from "features/cards/services/cards.api"
 export const store = configureStore({
   reducer: {
     app: appReducer,
-    counter: counterReducer,
     auth: authReducer,
     packs: packsReducer,
     cards: cardsReducer,
