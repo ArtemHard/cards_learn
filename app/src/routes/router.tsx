@@ -9,72 +9,67 @@ import { SetNewPassword } from "features/auth/SetNewPassword/SetNewPassword"
 import { Packs } from "features/packs/Packs/Packs"
 import { Cards } from "features/cards/Cards/Cards"
 import { Learn } from "components/Learn/Learn"
+import { RequireAuth } from "common/hoc/RequireAuth"
+import { nav } from "./navigation"
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     errorElement: <ErrorPage />,
-    children: [
-      {
-        path: "sign-in",
-        element: <Auth type="Sign In" key={"sign-in"} />,
-        // ErrorBoundary: ErrorPage,
-      },
-      {
-        path: "sign-up",
-        element: <Auth type="Sign Up" key={"sign-up"} />,
-        // ErrorBoundary: ErrorPage,
-      },
-      {
-        path: "check-email",
-        element: <CheckEmail />,
-        // ErrorBoundary: ErrorPage,
-      },
-      {
-        path: "set-new-password",
-        element: <SetNewPassword />,
-        // ErrorBoundary: ErrorPage,
-      },
-      {
-        path: "forgot-password",
-        element: <ForgotPassword />,
-        // ErrorBoundary: ErrorPage,
-      },
-      {
-        path: "profile",
-        element: <Profile />,
-        // ErrorBoundary: ErrorPage,
-      },
-      {
-        path: "packs",
-        element: <Packs />,
-        // ErrorBoundary: ErrorPage,
-        // children: [
-        //   {
-        //     path: "pack-name",
-        //   },
-        //   {
-        //     path: "friends-pack",
-        //   },
-        //   {
-        //     path: "my-pack",
-        //   },
-        //   {
-        //     path: "friends-pack",
-        //   },
-        // ],
-      },
-      {
-        path: "cards/:cardId",
-        element: <Cards />,
-        // ErrorBoundary: ErrorPage,
-      },
-      {
-        path: "learn/:cardId",
-        element: <Learn />,
-        // ErrorBoundary: ErrorPage,
-      },
-    ],
+    children: nav.map((el) => {
+      return {
+        path: el.path,
+        element: el.isPrivate ? <RequireAuth component={el.element} /> : el.element,
+      }
+    }),
+    // [
+    //   {
+    //     path: "sign-in",
+    //     element: <Auth type="Sign In" key={"sign-in"} />,
+    //     // ErrorBoundary: ErrorPage,
+    //   },
+    //   {
+    //     path: "sign-up",
+    //     element: <Auth type="Sign Up" key={"sign-up"} />,
+    //     // ErrorBoundary: ErrorPage,
+    //   },
+    //   {
+    //     path: "check-email",
+    //     element: <CheckEmail />,
+    //     // ErrorBoundary: ErrorPage,
+    //   },
+    //   {
+    //     path: "set-new-password",
+    //     element: <SetNewPassword />,
+    //     // ErrorBoundary: ErrorPage,
+    //   },
+    //   {
+    //     path: "forgot-password",
+    //     element: <ForgotPassword />,
+    //     // ErrorBoundary: ErrorPage,
+    //   },
+    //   {
+    //     path: "profile",
+    //     element: <RequireAuth component={<Profile />} />,
+
+    //     // element: <Profile />,
+    //     // ErrorBoundary: ErrorPage,
+    //   },
+    //   {
+    //     path: "packs",
+    //     element: <Packs />,
+    //   },
+    //   {
+    //     path: "cards/:cardId",
+    //     element: <Cards />,
+    //     // ErrorBoundary: ErrorPage,
+    //   },
+    //   {
+    //     path: "learn/:cardId",
+    //     element: <Learn />,
+    //     // ErrorBoundary: ErrorPage,
+    //   },
+    // ],
   },
 ])

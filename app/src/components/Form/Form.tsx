@@ -109,7 +109,7 @@ export const Form = ({ type, callback, email }: FormPropsType) => {
             marginBottom="24px"
             rules={{
               required: true,
-              minLength: 8,
+              // minLength: 8,
             }}
             errors={errors.password}
           />
