@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/cards_learn/static/css/main.683683e0.css",
+    "main.js": "/cards_learn/static/js/main.253e388c.js",
+    "static/js/787.c1112931.chunk.js": "/cards_learn/static/js/787.c1112931.chunk.js",
+    "static/media/400.svg": "/cards_learn/static/media/400.8baa1b795048b6fa13ff8d30800aa1b1.svg",
+    "index.html": "/cards_learn/index.html",
+    "main.683683e0.css.map": "/cards_learn/static/css/main.683683e0.css.map",
+    "main.253e388c.js.map": "/cards_learn/static/js/main.253e388c.js.map",
+    "787.c1112931.chunk.js.map": "/cards_learn/static/js/787.c1112931.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.683683e0.css",
+    "static/js/main.253e388c.js"
+  ]
+}
