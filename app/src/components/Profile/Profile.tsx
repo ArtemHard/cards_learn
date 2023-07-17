@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 import { useState, useCallback } from "react"
 import { useAppSelector, useActions } from "common/hooks"
-import { selectProfileData } from "common/utils/selectors/authSelectors"
+import { selectorProfileData } from "common/utils/selectors/authSelectors"
 import { authThunk } from "features/auth/auth.slice"
 import styled from "styled-components"
 import Avatar from "@mui/material/Avatar"
@@ -22,7 +22,7 @@ export type PrfileInputType = {
 }
 export const Profile = () => {
   const { logOut, updateUser } = useActions(authThunk)
-  const profile = useAppSelector(selectProfileData)
+  const profile = useAppSelector(selectorProfileData)
   const [edit, setEdit] = useState(false)
   const onClickEditMode = (e: any) => {
     setEdit(!edit)

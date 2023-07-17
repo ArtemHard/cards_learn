@@ -16,6 +16,10 @@ import Tooltip from "@mui/material/Tooltip"
 import MenuItem from "@mui/material/MenuItem"
 import { ButtonBase } from "@mui/material"
 import { BasicButton } from "components/Button/BasicButton"
+import { selectorIsAuth } from "features/auth/auth.selectors"
+import { selectorProfileAvatar } from "common/utils/selectors/authSelectors"
+import { nav } from "routes/navigation"
+import { Navigation } from "./Navigation/Navigation"
 
 const settings = [
   { text: "Profile", link: "/profile" },
@@ -23,7 +27,8 @@ const settings = [
 ]
 
 export const Header = () => {
-  const isAuth = useAppSelector((state) => state.auth.profile?.name)
+  const isAuthName = useAppSelector(selectorIsAuth)
+  const profileAvatar = useAppSelector(selectorProfileAvatar)
   const navigate = useNavigate()
   const { logOut } = useActions(authThunk)
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
@@ -39,17 +44,20 @@ export const Header = () => {
   return (
     <AppBar position="static" sx={{ backgroundColor: "#fcfcfc", alignItems: "center" }}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
+        <Toolbar
+          disableGutters
+          sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}
+        >
           <Typography
             variant="h5"
             noWrap
             component="a"
             href=""
             sx={{
-              mr: 2,
+              // mr: 2,
               // display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
+              // flexGrow: 1,
+              fontFamily: "monospace, sans-serif",
               fontWeight: 700,
               letterSpacing: ".3rem",
               color: "black",
@@ -58,7 +66,19 @@ export const Header = () => {
           >
             IT-INCUBA
           </Typography>
-          {isAuth ? (
+          <Navigation isAuthName={isAuthName} />
+          {nav.map((page) => {
+            if (isAuthName && page.isPrivate) {
+              return (
+                <MenuItem key={page.path} onClick={() => alert("navigate")}>
+                  <Typography textAlign="center" sx={{ color: "black" }}>
+                    {page.name}
+                  </Typography>
+                </MenuItem>
+              )
+            } else return null
+          })}
+          {isAuthName ? (
             <Box sx={{ flexGrow: 0 }}>
               <Typography
                 variant="h5"
@@ -77,11 +97,11 @@ export const Header = () => {
                   textDecoration: "none",
                 }}
               >
-                {isAuth}
+                {isAuthName}
               </Typography>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt="Remy Sharp" src={profileAvatar ? profileAvatar : "/static/images/avatar/2.jpg"} />
                 </IconButton>
               </Tooltip>
               <Menu

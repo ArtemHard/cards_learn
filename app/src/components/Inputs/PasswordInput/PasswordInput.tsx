@@ -37,11 +37,10 @@ export function PasswordInput<T extends FieldValues>({
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
   }
-  console.log(errors)
-
+  const inputId = "component-error" + name
   return (
     <FormControl sx={{ width: "100%", marginBottom: marginBottom }} variant="standard" error={!!errors}>
-      <InputLabel htmlFor="component-error">{label}</InputLabel>
+      <InputLabel htmlFor={inputId}>{label}</InputLabel>
 
       <Controller
         name={name}
@@ -51,7 +50,7 @@ export function PasswordInput<T extends FieldValues>({
           <>
             <Input
               key={name}
-              id="component-error"
+              id={inputId}
               aria-describedby="component-error-text"
               type={showPassword ? "text" : "password"}
               endAdornment={
@@ -70,7 +69,7 @@ export function PasswordInput<T extends FieldValues>({
               required={!!errors}
               // pass the required attribute to the Input component if it exists in rules
             />
-            <FormHelperText id="component-error-text">{errorHelperText(errors, rules)}</FormHelperText>
+            <FormHelperText id={"component-error-text" + name}>{errorHelperText(errors, rules)}</FormHelperText>
           </>
         )}
       />
