@@ -5,6 +5,7 @@ import {
   AuthRegisterType,
   ForgotPassDataForServer,
   ProfileType,
+  RegisterResponseType,
   SetNewPasswordData,
   updateUserData,
 } from "./auth.api"
@@ -13,24 +14,28 @@ import { createAppAsyncThunk } from "common/utils/createAppAsyncThunk"
 import { thunkTryCatch } from "common/utils/thunkTryCatch"
 import { appActions } from "app/app.slice"
 
-const register = createAppAsyncThunk<void, AuthRegisterType>("auth/register", async (arg, thunkApi) => {
-  const { dispatch } = thunkApi
-  // dispatch(appActions.setIsLoading({ isLoading: true }))
-  return await thunkTryCatch(thunkApi, async () => {
-    await authApi.register(arg)
-  })
-  // const { dispatch, rejectWithValue } = thunkApi
-  // try {
-  //   await authApi.register(arg)
-  // } catch (e: any) {
-  //   dispatch(
-  //     appActions.setError({
-  //       error: e.response ? e.response.data.error : e.message,
-  //     })
-  //   )
-  //   return rejectWithValue(null)
-  // }
-})
+const register = createAppAsyncThunk<{ profile: ProfileType }, AuthRegisterType>(
+  "auth/register",
+  async (arg, thunkApi) => {
+    const { dispatch } = thunkApi
+    // dispatch(appActions.setIsLoading({ isLoading: true }))
+    return await thunkTryCatch(thunkApi, async () => {
+      const res = await authApi.register(arg)
+      return { profile: res.data.addedUser }
+    })
+    // const { dispatch, rejectWithValue } = thunkApi
+    // try {
+    //   await authApi.register(arg)
+    // } catch (e: any) {
+    //   dispatch(
+    //     appActions.setError({
+    //       error: e.response ? e.response.data.error : e.message,
+    //     })
+    //   )
+    //   return rejectWithValue(null)
+    // }
+  }
+)
 
 const login = createAppAsyncThunk<{ profile: ProfileType }, AuthLoginType>("auth/login", async (arg, thunkApi) => {
   return await thunkTryCatch(
@@ -144,6 +149,10 @@ const slice = createSlice({
         state.sendEmail = action.payload.sendEmail
       })
       .addCase(register.rejected, (state, action) => {
+        // state.authError = action.error
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.profile = action.payload.profile
         // state.authError = action.error
       })
       .addCase(updateUser.fulfilled, (state, action) => {

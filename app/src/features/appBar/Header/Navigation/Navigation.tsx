@@ -13,7 +13,6 @@ type NavigationProps = {
 export const Navigation = ({ isAuthName }: NavigationProps) => {
   const navigate = useNavigate()
   let location = useLocation()
-  console.log(location.pathname)
 
   return (
     <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
@@ -24,11 +23,11 @@ export const Navigation = ({ isAuthName }: NavigationProps) => {
               return navigateLink(page, navigate, location.pathname)
             } else return null
           }
-          if (!isAuthName) {
-            if (page.isPrivate === false) {
-              return navigateLink(page, navigate, location.pathname)
-            } else return null
-          }
+          // if (!isAuthName) {
+          //   if (page.isPrivate === false) {
+          //     return navigateLink(page, navigate, location.pathname)
+          //   } else return null
+          // }
           return null
         } else return null
       })}

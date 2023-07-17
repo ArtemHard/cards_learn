@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { appActions } from "app/app.slice"
-import { Outlet, useNavigate } from "react-router-dom"
+import { Outlet, useLocation, useNavigate } from "react-router-dom"
 import { Header } from "features/appBar/Header/Header"
 import { GlobalError } from "common/components/GlobalError/GlobalError"
 import LinearProgress from "@mui/material/LinearProgress"
@@ -8,41 +8,43 @@ import { useAppDispatch, useAppSelector } from "common/hooks"
 import "react-toastify/dist/ReactToastify.css"
 import { selectIsAppInitialized, selectIsAuth, selectorIsLoading, selectUnHandleActions } from "./app.selectors"
 import { Modal } from "features/modals/Modal/Modal"
+import { PATH } from "routes/path"
 
 function App() {
   // const isLoading = useAppSelector((state) => state.app.isLoading)
   const isAuth = useAppSelector(selectIsAuth)
   const isLoading = useAppSelector(selectorIsLoading)
   const isAppInitialized = useAppSelector(selectIsAppInitialized)
-  const unHandleActions = useAppSelector(selectUnHandleActions)
+  // const unHandleActions = useAppSelector(selectUnHandleActions)
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
+  const location = useLocation()
 
   useEffect(() => {
-    // WARNING NEEDD TO UNCOMMENT
-    // if (!isAuth) navigate("/sign-in")
+    if (!isAuth) {
+      if (location.pathname !== "/" + PATH.LOGIN || location.pathname !== "/" + PATH.REGISTRATION)
+        return navigate(PATH.LOGIN)
+    }
+    if (isAuth) return navigate(PATH.PACKS)
     setTimeout(() => {
       dispatch(appActions.setIsLoading({ isLoading: false }))
     }, 3000)
   }, [isAuth])
   return (
     <div className="App">
-      <Header />
+      <Header isAuthName={isAuth} />
       <Modal />
-      <button onClick={() => navigate("/sign-in")}>sign-in</button>
+      {/* <button onClick={() => navigate("/sign-in")}>sign-in</button>
       <button onClick={() => navigate("/sign-up")}>sign-up</button>
       <button onClick={() => navigate("/check-email")}>check-email</button>
       <button onClick={() => navigate("/set-new-password")}>set-new-password</button>
       <button onClick={() => navigate("/forgot-password")}>forgot-password</button>
       <button onClick={() => navigate("/profile")}>Profile</button>
       <button onClick={() => navigate("/packs")}>Packs</button>
-      <button onClick={() => navigate("/cards")}>{">>>>> Cards"}</button>
+      <button onClick={() => navigate("/cards")}>{">>>>> Cards"}</button> */}
       <GlobalError />
       {isLoading && <LinearProgress />}
-      {/* <Counter /> */}
-      <div>
-        <Outlet />
-      </div>
+      <div>{!isAppInitialized && <Outlet />}</div>
     </div>
   )
 }

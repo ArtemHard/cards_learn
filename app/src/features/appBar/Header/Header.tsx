@@ -18,16 +18,17 @@ import { ButtonBase } from "@mui/material"
 import { BasicButton } from "components/Button/BasicButton"
 import { selectorIsAuth } from "features/auth/auth.selectors"
 import { selectorProfileAvatar } from "common/utils/selectors/authSelectors"
-import { nav } from "routes/navigation"
 import { Navigation } from "./Navigation/Navigation"
 
 const settings = [
   { text: "Profile", link: "/profile" },
   { text: "Logout", link: undefined },
 ]
-
-export const Header = () => {
-  const isAuthName = useAppSelector(selectorIsAuth)
+type HeaderProps = {
+  isAuthName: string | undefined
+}
+export const Header = React.memo(({ isAuthName }: HeaderProps) => {
+  // const isAuthName = useAppSelector(selectorIsAuth)
   const profileAvatar = useAppSelector(selectorProfileAvatar)
   const navigate = useNavigate()
   const { logOut } = useActions(authThunk)
@@ -67,17 +68,6 @@ export const Header = () => {
             IT-INCUBA
           </Typography>
           <Navigation isAuthName={isAuthName} />
-          {nav.map((page) => {
-            if (isAuthName && page.isPrivate) {
-              return (
-                <MenuItem key={page.path} onClick={() => alert("navigate")}>
-                  <Typography textAlign="center" sx={{ color: "black" }}>
-                    {page.name}
-                  </Typography>
-                </MenuItem>
-              )
-            } else return null
-          })}
           {isAuthName ? (
             <Box sx={{ flexGrow: 0 }}>
               <Typography
@@ -136,4 +126,4 @@ export const Header = () => {
       </Container>
     </AppBar>
   )
-}
+})

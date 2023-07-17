@@ -71,7 +71,7 @@ export type LogOutResponseType = {
 // 3 часа бездействовать,
 // true - разрешено 7 дней бездействовать
 
-interface RegisterResponseType {
+export interface RegisterResponseType {
   addedUser: Omit<ProfileType, "token" | "tokenDeathTime">
 }
 

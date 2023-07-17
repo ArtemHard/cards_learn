@@ -3,7 +3,7 @@ import styled from "styled-components"
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 7% 0 7%;
+  margin: 36px 7% 0 7%;
   /* max-width: 1008px; */
 `
 

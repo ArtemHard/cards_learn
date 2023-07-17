@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom"
 import { CheckEmail } from "features/auth/CheckEmail/CheckEmail"
 import { Profile } from "components/Profile/Profile"
 import App from "app/App"
-import ErrorPage from "components/404/ErrorPage"
+import { PageNotFound } from "components/404/ErrorPage"
 import { Auth } from "features/auth/Auth/Auth"
 import { ForgotPassword } from "features/auth/ForgotPassword/ForgotPassword"
 import { SetNewPassword } from "features/auth/SetNewPassword/SetNewPassword"
@@ -16,7 +16,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <ErrorPage />,
+    errorElement: <PageNotFound />,
     children: nav.map((el) => {
       return {
         path: el.path,

@@ -87,18 +87,6 @@ export const Form = ({ type, callback, email }: FormPropsType) => {
             control={control}
             errors={errors.email}
           />
-          // <PasswordInput
-          // name="email"
-          //   label="Email"
-          //   type="email"
-          //   key={"email"}
-          //   control={control}
-          //   marginBottom="24px"
-          //   rules={{
-          //     required: true,
-          //     minLength: 8,
-          //   }}
-          // />
         )}
         {type !== "Forgot your password?" && type !== "Check Email" && (
           <PasswordInput
@@ -109,7 +97,6 @@ export const Form = ({ type, callback, email }: FormPropsType) => {
             marginBottom="24px"
             rules={{
               required: true,
-              // minLength: 8,
             }}
             errors={errors.password}
           />

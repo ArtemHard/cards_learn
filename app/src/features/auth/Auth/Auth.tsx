@@ -6,6 +6,7 @@ import { toast } from "react-toastify"
 import { Form, FormInputsType } from "components/Form/Form"
 import { errorToastHandler } from "common/utils"
 import { selectorIsAuth } from "../auth.selectors"
+import { PATH } from "routes/path"
 
 export type AuthComponentType = {
   type: "Sign In" | "Sign Up" | "Forgot your password?" | "Check Email" | "Create new password" | "Personal Information"
@@ -21,13 +22,14 @@ export const Auth = ({ type }: AuthComponentType) => {
 
   const queryLogin = (data: FormInputsType) => {
     const { passwordConfirm, ...signInData } = data
-    const tempDataSignIn = {
-      email: "artemKab@gmail.com",
-      password: "12345678",
-      rememberMe: false,
-    }
+    // const tempDataSignIn = {
+    //   email: "artemKab@gmail.com",
+    //   password: "12345678",
+    //   rememberMe: false,
+    // }
     //WARNING FIX TEMPDATA to signInData
-    login(tempDataSignIn)
+    // asdfasdfsdfgsd@sdfsd.sdf
+    login(signInData)
       .unwrap()
       .then((result) => {
         toast.success("Вы успешно залогинились")
@@ -38,8 +40,12 @@ export const Auth = ({ type }: AuthComponentType) => {
     const { rememberMe, passwordConfirm, ...signUpData } = data
     register(signUpData)
       .unwrap()
+      .catch(errorToastHandler)
       .then(() => {
-        navigate("/sign-in")
+        toast.success("Вы успешно зарегистрировались")
+        setTimeout(() => {
+          navigate(PATH.PACKS)
+        }, 2000)
       })
   }
 

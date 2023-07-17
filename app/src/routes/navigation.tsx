@@ -7,6 +7,7 @@ import { ForgotPassword } from "features/auth/ForgotPassword/ForgotPassword"
 import { SetNewPassword } from "features/auth/SetNewPassword/SetNewPassword"
 import { Cards } from "features/cards/Cards/Cards"
 import { Packs } from "features/packs/Packs/Packs"
+import { PATH } from "./path"
 
 export type NavRouteType = {
   path: string
@@ -18,7 +19,7 @@ export type NavRouteType = {
 
 export const nav: NavRouteType[] = [
   {
-    path: "sign-in",
+    path: PATH.LOGIN,
     name: "Sign in",
     element: <Auth type="Sign In" key={"sign-in"} />,
     isPrivate: false,
@@ -26,7 +27,7 @@ export const nav: NavRouteType[] = [
     // ErrorBoundary: ErrorPage,
   },
   {
-    path: "sign-up",
+    path: PATH.REGISTRATION,
     name: "Sign up",
     element: <Auth type="Sign Up" key={"sign-up"} />,
     isPrivate: false,
@@ -34,28 +35,28 @@ export const nav: NavRouteType[] = [
     // ErrorBoundary: ErrorPage,
   },
   {
-    path: "check-email",
+    path: PATH.CHECK_EMAIL,
     element: <CheckEmail />,
     isPrivate: false,
     menu: false,
     // ErrorBoundary: ErrorPage,
   },
   {
-    path: "set-new-password",
+    path: PATH.SET_NEW_PASSWORD,
     element: <SetNewPassword />,
     isPrivate: false,
     menu: false,
     // ErrorBoundary: ErrorPage,
   },
   {
-    path: "forgot-password",
+    path: PATH.FORGOT_PASSWORD,
     element: <ForgotPassword />,
     isPrivate: false,
     menu: true,
     // ErrorBoundary: ErrorPage,
   },
   {
-    path: "profile",
+    path: PATH.PROFILE,
     name: "Profile",
     element: <Profile />,
     isPrivate: true,
@@ -65,21 +66,21 @@ export const nav: NavRouteType[] = [
     // ErrorBoundary: ErrorPage,
   },
   {
-    path: "packs",
+    path: PATH.PACKS,
     name: "Packs",
     element: <Packs />,
     isPrivate: true,
     menu: true,
   },
   {
-    path: "cards/:cardId",
+    path: PATH.CARDS,
     element: <Cards />,
     isPrivate: true,
     menu: false,
     // ErrorBoundary: ErrorPage,
   },
   {
-    path: "learn/:cardId",
+    path: PATH.LEARN,
     element: <Learn />,
     isPrivate: true,
     menu: false,
