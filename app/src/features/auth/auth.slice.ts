@@ -151,10 +151,10 @@ const slice = createSlice({
       .addCase(register.rejected, (state, action) => {
         // state.authError = action.error
       })
-      .addCase(register.fulfilled, (state, action) => {
-        state.profile = action.payload.profile
-        // state.authError = action.error
-      })
+      // .addCase(register.fulfilled, (state, action) => {
+      //   // state.profile = action.payload.profile
+      //   // state.authError = action.error
+      // })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.profile = action.payload.profile
       })
