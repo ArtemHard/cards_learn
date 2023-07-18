@@ -48,6 +48,7 @@ export const Auth = ({ type }: AuthComponentType) => {
         // }
       })
   }
+  console.log("RERENDER AUTH")
 
   return <Form type={type} callback={type === "Sign In" ? queryLogin : queryRegister} />
 }

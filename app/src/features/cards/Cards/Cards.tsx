@@ -115,7 +115,7 @@ export const Cards = () => {
 
       <P.Container key={"header"} justifyContent="space-between">
         <P.Title>
-          {packName} {cardsTotalCount && isUserPack && <MoreTools packId={packId} />}
+          {packName} {!!cardsTotalCount && isUserPack && <MoreTools packId={packId} />}
         </P.Title>
         {(!!cardsLength || isUserPack) && (
           <BasicButton

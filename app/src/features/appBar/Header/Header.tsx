@@ -24,11 +24,9 @@ const settings = [
   { text: "Profile", link: "/profile" },
   { text: "Logout", link: undefined },
 ]
-type HeaderProps = {
-  isAuthName: string | undefined
-}
-export const Header = React.memo(({ isAuthName }: HeaderProps) => {
-  // const isAuthName = useAppSelector(selectorIsAuth)
+
+export const Header = () => {
+  const isAuthName = useAppSelector(selectorIsAuth)
   const profileAvatar = useAppSelector(selectorProfileAvatar)
   const navigate = useNavigate()
   const { logOut } = useActions(authThunk)
@@ -126,4 +124,4 @@ export const Header = React.memo(({ isAuthName }: HeaderProps) => {
       </Container>
     </AppBar>
   )
-})
+}

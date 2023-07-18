@@ -156,7 +156,9 @@ const slice = createSlice({
       //   // state.authError = action.error
       // })
       .addCase(updateUser.fulfilled, (state, action) => {
-        state.profile = action.payload.profile
+        if (state.profile) {
+          state.profile.name = action.payload.profile.name
+        }
       })
   },
 })
