@@ -34,6 +34,7 @@ export const Auth = ({ type }: AuthComponentType) => {
       .unwrap()
       .then(() => {
         toast.success("Вы успешно залогинились")
+        navigate(PATH.PACKS)
       })
       .catch(errorToastHandler)
   }

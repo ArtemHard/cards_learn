@@ -26,6 +26,14 @@ function App() {
   console.log("RENDER APP")
 
   useEffect(() => {
+    // console.log(document.location.pathname)
+    // if (!isAuth) {
+    //   if (document.location.pathname !== "/" + PATH.LOGIN || document.location.pathname !== "/" + PATH.REGISTRATION)
+    //     <Navigate to={PATH.LOGIN} />
+    //   // navigate(PATH.LOGIN)
+    // }
+    // if (isAuth) <Navigate to={PATH.PACKS} />
+    // navigate(PATH.PACKS)
     setTimeout(() => {
       dispatch(appActions.setIsLoading({ isLoading: false }))
     }, 3000)

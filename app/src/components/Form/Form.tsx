@@ -1,6 +1,4 @@
-import { useForm, Controller, SubmitHandler } from "react-hook-form"
-import FormControlLabel from "@mui/material/FormControlLabel"
-import Checkbox from "@mui/material/Checkbox"
+import { useForm, SubmitHandler } from "react-hook-form"
 import { BasicButton } from "components/Button/BasicButton"
 import { AuthLoginType } from "features/auth/auth.api"
 import * as S from "./Form.styled"
@@ -9,7 +7,6 @@ import { TextInput } from "components/Inputs/TextInput/TextInput"
 import { AuthComponentType } from "features/auth/Auth/Auth"
 import { checkEmailInstructions, createNewPassInstructions, forgotPassInstructions } from "common/constants"
 import { CheckboxControl } from "components/Checkbox/Checkbox"
-import { useMemo } from "react"
 
 const generaeTextForHtmlElement = (
   type: AuthComponentTypeValues,
@@ -53,7 +50,6 @@ export const Form = ({ type, callback, email }: FormPropsType) => {
   const {
     control,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<FormInputsType>({
     defaultValues: {
