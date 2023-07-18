@@ -4,7 +4,7 @@ import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import MenuItem from "@mui/material/MenuItem"
 import { NavigateFunction, useHref, useLocation, useNavigate } from "react-router-dom"
-import { NavRouteType, nav } from "routes/navigation"
+import { NavRouteType, nav } from "routes/navigationLinks"
 
 type NavigationProps = {
   isAuthName: string | undefined
@@ -23,11 +23,6 @@ export const Navigation = ({ isAuthName }: NavigationProps) => {
               return navigateLink(page, navigate, location.pathname)
             } else return null
           }
-          // if (!isAuthName) {
-          //   if (page.isPrivate === false) {
-          //     return navigateLink(page, navigate, location.pathname)
-          //   } else return null
-          // }
           return null
         } else return null
       })}

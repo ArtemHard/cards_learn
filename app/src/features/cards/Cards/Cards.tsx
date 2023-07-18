@@ -24,6 +24,7 @@ import { selectorIsLoading } from "app/app.selectors"
 import { modalActions } from "features/modals/modal.slice"
 import { EmptyPack } from "components/EmptyPack/EmptyPack"
 import { CardStyle as S } from "./Cards.styled"
+import { toast } from "react-toastify"
 
 export type headerTableParamsType = {
   dataParams: string
@@ -49,6 +50,7 @@ export const Cards = () => {
   const { fetchCards } = useActions(cardsThunks)
   const { changeFilterParams, clearFilter } = useActions(cardsActions)
   const { setDataModal, toggleModal } = useActions(modalActions)
+
   const pageCount = useAppSelector(selectorCardsPageCount)
   const page = useAppSelector(selectorCardsPage)
   const cardsTotalCount = useAppSelector(selectorCardsTotalCount)
@@ -63,8 +65,13 @@ export const Cards = () => {
   const onClickHandler = () => {
     if (isUserPack && packId) {
       openAddNewModal()
-    } else {
+      return
+    }
+    if (cardsTotalCount > 0) {
       navigate("/learn/" + packId)
+      return
+    } else {
+      toast.error("The pack is empty")
     }
   }
 
@@ -99,7 +106,7 @@ export const Cards = () => {
 
   return (
     <P.Wrapper>
-      <P.Container key={"navigation"} justifyContent="flex-start">
+      <P.Container key={"navigation"} justifyContent="flex-start" margin=" 0 0 10px 0">
         <S.BackNavigateContainer onClick={() => navigate("/packs")}>
           <KeyboardBackspaceOutlinedIcon sx={{ marginRight: "8px" }} />
           <S.Span>Back to Packs List</S.Span>
@@ -108,7 +115,7 @@ export const Cards = () => {
 
       <P.Container key={"header"} justifyContent="space-between">
         <P.Title>
-          {packName} <MoreTools packId={packId} />
+          {packName} {cardsTotalCount && isUserPack && <MoreTools packId={packId} />}
         </P.Title>
         {(!!cardsLength || isUserPack) && (
           <BasicButton

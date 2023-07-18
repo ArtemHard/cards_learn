@@ -6,11 +6,12 @@ type ItemMenuProps = {
   callback: () => void
   childrenIcon?: React.ReactNode
   innerText: string
+  disabled?: boolean
 }
 
-export const ItemMenu = ({ callback, childrenIcon, innerText }: ItemMenuProps) => {
+export const ItemMenu = ({ callback, childrenIcon, innerText, disabled }: ItemMenuProps) => {
   return (
-    <MenuItem key={"setting.text"} onClick={callback}>
+    <MenuItem key={"setting.text"} onClick={callback} disabled={disabled}>
       <Typography
         sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px" }}
         textAlign="center"

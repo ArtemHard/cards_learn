@@ -1,22 +1,25 @@
+import { HTMLAttributes } from "react"
 import styled from "styled-components"
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 36px 7% 0 7%;
-  /* max-width: 1008px; */
 `
 
-type ContainerType = {
+type ContainerType = HTMLAttributes<HTMLDivElement> & {
   justifyContent?: "flex-start" | "space-between"
   width?: string
+  alignItems?: "center"
+  margin?: string
 }
 
 const Container = styled.div<ContainerType>`
+  margin: ${(props) => (props.margin ? props.margin : undefined)};
   display: flex;
   flex-direction: row;
   justify-content: ${(props) => (props.justifyContent ? props.justifyContent : "space-between")};
-  align-items: ${(props) => (props.justifyContent === "flex-start" ? "center" : null)};
+  align-items: ${(props) => (props.justifyContent === "flex-start" ? "center" : props.alignItems)};
   width: ${(props) => (props.width ? props.width : undefined)};
 `
 const SpanPageContainer = styled.div`
@@ -32,6 +35,7 @@ const Title = styled.h1`
   font-weight: 600;
   font-size: 22px;
   line-height: 27px;
+  margin: 0;
   /* identical to box height */
 
   color: #000000;

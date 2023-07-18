@@ -13,7 +13,13 @@ import { useNavigate, useParams } from "react-router-dom"
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined"
 import { ItemMenu } from "./ItemMenu/ItemMenu"
 import { modalActions } from "features/modals/modal.slice"
-import { selectorCards, selectorPackName } from "features/cards/cards.selector"
+import {
+  selectorCards,
+  selectorCardsPageCount,
+  selectorCardsTotalCount,
+  selectorPackName,
+} from "features/cards/cards.selector"
+import { toast } from "react-toastify"
 
 type MoreToolsProps = {
   packId: string | undefined
@@ -21,9 +27,13 @@ type MoreToolsProps = {
 
 export const MoreTools = ({ packId }: MoreToolsProps) => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
+
   const { removePack, updatePack } = useActions(packsThunks)
   const { setDataModal, toggleModal } = useActions(modalActions)
+
   const packName = useAppSelector(selectorPackName)
+  const cardsTotalCount = useAppSelector(selectorCardsTotalCount)
+
   const navigate = useNavigate()
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
@@ -50,7 +60,10 @@ export const MoreTools = ({ packId }: MoreToolsProps) => {
   }
 
   const learnPackNavigate = () => {
-    navigate("/learn/" + packId)
+    if (cardsTotalCount > 0) {
+      navigate("/learn/" + packId)
+      return
+    } else toast.error("The pack is empty")
   }
 
   React.useEffect(() => {}, [])
@@ -86,6 +99,7 @@ export const MoreTools = ({ packId }: MoreToolsProps) => {
       >
         <ItemMenu
           key={"Learn Cards"}
+          disabled={!cardsTotalCount}
           innerText="Learn Cards"
           callback={learnPackNavigate}
           childrenIcon={<SchoolOutlinedIcon />}

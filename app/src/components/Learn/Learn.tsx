@@ -31,7 +31,8 @@ export const Learn = () => {
   const [first, setFirst] = useState<boolean>(true)
   const cards = useAppSelector(selectorCards)
   const packName = useAppSelector(selectorPackName)
-  const { cardId } = useParams()
+  const { pack_id } = useParams()
+  console.log(pack_id + "11111111111111111111")
 
   const [card, setCard] = useState<Card>({
     _id: "fake",
@@ -50,7 +51,7 @@ export const Learn = () => {
 
   useEffect(() => {
     if (first) {
-      changeFilterParams({ cardsPack_id: cardId, pageCount: 100 })
+      changeFilterParams({ cardsPack_id: pack_id, pageCount: 100 })
       fetchCards()
       setFirst(false)
     }
@@ -58,11 +59,11 @@ export const Learn = () => {
     if (cards.length > 0) setCard(getCard(cards))
 
     return () => {}
-  }, [cardId, cards, first])
+  }, [pack_id, cards, first])
 
   const changeGradeClickHandlerNext = (newGrade: number) => {
     setIsChecked(false)
-    if (cardId) {
+    if (pack_id) {
       updateGradeCard({ grade: newGrade, card_id: card._id })
       // setCard(getCard(cards))
     }
@@ -77,7 +78,7 @@ export const Learn = () => {
   return (
     <P.Wrapper>
       <P.Container>
-        <BackNavigateContainer onClick={() => navigate("/cards/" + cardId)}>
+        <BackNavigateContainer onClick={() => navigate("/cards/" + pack_id)}>
           <KeyboardBackspaceOutlinedIcon sx={{ marginRight: "8px" }} />
           <Span>Back to Packs List</Span>
         </BackNavigateContainer>

@@ -29,7 +29,6 @@ export function PasswordInput<T extends FieldValues>({
   errors,
 }: PasswordInputProps<T>) {
   const [showPassword, setShowPassword] = useState(false)
-  console.log("render " + name)
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword)

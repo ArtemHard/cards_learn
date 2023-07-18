@@ -22,17 +22,20 @@ export const Auth = ({ type }: AuthComponentType) => {
 
   const queryLogin = (data: FormInputsType) => {
     const { passwordConfirm, ...signInData } = data
-    // const tempDataSignIn = {
-    //   email: "artemKab@gmail.com",
-    //   password: "12345678",
-    //   rememberMe: false,
-    // }
+    const tempDataSignIn = {
+      email: "artemKab@gmail.com",
+      password: "12345678",
+      rememberMe: false,
+    }
     //WARNING FIX TEMPDATA to signInData
     // asdfasdfsdfgsd@sdfsd.sdf
-    login(signInData)
+    // pass 12345678
+    login(tempDataSignIn)
       .unwrap()
       .then((result) => {
-        toast.success("Вы успешно залогинились")
+        if (result.profile._id) {
+          toast.success("Вы успешно залогинились")
+        }
       })
       .catch(errorToastHandler)
   }
@@ -40,12 +43,13 @@ export const Auth = ({ type }: AuthComponentType) => {
     const { rememberMe, passwordConfirm, ...signUpData } = data
     register(signUpData)
       .unwrap()
-      .catch(errorToastHandler)
-      .then(() => {
-        toast.success("Вы успешно зарегистрировались")
-        setTimeout(() => {
-          navigate(PATH.PACKS)
-        }, 2000)
+      .then((result) => {
+        if (result.profile._id) {
+          toast.success("Вы успешно зарегистрировались")
+          setTimeout(() => {
+            navigate(PATH.PACKS)
+          }, 2000)
+        }
       })
   }
 

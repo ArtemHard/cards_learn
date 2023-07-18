@@ -10,7 +10,7 @@ import { Packs } from "features/packs/Packs/Packs"
 import { Cards } from "features/cards/Cards/Cards"
 import { Learn } from "components/Learn/Learn"
 import { RequireAuth } from "common/hoc/RequireAuth"
-import { nav } from "./navigation"
+import { nav } from "./navigationLinks"
 
 export const router = createBrowserRouter([
   {
