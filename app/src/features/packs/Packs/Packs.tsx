@@ -23,12 +23,15 @@ import { PaginationCommon } from "components/Pagination/PaginationCommon"
 import { User } from "features/users/User"
 import { useGetCardsQuery } from "features/cards/services/cards.api"
 import { modalActions } from "features/modals/modal.slice"
+import { selectorIsAuth } from "features/auth/auth.selectors"
+import { authThunk } from "features/auth/auth.slice"
 
 export const Packs = () => {
   // DANGER FAKE SELECTOR
   const cardPacks = useAppSelector(selectorPacks)
   const packsTotalCount = useAppSelector(selectorPacksTotalCount)
   const searchPackName = useAppSelector(selectorSearchPackName)
+  const isAuth = useAppSelector(selectorIsAuth)
   const isLoading = useAppSelector(selectorIsLoading)
   const pageCount = useAppSelector(selectorPageCount)
   const page = useAppSelector(selectorPage)
@@ -36,8 +39,10 @@ export const Packs = () => {
   const { setDataModal, toggleModal } = useActions(modalActions)
 
   useLayoutEffect(() => {
-    fetchPacks()
-  }, [])
+    if (isAuth) {
+      fetchPacks()
+    }
+  }, [isAuth])
 
   const addPackHandler = () => {
     setDataModal({ _id: "", type: "Pack", answer: "", name: "", question: "" })

@@ -1,7 +1,6 @@
-import { useAppSelector, useAppDispatch, useActions } from "common/hooks"
+import { useAppSelector, useActions } from "common/hooks"
 import { authThunk } from "features/auth/auth.slice"
-import { useLocation, useNavigate } from "react-router-dom"
-import styled from "styled-components"
+import { useNavigate } from "react-router-dom"
 
 import * as React from "react"
 import AppBar from "@mui/material/AppBar"
@@ -14,11 +13,11 @@ import Container from "@mui/material/Container"
 import Avatar from "@mui/material/Avatar"
 import Tooltip from "@mui/material/Tooltip"
 import MenuItem from "@mui/material/MenuItem"
-import { ButtonBase } from "@mui/material"
 import { BasicButton } from "components/Button/BasicButton"
 import { selectorIsAuth } from "features/auth/auth.selectors"
 import { selectorProfileAvatar } from "common/utils/selectors/authSelectors"
 import { Navigation } from "./Navigation/Navigation"
+import { PATH } from "routes/path"
 
 const settings = [
   { text: "Profile", link: "/profile" },
@@ -38,6 +37,14 @@ export const Header = () => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
+  }
+
+  const navigateToClickHandler = (link: string | undefined) => {
+    link
+      ? navigate(link)
+      : logOut()
+          .unwrap()
+          .then(() => navigate(PATH.LOGIN))
   }
 
   return (
@@ -110,7 +117,7 @@ export const Header = () => {
               >
                 {settings.map((setting) => (
                   <MenuItem key={setting.text} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center" onClick={() => (setting.link ? navigate(setting.link) : logOut())}>
+                    <Typography textAlign="center" onClick={() => navigateToClickHandler(setting.link)}>
                       {setting.text}
                     </Typography>
                   </MenuItem>

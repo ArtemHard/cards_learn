@@ -15,6 +15,8 @@ import { TextInput } from "components/Inputs/TextInput/TextInput"
 import { InputTypeFile } from "components/Inputs/InputTypeFile"
 import axios from "axios"
 import { Button } from "@mui/material"
+import { Navigate, useNavigate } from "react-router-dom"
+import { PATH } from "routes/path"
 
 export type PrfileInputType = {
   name: string
@@ -28,8 +30,12 @@ export const Profile = () => {
     setEdit(!edit)
   }
 
+  const navigate = useNavigate()
+
   const onClickHandlerLogOut = () => {
     logOut()
+      .unwrap()
+      .then(() => navigate(PATH.LOGIN))
   }
   const onSubmit: SubmitHandler<PrfileInputType> = (data) => {
     if (data.name === profile?.name || data.name.trim() === "") {

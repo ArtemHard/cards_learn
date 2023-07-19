@@ -4,7 +4,7 @@ import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom"
 import { Header } from "features/appBar/Header/Header"
 import { GlobalError } from "common/components/GlobalError/GlobalError"
 import LinearProgress from "@mui/material/LinearProgress"
-import { useAppDispatch, useAppSelector } from "common/hooks"
+import { useActions, useAppDispatch, useAppSelector } from "common/hooks"
 import "react-toastify/dist/ReactToastify.css"
 import {
   selectIsAppInitialized,
@@ -15,6 +15,7 @@ import {
 } from "./app.selectors"
 import { Modal } from "features/modals/Modal/Modal"
 import { PATH } from "routes/path"
+import { authThunk } from "features/auth/auth.slice"
 
 function App() {
   // const isLoading = useAppSelector((state) => state.app.isLoading)
@@ -22,7 +23,6 @@ function App() {
   const isLoading = useAppSelector(selectorIsLoading)
   const isAppInitialized = useAppSelector(selectIsAppInitialized)
   // const unHandleActions = useAppSelector(selectUnHandleActions)
-  const dispatch = useAppDispatch()
   console.log("RENDER APP")
 
   useEffect(() => {
@@ -34,9 +34,10 @@ function App() {
     // }
     // if (isAuth) <Navigate to={PATH.PACKS} />
     // navigate(PATH.PACKS)
-    setTimeout(() => {
-      dispatch(appActions.setIsLoading({ isLoading: false }))
-    }, 3000)
+    // setTimeout(() => {
+    //   dispatch(appActions.setIsLoading({ isLoading: false }))
+    // }, 3000)
+    // if (!isAuth) authMe()
   }, [isAuth])
   return (
     <div className="App">

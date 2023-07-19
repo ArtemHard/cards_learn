@@ -25,6 +25,7 @@ import { modalActions } from "features/modals/modal.slice"
 import { EmptyPack } from "components/EmptyPack/EmptyPack"
 import { CardStyle as S } from "./Cards.styled"
 import { toast } from "react-toastify"
+import { selectorIsAuth } from "features/auth/auth.selectors"
 
 export type headerTableParamsType = {
   dataParams: string
@@ -46,6 +47,7 @@ export const Cards = () => {
   const isUserPack = useAppSelector(selectIsUserPack)
   const searchParamsQuestion = useAppSelector(selectorCardsSearhQuestion)
   const isLoading = useAppSelector(selectorIsLoading)
+  const isAuth = useAppSelector(selectorIsAuth)
 
   const { fetchCards } = useActions(cardsThunks)
   const { changeFilterParams, clearFilter } = useActions(cardsActions)
@@ -95,14 +97,16 @@ export const Cards = () => {
 
   const navigate = useNavigate()
   useEffect(() => {
-    if (packId) {
+    if (packId && isAuth) {
       changeFilterParams({ cardsPack_id: packId })
       fetchCards()
     }
+
     return () => {
       clearFilter()
     }
-  }, [])
+  }, [isAuth])
+  console.log("RENDER CARDS")
 
   return (
     <P.Wrapper>
