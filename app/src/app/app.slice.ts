@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice, current } from "@reduxjs/toolkit"
 import { AxiosError, isAxiosError } from "axios"
+import { PATH } from "routes/path"
 
 const slice = createSlice({
   // name должен быть уникальным
@@ -9,7 +10,7 @@ const slice = createSlice({
   initialState: {
     error: null as string | null,
     isLoading: false,
-    isAppInitialized: false,
+    isAppInitialized: false as boolean,
     unHandleActions: [] as string[],
   },
 
@@ -20,6 +21,9 @@ const slice = createSlice({
     },
     setError: (state, action: PayloadAction<{ error: string | null }>) => {
       state.error = action.payload.error
+    },
+    setAppInitialized: (state, action: PayloadAction<boolean>) => {
+      state.isAppInitialized = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -60,6 +64,15 @@ const slice = createSlice({
           state.isLoading = false
           if (!action.payload.showGlobalError) return
           const err = action.payload.e as Error | AxiosError<{ error: string }>
+          // debugger
+          if (
+            action.type === "auth/me/rejected" &&
+            (document.location.pathname === PATH.LOGIN ||
+              document.location.pathname === PATH.REGISTRATION ||
+              document.location.pathname === "/")
+          ) {
+            return
+          }
           if (isAxiosError(err)) {
             state.error = err.response ? err.response.data.error : err.message
           } else {

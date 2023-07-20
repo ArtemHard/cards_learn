@@ -24,7 +24,9 @@ function App() {
   const isAppInitialized = useAppSelector(selectIsAppInitialized)
   // const unHandleActions = useAppSelector(selectUnHandleActions)
   console.log("RENDER APP")
-
+  const { setAppInitialized } = useActions(appActions)
+  const { authMe } = useActions(authThunk)
+  const navigate = useNavigate()
   useEffect(() => {
     // console.log(document.location.pathname)
     // if (!isAuth) {
@@ -38,6 +40,22 @@ function App() {
     //   dispatch(appActions.setIsLoading({ isLoading: false }))
     // }, 3000)
     // if (!isAuth) authMe()
+    if (!isAuth) {
+      authMe()
+        .unwrap()
+        .then(() => {
+          // if (isAuth) {
+          if (document.location.pathname === PATH.LOGIN || document.location.pathname === PATH.REGISTRATION)
+            navigate(PATH.PACKS)
+          // }
+        })
+        // .catch(()=> {
+
+        // })
+        .finally(() => {
+          setAppInitialized(true)
+        })
+    }
   }, [isAuth])
   return (
     <div className="App">
@@ -45,7 +63,7 @@ function App() {
       <Modal />
       <GlobalError />
       {isLoading && <LinearProgress />}
-      <div>{!isAppInitialized && <Outlet />}</div>
+      <div>{isAppInitialized && <Outlet />}</div>
     </div>
   )
 }
