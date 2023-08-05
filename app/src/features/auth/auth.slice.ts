@@ -5,14 +5,12 @@ import {
   AuthRegisterType,
   ForgotPassDataForServer,
   ProfileType,
-  RegisterResponseType,
   SetNewPasswordData,
   updateUserData,
 } from "./auth.api"
 import { createAppAsyncThunk } from "common/utils/createAppAsyncThunk"
 
 import { thunkTryCatch } from "common/utils/thunkTryCatch"
-import { appActions } from "app/app.slice"
 
 const register = createAppAsyncThunk<{ profile: ProfileType }, AuthRegisterType>(
   "auth/register",
@@ -23,17 +21,6 @@ const register = createAppAsyncThunk<{ profile: ProfileType }, AuthRegisterType>
       const res = await authApi.register(arg)
       return { profile: res.data.addedUser }
     })
-    // const { dispatch, rejectWithValue } = thunkApi
-    // try {
-    //   await authApi.register(arg)
-    // } catch (e: any) {
-    //   dispatch(
-    //     appActions.setError({
-    //       error: e.response ? e.response.data.error : e.message,
-    //     })
-    //   )
-    //   return rejectWithValue(null)
-    // }
   }
 )
 
@@ -46,23 +33,6 @@ const login = createAppAsyncThunk<{ profile: ProfileType }, AuthLoginType>("auth
     },
     false
   )
-  // const { getState } = thunkApi
-  // const state = getState()
-  // const res = await authApi.login(arg)
-  // return { profile: res.data }
-  // const { dispatch, rejectWithValue } = thunkApi
-  // try {
-  //   const res = await authApi.login(arg)
-
-  //   return { profile: res.data }
-  // } catch (e: any) {
-  //   dispatch(
-  //     appActions.setError({
-  //       error: e.response ? e.response.data.error : e.message,
-  //     })
-  //   )
-  //   return rejectWithValue(null)
-  // }
 })
 
 const authMe = createAppAsyncThunk<{ profile: ProfileType }, void>("auth/me", async (arg, thunkAPI) => {
@@ -72,10 +42,6 @@ const authMe = createAppAsyncThunk<{ profile: ProfileType }, void>("auth/me", as
       profile: res.data,
     }
   })
-  // const res = await authApi.checkAuth()
-  // return {
-  //   profile: res.data,
-  // }
 })
 
 const logOut = createAppAsyncThunk("auth/logOut", async (arg, thunkAPI) => {
@@ -148,16 +114,10 @@ const slice = createSlice({
       .addCase(forgotPassword.fulfilled, (state, action) => {
         state.sendEmail = action.payload.sendEmail
       })
-      .addCase(register.rejected, (state, action) => {
-        // state.authError = action.error
-      })
-      // .addCase(register.fulfilled, (state, action) => {
-      //   // state.profile = action.payload.profile
-      //   // state.authError = action.error
-      // })
+      .addCase(register.rejected, (state, action) => {})
       .addCase(updateUser.fulfilled, (state, action) => {
         if (state.profile) {
-          state.profile.name = action.payload.profile.name
+          state.profile = action.payload.profile
         }
       })
   },
