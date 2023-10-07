@@ -64,15 +64,9 @@ const slice = createSlice({
           state.isLoading = false
           if (!action.payload.showGlobalError) return
           const err = action.payload.e as Error | AxiosError<{ error: string }>
-          if (
-            action.type === "auth/me/rejected" &&
-            (document.location.pathname === PATH.LOGIN ||
-              document.location.pathname === PATH.REGISTRATION ||
-              document.location.pathname === "/" ||
-              document.location.pathname === "/cards_learn")
-          ) {
-            return
-          }
+          // if (action.type === "auth/me/rejected") {
+          //   return
+          // }
           if (isAxiosError(err)) {
             state.error = err.response ? err.response.data.error : err.message
           } else {

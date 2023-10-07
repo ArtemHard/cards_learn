@@ -20,11 +20,8 @@ import { TablePacks } from "./PacksTable/TablePacks"
 import { selectorIsLoading } from "app/app.selectors"
 import SelectButtonPaginator from "components/Selector/SelectButtonPaginator"
 import { PaginationCommon } from "components/Pagination/PaginationCommon"
-import { User } from "features/users/User"
-import { useGetCardsQuery } from "features/cards/services/cards.api"
 import { modalActions } from "features/modals/modal.slice"
 import { selectorIsAuth } from "features/auth/auth.selectors"
-import { authThunk } from "features/auth/auth.slice"
 
 export const Packs = () => {
   // DANGER FAKE SELECTOR
@@ -35,7 +32,7 @@ export const Packs = () => {
   const isLoading = useAppSelector(selectorIsLoading)
   const pageCount = useAppSelector(selectorPageCount)
   const page = useAppSelector(selectorPage)
-  const { fetchPacks, createPack, removePack, updatePack } = useActions(packsThunks)
+  const { fetchPacks } = useActions(packsThunks)
   const { setDataModal, toggleModal } = useActions(modalActions)
 
   useLayoutEffect(() => {
@@ -47,16 +44,6 @@ export const Packs = () => {
   const addPackHandler = () => {
     setDataModal({ _id: "", type: "Pack", answer: "", name: "", question: "" })
     toggleModal({ isCreateNew: true })
-    // createPack(newPack)
-  }
-
-  const removePackHandler = (id: string) => {
-    removePack(id)
-  }
-
-  const updatePackHandler = (pack: PackType) => {
-    const newName = "🦖" + Math.random()
-    updatePack({ ...pack, name: newName })
   }
 
   const searchQuery = useAppSelector(selectorSearchPackName)

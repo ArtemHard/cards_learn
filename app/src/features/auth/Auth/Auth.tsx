@@ -17,7 +17,7 @@ export const Auth = ({ type }: AuthComponentType) => {
 
   const { login, register } = useActions(authThunk)
 
-  if (!!isAuth) navigate("/")
+  if (!!isAuth) navigate(PATH.PACKS)
 
   const queryLogin = (data: FormInputsType) => {
     const { passwordConfirm, ...signInData } = data

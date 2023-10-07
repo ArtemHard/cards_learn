@@ -17,12 +17,6 @@ export const store = configureStore({
     [cardsSliceApi.reducerPath]: cardsSliceApi.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(cardsSliceApi.middleware),
-  // middleware: (getDefaultMiddleware) =>
-  //   getDefaultMiddleware({
-  //     serializableCheck: false,
-  //   })
-  //     .prepend()
-  //     .concat(usersApi.middleware, cardsSliceApi.middleware),
 })
 
 setupListeners(store.dispatch)
