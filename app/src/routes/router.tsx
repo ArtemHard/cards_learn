@@ -1,20 +1,14 @@
 import { createBrowserRouter } from "react-router-dom"
-import { CheckEmail } from "features/auth/CheckEmail/CheckEmail"
-import { Profile } from "components/Profile/Profile"
+
 import App from "app/App"
 import { PageNotFound } from "components/404/ErrorPage"
-import { Auth } from "features/auth/Auth/Auth"
-import { ForgotPassword } from "features/auth/ForgotPassword/ForgotPassword"
-import { SetNewPassword } from "features/auth/SetNewPassword/SetNewPassword"
-import { Packs } from "features/packs/Packs/Packs"
-import { Cards } from "features/cards/Cards/Cards"
-import { Learn } from "components/Learn/Learn"
+
 import { RequireAuth } from "common/hoc/RequireAuth"
 import { nav } from "./navigationLinks"
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/cards_learn",
     element: <App />,
     errorElement: <PageNotFound />,
     children: nav.map((el) => {
