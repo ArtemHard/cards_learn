@@ -7,6 +7,7 @@ import { TextInput } from "components/Inputs/TextInput/TextInput"
 import { AuthComponentType } from "features/auth/Auth/Auth"
 import { checkEmailInstructions, createNewPassInstructions, forgotPassInstructions } from "common/constants"
 import { CheckboxControl } from "components/Checkbox/Checkbox"
+import { TestInfo } from "components/TestInfo/TestInfo"
 
 const generaeTextForHtmlElement = (
   type: AuthComponentTypeValues,
@@ -66,6 +67,7 @@ export const Form = ({ type, callback, email }: FormPropsType) => {
 
   return (
     <S.FormWrapper>
+      <TestInfo />
       <S.FormModule onSubmit={handleSubmit(onSubmit)}>
         <S.TitleForForm>{type}</S.TitleForForm>
         {type === "Check Email" && <S.SVGEmail />}

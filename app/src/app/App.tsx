@@ -18,12 +18,9 @@ import { PATH } from "routes/path"
 import { authThunk } from "features/auth/auth.slice"
 
 function App() {
-  // const isLoading = useAppSelector((state) => state.app.isLoading)
   const isAuth = useAppSelector(selectIsAuth)
   const isLoading = useAppSelector(selectorIsLoading)
   const isAppInitialized = useAppSelector(selectIsAppInitialized)
-  // const unHandleActions = useAppSelector(selectUnHandleActions)
-  console.log("RENDER APP")
   const { setAppInitialized } = useActions(appActions)
   const { authMe } = useActions(authThunk)
   const navigate = useNavigate()
@@ -49,9 +46,9 @@ function App() {
             navigate(PATH.PACKS)
           // }
         })
-        // .catch(()=> {
-
-        // })
+        .catch(() => {
+          navigate(PATH.LOGIN)
+        })
         .finally(() => {
           setAppInitialized(true)
         })

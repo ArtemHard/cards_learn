@@ -8,6 +8,6 @@ export const PATH = {
   PACKS: "/packs",
   CARDS: "/cards/:cardId",
   LEARN: "/learn/:pack_id",
-  NOT_FOUND: "404",
+  NOT_FOUND: "*",
   CURRENT_URL: window.location.href.split("#")[0],
 }

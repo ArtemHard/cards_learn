@@ -1,7 +1,7 @@
 {
   "name": "app",
   "version": "0.1.0",
-  "homepage": "https://ArtemHard.github.io/cards_learn",
+  "homepage": "https://ArtemHard.github.io/cards_learn/",
   "private": true,
   "jest": {
     "moduleNameMapper": {

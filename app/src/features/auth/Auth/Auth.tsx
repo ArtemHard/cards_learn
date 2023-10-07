@@ -1,4 +1,3 @@
-import React from "react"
 import { authThunk } from "../auth.slice"
 import { useNavigate } from "react-router-dom"
 import { useActions, useAppSelector } from "common/hooks"
@@ -51,5 +50,9 @@ export const Auth = ({ type }: AuthComponentType) => {
   }
   console.log("RERENDER AUTH")
 
-  return <Form type={type} callback={type === "Sign In" ? queryLogin : queryRegister} />
+  return (
+    <>
+      <Form type={type} callback={type === "Sign In" ? queryLogin : queryRegister} />
+    </>
+  )
 }
