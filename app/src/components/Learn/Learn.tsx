@@ -11,6 +11,7 @@ import { TitleForForm } from "components/Form/Form.styled"
 import KeyboardBackspaceOutlinedIcon from "@mui/icons-material/KeyboardBackspaceOutlined"
 import { P } from "../../features/packs/Packs/Packs.styled"
 import { ImageCard } from "components/AddImg/AddImg"
+import { selectorIsLoading } from "app/app.selectors"
 
 const getCard = (cards: Card[]) => {
   const sum = cards.reduce((acc, card) => acc + (6 - card.grade) * (6 - card.grade), 0)
@@ -30,6 +31,7 @@ export const Learn = () => {
   const [isChecked, setIsChecked] = useState<boolean>(false)
   const [first, setFirst] = useState<boolean>(true)
   const cards = useAppSelector(selectorCards)
+  const isLoading = useAppSelector(selectorIsLoading)
   const packName = useAppSelector(selectorPackName)
   const { pack_id } = useParams()
   console.log(pack_id + "11111111111111111111")
@@ -74,7 +76,6 @@ export const Learn = () => {
   }
 
   const navigate = useNavigate()
-
   return (
     <P.Wrapper>
       <P.Container>
@@ -83,47 +84,49 @@ export const Learn = () => {
           <Span>Back to Packs List</Span>
         </BackNavigateContainer>
       </P.Container>
-      <Container>
-        <TitleForForm>Learn "{packName}"</TitleForForm>
-        <Wrapper>
-          {card.question !== "no question" ? (
-            <SpanText>
-              <b>Question: </b>
-              {card.question}
-            </SpanText>
-          ) : (
-            <>
+      {!isLoading && (
+        <Container>
+          <TitleForForm>Learn "{packName}"</TitleForForm>
+          <Wrapper>
+            {card.question !== "no question" ? (
               <SpanText>
                 <b>Question: </b>
+                {card.question}
               </SpanText>
-              {<ImageCard key={"questionImg"} src={card.questionImg} />}
-            </>
-          )}
-          <GrayText>
-            Количество попыток ответов на вопрос: <b>{card.shots}</b>
-          </GrayText>
+            ) : (
+              <>
+                <SpanText>
+                  <b>Question: </b>
+                </SpanText>
+                {<ImageCard key={"questionImg"} src={card.questionImg} />}
+              </>
+            )}
+            <GrayText>
+              Количество попыток ответов на вопрос: <b>{card.shots}</b>
+            </GrayText>
 
-          {!isChecked && <BasicButton buttonText="Show answer" onClick={() => setIsChecked(true)} />}
-          {isChecked && card.answer !== "no answer" && (
-            <>
-              <SpanText>
-                <b>Answer: </b>
-                {card.answer}
-              </SpanText>
-              <SetRating callback={changeGradeClickHandlerNext} />
-            </>
-          )}
-          {isChecked && card.answerImg && (
-            <>
-              <SpanText>
-                <b>Answer: </b>
-              </SpanText>
-              {<ImageCard key={"answerImg"} src={card.answerImg} />}
-              <SetRating callback={changeGradeClickHandlerNext} />
-            </>
-          )}
-        </Wrapper>
-      </Container>
+            {!isChecked && <BasicButton buttonText="Show answer" onClick={() => setIsChecked(true)} />}
+            {isChecked && card.answer !== "no answer" && (
+              <>
+                <SpanText>
+                  <b>Answer: </b>
+                  {card.answer}
+                </SpanText>
+                <SetRating callback={changeGradeClickHandlerNext} />
+              </>
+            )}
+            {isChecked && card.answerImg && (
+              <>
+                <SpanText>
+                  <b>Answer: </b>
+                </SpanText>
+                {<ImageCard key={"answerImg"} src={card.answerImg} />}
+                <SetRating callback={changeGradeClickHandlerNext} />
+              </>
+            )}
+          </Wrapper>
+        </Container>
+      )}
     </P.Wrapper>
   )
 }

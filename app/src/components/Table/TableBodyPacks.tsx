@@ -69,6 +69,7 @@ export const TableBodyPacks = ({ packs }: TableBodyPacksProps) => {
           <TableCell sx={textTableStyle} align="right">
             <IconButton
               aria-label="read"
+              disabled={!pack.cardsCount}
               onClick={() => {
                 learnPackHandler(pack._id)
               }}
