@@ -3,6 +3,7 @@
 <p>Application for learning words in format question-answer, that
 can use text or images. User can create private or public sets of words,
 and learn yours or public sets another users.
+BLL based on ReduxToolkit
 </p>
 <p>This app is the *first version* of app <a href="https://github.com/ArtemHard/cardsSecond/">cardsSecond<a/></p>
 
