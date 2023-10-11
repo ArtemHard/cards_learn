@@ -24,3 +24,15 @@ BLL based on ReduxToolkit
 >   > - set status of card for change frequency repeat
 >   > - Change personal info
 > - Have validation on all forms
+
+ #### For start app
+
+Open terminal:
+1. git clone https://github.com/ArtemHard/cards_learn.git
+2. go to app directory (cd/app)
+3. npm i
+4. npm start
+   This section need for start server development:
+5. go to server directory (open new terminal => cd/server or write down correct path)
+6. npm i
+7. npm start
