@@ -28,10 +28,10 @@ BLL based on ReduxToolkit
  #### For start app
 
 Open terminal:
-2. git clone https://github.com/ArtemHard/cards_learn.git
-1. go to app directory (cd/app)
-2. npm i
-3. npm start
+1. git clone https://github.com/ArtemHard/cards_learn.git
+2. go to app directory (cd/app)
+3. npm i
+4. npm start
    This section need for start server development:
 5. go to server directory (open new terminal => cd/server or write down correct path)
 6. npm i
