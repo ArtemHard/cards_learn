@@ -1,46 +1,38 @@
-# Getting Started with Create React App
+# Application for learning words
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
+<p>Application for learning words in format question-answer, that
+can use text or images. User can create private or public sets of words,
+and learn yours or public sets another users.
+BLL based on ReduxToolkit
+</p>
+<p>This app is the *first version* of app <a href="https://github.com/ArtemHard/cardsSecond/">cardsSecond<a/></p>
 
-## Available Scripts
+#### [Demonstration](https://artemhard.github.io/cards_learn/)
+*note*: **deck** = cards kit
 
-In the project directory, you can run:
+> ### Possibilities of app:
+>
+> - Authorization
+> - Registration
+> - Recovering Password
+> - Searching cards and decks by params (name, updated, question and etc.)
+> - CRUD operation:
+>   > - User can create, delete, update deck
+>   > - User can create, delete, update card
+>   > - User can learn yours or public cards
+>   > - creating, updating support images
+>   > - set status of card for change frequency repeat
+>   > - Change personal info
+> - Have validation on all forms
 
-### `yarn start`
+ #### For start app
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Open terminal:
+2. git clone https://github.com/ArtemHard/cards_learn.git
+1. go to app directory (cd/app)
+2. npm i
+3. npm start
+   This section need for start server development:
+5. go to server directory (open new terminal => cd/server or write down correct path)
+6. npm i
+7. npm start
