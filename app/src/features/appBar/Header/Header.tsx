@@ -70,7 +70,7 @@ export const Header = () => {
               textDecoration: "none",
             }}
           >
-            IT-INCUBA
+            Artem-Kabakov
           </Typography>
           <Navigation isAuthName={isAuthName} />
           {isAuthName ? (
